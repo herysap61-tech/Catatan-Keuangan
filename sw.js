@@ -1,7 +1,7 @@
 // Service worker Finara: cache-first agar bisa dipakai offline.
 // Naikkan VERSI setiap kali Anda memperbarui file agar pengguna dapat versi baru.
-const VERSI = 'finara-v1.1.0';
-const INTI = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+const VERSI = 'finara-v1.2.0';
+const INTI = ['./', './index.html', './manifest.webmanifest','./styles.css','./app.js', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSI).then(c => c.addAll(INTI)).then(() => self.skipWaiting()));

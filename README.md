@@ -35,19 +35,29 @@ Made by **Herysap61**.
 
 ## Memperbarui aplikasi
 
-Setelah mengubah file, naikkan nilai `VERSI` di `sw.js` (mis. `finara-v1.1.1`) dan `VER` di `index.html`, lalu unggah ulang. Pengguna akan melihat pesan **Versi baru siap, Muat ulang**.
+Setelah mengubah file, naikkan nilai `VERSI` di `sw.js` (mis. `finara-v1.2.0`) dan `VER` di `app.js`, lalu unggah ulang. Pengguna akan melihat pesan **Versi baru siap, Muat ulang**.
 
 ## Menerima masukan dari rekan
 
-Aktifkan **Issues** di repositori, lalu isi konstanta `FEEDBACK_URL` di `index.html` dengan `https://github.com/USERNAME/finara/issues/new`. Menu **Lainnya > Kirim masukan** akan muncul otomatis.
+Aktifkan **Issues** di repositori, lalu isi konstanta `FEEDBACK_URL` di `app.js` dengan `https://github.com/USERNAME/finara/issues/new`. Menu **Lainnya > Kirim masukan** akan muncul otomatis.
 
 ## Struktur file
 
 | File | Fungsi |
 |---|---|
-| `index.html` | Seluruh aplikasi |
+| `index.html` | Kerangka halaman |
+| `styles.css` | Seluruh tampilan |
+| `app.js` | Seluruh logika aplikasi |
 | `manifest.webmanifest` | Agar bisa dipasang seperti aplikasi |
 | `sw.js` | Cache untuk mode offline |
 | `icon*.png`, `icon.svg`, `apple-touch-icon.png` | Ikon aplikasi |
 | `.nojekyll` | Mencegah GitHub Pages memproses ulang file |
 | `LICENSE` | Lisensi MIT |
+
+## Privasi mutlak
+
+Finara tidak punya server, akun, atau pelacak. Tidak ada data yang dikirim ke internet. Pencadangan dan pemulihan murni lewat file yang Anda simpan sendiri (**Lainnya > Cadangan dan pulihkan**): `.json` untuk cadangan lengkap, `.csv` untuk cadangan yang bisa dibuka di spreadsheet dan dipulihkan lagi. PIN dan enkripsi sengaja tidak disediakan karena proyek ini untuk percobaan dan portofolio.
+
+## Sebelum meng-hosting
+
+Ganti `USERNAME` pada tag `og:image` di `index.html` dengan nama akun GitHub Anda agar pratinjau tautan muncul.
