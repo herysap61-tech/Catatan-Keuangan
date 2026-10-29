@@ -2,15 +2,37 @@
 <html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#eef1ec" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0b160e" media="(prefers-color-scheme: dark)">
+<!--
+FINARA · BACA INI DULU
+Nomor versi dan catatan pembaruan : versi.js (satu-satunya tempat)
+Pengaturan                        : config.js
+Peta kode dan cara memperbarui    : README.md, docs/PETA-KODE.md, docs/PANDUAN-PEMBARUAN.md
+Urutan <script> di bawah ADALAH urutan pemuatan; jika menambah berkas js/,
+daftarkan juga di sw.js (INTI). tools/cek.mjs memeriksanya otomatis.
+Privasi : berkas ini tidak memuat data pribadi, akun, atau alamat repositori.
+-->
 <title>Finara</title>
 <meta name="description" content="Finara: pencatat keuangan pribadi dan usaha. Made by Herysap61.">
-<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Finara"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="author" content="Herysap61"><meta property="og:title" content="Finara"><meta property="og:description" content="Pencatat keuangan pribadi dan usaha. Gratis, jalan offline, data tersimpan di perangkat Anda."><meta property="og:type" content="website"><meta property="og:image" content="https://herysap61-tech.github.io/Catatan-Keuangan/icon-512.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Finara"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="author" content="Herysap61"><meta property="og:title" content="Finara"><meta property="og:description" content="Pencatat keuangan pribadi dan usaha. Gratis, jalan offline, data tersimpan di perangkat Anda."><meta property="og:type" content="website"><meta property="og:image" content="https://USERNAME.github.io/finara/icon-512.png">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="icon" href="icon-192.png" sizes="192x192" type="image/png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 <link rel="stylesheet" href="styles.css"></head>
 <body data-mode="p"><div id="spl" aria-hidden="true"><img src="icon.svg" alt=""><b>Finara</b><small>Made by <b>Herysap61</b></small></div>
-<aside class="rail"><header><div class="brand"><h1>Finara</h1><span class="by">Made by <b>Herysap61</b></span><span class="tag">Tegas mencatat. Jujur melaporkan.</span><span class="pw">Powered by <b>KALSARA</b></span></div><div class="hr"><div class="seg" id="seg"></div><button class="hb" data-a="hint" aria-label="Tampilkan atau sembunyikan bantuan">?</button></div></header><nav id="nav" aria-label="Navigasi utama"></nav></aside>
+<aside class="rail"><header><div class="brand"><h1>Finara</h1><span class="by">Made by <b>Herysap61</b></span><span class="pw">Powered by <b>KALSARA</b></span></div><div class="hr"><div class="seg" id="seg"></div><button class="hb" data-a="hint" aria-label="Tampilkan atau sembunyikan bantuan">?</button></div></header><nav id="nav" aria-label="Navigasi utama"></nav></aside>
 <main id="m"><noscript><div class="c"><b>Finara belum bisa berjalan di tampilan ini</b><small>Pratinjau WhatsApp atau Files tidak menjalankan aplikasi. Buka lewat tautan web di Safari atau Chrome, bukan dari file yang dikirim.</small></div></noscript></main>
 <button class="fab" data-a="add:expense" aria-label="Catat transaksi"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Catat</span></button>
 <div id="sh"><div id="shc" role="dialog" aria-modal="true" aria-label="Jendela formulir" tabindex="-1"></div></div><div id="toast" role="status" aria-live="polite"></div>
-<script src="app.js"></script></body></html>
+<script src="config.js"></script>
+<script src="versi.js"></script>
+<script src="js/01-dasar.js"></script>
+<script src="js/02-data.js"></script>
+<script src="js/03-hitung.js"></script>
+<script src="js/04-komponen.js"></script>
+<script src="js/05-grafik.js"></script>
+<script src="js/06-layar.js"></script>
+<script src="js/07-render-formulir.js"></script>
+<script src="js/08-data-lanjutan.js"></script>
+<script src="js/09-aksi.js"></script>
+<script src="js/10-peristiwa.js"></script>
+<script src="js/11-mulai.js"></script>
+</body></html>

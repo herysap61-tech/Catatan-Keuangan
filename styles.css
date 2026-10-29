@@ -1,3 +1,11 @@
+/* ============================================================
+   FINARA · styles.css
+   Seluruh tampilan. Urutan: dasar & tema (atas) lalu lapisan
+   per rilis di bawah, ditandai komentar "===== vX =====".
+   Rilis baru: tambahkan gaya baru di AKHIR berkas dengan penanda
+   versi, jangan menyisipkan di tengah. Warna memakai variabel
+   :root (mode terang) dan :root[data-theme=dark] / prefers-color-scheme.
+   ============================================================ */
 :root{--bg:#eef1ec;--sf:#fff;--ink:#0e2212;--mu:#657568;--ln:#e5eae3;--field:#f2f5f0;--pos:#1f7a35;--neg:#c23b2b;--sh:0 10px 30px rgba(14,40,20,.12);--rail:272px;color-scheme:light;
 --p-ac:#1a4a1f;--p-on:#fff;--p-ac2:#a6ee6b;--p-on2:#10300f;--p-tint:#e8f8d6;--p-at:#1a4a1f;
 --u-ac:#0f4c52;--u-on:#fff;--u-ac2:#8fe6da;--u-on2:#06302f;--u-tint:#dcf5f1;--u-at:#0f4c52}
@@ -251,3 +259,11 @@ nav button{font-size:11px}.ch .ax{font-size:11px}.pw{font-size:12px}
 .tools.t2{grid-template-columns:1fr 1fr}.tools.t2 label{margin:0}.tools.t2 .btn{grid-column:1/-1}
 details{margin:14px 0}summary{cursor:pointer;font-weight:700;color:var(--at);min-height:32px}
 @media print{.rail,nav,.fab,#toast,.pn,.row,.chips,body::after{display:none!important}body{padding:0!important;background:#fff;color:#000}main{max-width:none}.c{box-shadow:none;border:1px solid #ccc;break-inside:avoid}}
+
+/* ===== v1.3 ===== */
+.pf{display:block;text-align:left;margin-bottom:8px}.pf small{display:block;font-weight:400}.pf.on{outline:2px solid var(--at)}
+.health .hr{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid rgba(128,128,128,.25)}.health .hr>div:last-child{text-align:right;white-space:nowrap}.health small{display:block}
+
+/* ===== v1.4 ===== */
+.mb{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:12px;z-index:5;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:#2f8f46;color:#fff}.mb.u{background:#2f7fd1}body[data-mode="u"]{--at:#2f7fd1}
+.rv{margin:0 0 14px}.rv b{display:block}.rv small{margin-bottom:4px}.rv p{margin:2px 0}
