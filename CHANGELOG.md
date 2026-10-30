@@ -4,6 +4,18 @@ Catatan untuk **pengembang** (apa yang berubah di kode dan kenapa). Catatan untu
 ada di `versi.js` (tampil di aplikasi: Lainnya > Tentang > Riwayat versi).
 Format: bagian terbaru di atas. Penomoran: lihat `docs/PANDUAN-PEMBARUAN.md`.
 
+## [1.6.1] - 2026-10-30
+
+Rilis perbaikan. **Tidak ada perubahan kode aplikasi, perhitungan, skema, atau format data.**
+
+### Diperbaiki
+- `manifest.webmanifest`: `display_override: ["fullscreen", "standalone"]` dihapus. Karena `fullscreen` didahulukan, Finara yang dipasang
+  di Android dibuka tanpa bilah status sehingga jam, baterai, dan sinyal tertutup. Kini hanya `display: standalone` (bilah status tampil).
+
+### Catatan
+- Chrome memperbarui manifest aplikasi terpasang secara berkala, bukan seketika. Untuk melihat hasilnya segera, hapus aplikasi dari
+  layar utama lalu pasang lagi dari tautan web. Data tidak hilang karena tersimpan di peramban, tetapi unduh cadangan dulu sebagai pengaman.
+
 ## [1.6.0] - 2026-10-30
 
 Rilis tampilan Beranda dan tombol pasang aplikasi. **Tidak ada perubahan perhitungan, skema, atau format data** (`SCHEMA` tetap 2).

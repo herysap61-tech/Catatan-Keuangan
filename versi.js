@@ -15,8 +15,9 @@
    Privasi: berkas ini tidak memuat data pribadi, akun, atau alamat
    repositori. Jangan menuliskannya di catatan versi.
    ============================================================ */
-const VER='1.6.0',TGL='2026-10-30';
+const VER='1.6.1',TGL='2026-10-30';
 const RIWAYAT=[
+{v:'1.6.1',t:'2026-10-30',u:['Perbaikan: saat Finara dipasang di HP, jam, baterai, dan sinyal tidak lagi tertutup karena aplikasi tidak lagi dibuka dalam mode layar penuh']},
 {v:'1.6.0',t:'2026-10-30',u:['Beranda ditata ulang agar lebih rapi: jatah hari ini, pemasukan dan pengeluaran, lalu Rekening saya, diikuti kartu penjelasan, anggaran, tren, dan kesehatan keuangan. Rincian transaksi terbaru kini di paling bawah, dengan tombol Lihat semua','Pada layar lebar, kartu-kartu di Beranda tersusun dua kolom','Tombol Pasang Finara di perangkat ini kembali: muncul sebagai kartu di Beranda dan di Lainnya, lengkap dengan petunjuk untuk iPhone dan peramban yang tidak punya tombol pasang otomatis. Hilang sendiri setelah Finara terpasang, atau bila Anda pilih Nanti saja']},
 {v:'1.5.1',t:'2026-10-30',u:['Istilah uang bebas diganti sisa setelah tagihan, agar jelas bahwa angka ini baru dikurangi tagihan dan utang, belum tabungan atau dana darurat','Kartu cara hitung kini menjelaskan bahwa uang di rekening tabungan tetap terhitung, dan cara menahannya lewat tagihan tetap']},
 {v:'1.5.0',t:'2026-10-30',u:['Beranda kini menjawab satu pertanyaan: berapa uang yang aman dipakai hari ini sampai gajian (jatah harian)','Pengguna baru cukup menjawab tiga pertanyaan, lalu jatah harian langsung tampil sebelum mencatat apa pun','Setiap kali mencatat, Finara menunjukkan dampaknya ke saldo dan jatah, sebelum dan sesudah disimpan','Tampilan lebih sederhana: pinjaman dan utang-piutang dipindah ke fitur lanjutan di Lainnya (bila Anda sudah punya datanya, tetap tampil). Mode Usaha tidak berubah','Kartu Kesehatan keuangan kini disertai langkah yang disarankan. Perbaikan kecil: Beranda ikut diperbarui setelah transaksi berulang dijeda atau dihapus']},
