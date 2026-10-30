@@ -4,6 +4,20 @@ Catatan untuk **pengembang** (apa yang berubah di kode dan kenapa). Catatan untu
 ada di `versi.js` (tampil di aplikasi: Lainnya > Tentang > Riwayat versi).
 Format: bagian terbaru di atas. Penomoran: lihat `docs/PANDUAN-PEMBARUAN.md`.
 
+## [1.5.1] - 2026-10-30
+
+Perbaikan istilah dan penjelasan; **tidak ada perubahan perhitungan, skema, atau format data**.
+
+### Diubah
+- Label "uang bebas" diganti "sisa setelah tagihan" di `06b-jatah.js`, `09b-aksi-jatah.js`, dan `06-layar.js`. Alasannya: angka ini
+  hanya mengurangi tagihan berulang dan utang jatuh tempo; tabungan, dana darurat, dan anggaran belum dikurangkan,
+  sehingga kata "bebas" menyesatkan. Nama variabel internal `fr` tidak diubah.
+- Kartu "Cara menghitung jatah Anda" kini menyebut bahwa rekening tabungan tetap masuk total saldo, dan cara menahannya
+  (tagihan tetap). Catatan: tagihan tetap tercatat sebagai pengeluaran.
+
+### Catatan
+- Belum ada penahan khusus (dana ditahan, pengecualian rekening, target tabungan yang ikut menahan). Lihat `docs/RENCANA.md`.
+
 ## [1.5.0] - 2026-10-30
 
 Rilis fokus **mode Pribadi**: satu janji utama (jatah harian sampai gajian), alur pertama yang pendek, dan umpan balik

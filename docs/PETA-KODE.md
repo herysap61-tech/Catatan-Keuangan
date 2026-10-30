@@ -209,8 +209,8 @@ Buka aplikasi lewat `http://localhost` (lihat README), lalu:
 
 ## 10. Rumus jatah harian (1.5.0)
 
-`jatah()` di `06b-jatah.js`: uang bebas = total saldo − tagihan berulang (`S.rec` jenis expense/loan) dan utang yang jatuh tempo
-sebelum gajian berikutnya. Jatah hari ini = (uang bebas + pengeluaran harian hari ini) ÷ jumlah hari sampai gajian (hari ini ikut).
+`jatah()` di `06b-jatah.js`: sisa setelah tagihan (variabel `fr`, dulu berlabel "uang bebas") = total saldo − tagihan berulang (`S.rec` jenis expense/loan) dan utang yang jatuh tempo
+sebelum gajian berikutnya. Jatah hari ini = (sisa setelah tagihan + pengeluaran harian hari ini) ÷ jumlah hari sampai gajian (hari ini ikut).
 Sisa jatah = jatah − pengeluaran harian hari ini. Pengeluaran harian tidak memuat transaksi hasil aturan berulang (`rec`) dan
 pembayaran utang (`pay`). Pratinjau dampak di formulir memakai `simTx()`: menambah satu transaksi rekaan ke `S.tx`, menghitung, lalu membuangnya.
 

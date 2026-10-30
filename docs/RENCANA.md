@@ -8,6 +8,8 @@ Daftar **calon** pekerjaan, bukan janji. Urutan = usulan prioritas. Coret (`[x]`
 - [ ] **Uji dengan 3–5 orang**: buka Finara tanpa penjelasan selama 5 menit, catat di mana mereka berhenti atau bertanya (layar sambutan, tiga pertanyaan, formulir Catat).
 - [ ] Bila mode Pribadi sudah rapi: rapikan mode Usaha dengan pola yang sama (satu janji utama, alur pertama pendek, umpan balik setelah mencatat).
 - [ ] Pertimbangkan penghasilan tidak tetap (jatah mingguan) dan pemasukan yang diharapkan sebelum gajian.
+- [ ] **Penahan uang** agar jatah mencerminkan keadaan sebenarnya: (1) kolom "Sisihkan per bulan" untuk tabungan atau dana darurat yang dikurangkan dari sisa setelah tagihan, (2) opsi per rekening "jangan hitung untuk jatah harian", (3) setoran Target tabungan ikut menahan. Saat ini `jatah()` hanya mengurangi tagihan berulang dan utang jatuh tempo; tabungan dan anggaran belum.
+- [ ] Tanggal gajian 29–31 belum didukung (layar hanya menerima 1–28; pengguna diminta mengisi 28). Bila ingin didukung, anggap gajian jatuh di hari terakhir bulan bila tanggalnya tidak ada, dan uji dengan menyapu semua tanggal.
 
 ## Fitur yang sudah diketahui belum ada
 (dari catatan "Belum tersedia" di README dan layar Tentang)

@@ -20,8 +20,8 @@ const LJ=()=>U()||LANJUT||hasAdv();
 const tyOK=(k,cur)=>(!T[k].only||U()||k===cur)&&(LJ()||BASIC.includes(k)||k===cur);
 
 /* ---------- Hitungan jatah harian ----------
-   Uang bebas  = total saldo − tagihan berulang dan utang yang jatuh tempo sebelum gajian berikutnya.
-   Jatah hari ini (A) = (uang bebas + pengeluaran harian hari ini) ÷ jumlah hari sampai gajian (hari ini ikut dihitung).
+   Sisa setelah tagihan = total saldo − tagihan berulang dan utang yang jatuh tempo sebelum gajian berikutnya.
+   Jatah hari ini (A) = (sisa setelah tagihan + pengeluaran harian hari ini) ÷ jumlah hari sampai gajian (hari ini ikut dihitung).
    Sisa jatah (rem)  = A − pengeluaran harian hari ini.
    Pengeluaran harian = jenis "expense" yang bukan hasil transaksi berulang dan bukan pembayaran utang
    (keduanya sudah dihitung lewat tagihan). next = jatah per hari mulai besok bila hari ini tidak belanja lagi. */
@@ -48,8 +48,8 @@ if(needSetup())return'Tersimpan. Isi saldo awal lewat Beranda (Hitung jatah hari
 const J=jatah();if(ty==='transfer')return'Tersimpan. Total uang tidak berubah, jatah harian aman.';
 if(J.fr<0n)return'Tersimpan. Uang belum cukup untuk tagihan sampai gajian (kurang '+rp(-J.fr)+').';
 if(ty==='expense'&&d===td)return J.rem<0n?'Tersimpan. Melebihi jatah hari ini '+rp(-J.rem)+(J.days>1?'. Jatah besok jadi '+rp(J.next)+'.':'.'):'Tersimpan. Sisa jatah hari ini '+rp(J.rem)+'.';
-if(ty==='income')return'Tersimpan. Uang bebas sampai gajian jadi '+rp(J.fr)+', jatah hari ini '+rp(J.A)+'.';
-return'Tersimpan. Uang bebas sampai gajian: '+rp(J.fr)+'.'}
+if(ty==='income')return'Tersimpan. Sisa setelah tagihan sampai gajian jadi '+rp(J.fr)+', jatah hari ini '+rp(J.A)+'.';
+return'Tersimpan. Sisa setelah tagihan sampai gajian: '+rp(J.fr)+'.'}
 
 /* ---------- Pratinjau dampak di formulir transaksi baru ---------- */
 function imp(){const el=$('#imp');if(!el)return;el.innerHTML='';if(FM.id||U())return;
@@ -63,7 +63,7 @@ const n=simTx({d,ty,a,to:toa?to:'',amt},()=>({j:jatah(),b:bal(ac),b2:toa?bal(toa
 ln('Saldo '+esc(ac.name),b0,n.b);if(toa)ln('Saldo '+esc(toa.name),b20,n.b2);
 if(ty==='transfer')p='Total uang tidak berubah, jadi jatah harian tidak terpengaruh.';
 else if(needSetup())p='Saldo awal belum diisi, jadi hitungan jatah belum bisa ditampilkan. Isi lewat Beranda (Hitung jatah harian saya).';
-else{ln('Uang bebas',J0.fr,n.j.fr);
+else{ln('Sisa setelah tagihan',J0.fr,n.j.fr);
 if(ty==='expense'&&d===td){ln('Sisa jatah hari ini',J0.rem,n.j.rem);if(n.j.rem<0n)p='Melebihi jatah hari ini, sehingga jatah hari-hari berikutnya ikut menyusut.'}
 else if(ty!=='expense')ln('Jatah hari ini',J0.A,n.j.A)}
 el.innerHTML='<b>Dampak jika disimpan</b>'+L.join('')+(p?'<p>'+p+'</p>':'')}
@@ -75,12 +75,12 @@ const sub=ng?'Saldo '+rp(J.tot)+', tagihan sebelum gajian '+rp(J.bt)+'. Tunda pe
 :ov?(J.days>1?'Jatah hari-hari berikutnya menyusut jadi '+rp(J.next)+' per hari.':'Besok sudah gajian.')
 :S.tx.length?'Dari jatah '+rp(J.A)+' hari ini, terpakai '+rp(J.out)+'.':'Catat pengeluaran pertama Anda, dan angka ini langsung berubah.';
 return`<div class="hero hj${ng||ov?' bad':''}"><small>${lab}</small><b>${big}</b>${ng?'':`<div class="hbar" role="img" aria-label="Jatah hari ini terpakai ${pc0}%"><i style="width:${pc0}%"></i></div>`}<small class="hsub">${sub}</small>
-<div class="hmini"><span><em>Total saldo</em><strong>${rp(J.tot)}</strong></span><span><em>Tagihan</em><strong>−${rp(J.bt)}</strong></span><span><em>Uang bebas</em><strong>${rp(J.fr)}</strong></span></div>
+<div class="hmini"><span><em>Total saldo</em><strong>${rp(J.tot)}</strong></span><span><em>Tagihan</em><strong>−${rp(J.bt)}</strong></span><span><em>Sisa setelah tagihan</em><strong>${rp(J.fr)}</strong></span></div>
 <small>Dibagi ${J.days} hari sampai gajian ${tglId(J.np)}. <button class="lk" data-a="payday">Ubah tanggal gajian</button></small>
 <div class="qa"><button class="btn" data-a="add:expense"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Catat</button><button class="btn ghost" data-a="add:transfer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h13M16 3l4 4-4 4M17 17H4M8 13l-4 4 4 4"/></svg>Transfer</button></div></div>`}
 // Layar pertama untuk pengguna yang belum punya uang tercatat: janji, contoh hitungan, tiga pertanyaan.
 function vWelcome(){return`<div class="dash"><div class="hero hj prom"><small>Selamat datang di Finara</small><b>Tahu berapa uang yang aman dipakai per hari sampai gajian.</b><small>Jawab 3 pertanyaan singkat. Hasilnya langsung tampil, sebelum Anda mencatat apa pun.</small><div class="qa"><button class="btn" data-a="onb">Hitung jatah harian saya</button></div></div>
-<div class="d-a"><div class="c"><b>Begini cara menghitungnya</b><table><tr><td>Uang Anda sekarang</td><td>Rp2.000.000</td></tr><tr><td>Tagihan tetap sebelum gajian</td><td>−Rp600.000</td></tr><tr><td>Uang bebas</td><td>Rp1.400.000</td></tr><tr><td>Gajian 10 hari lagi</td><td class="pos">Rp140.000 per hari</td></tr></table><small>Hanya contoh. Angka Anda dihitung dari jawaban Anda sendiri.</small></div>
+<div class="d-a"><div class="c"><b>Begini cara menghitungnya</b><table><tr><td>Uang Anda sekarang</td><td>Rp2.000.000</td></tr><tr><td>Tagihan tetap sebelum gajian</td><td>−Rp600.000</td></tr><tr><td>Sisa setelah tagihan</td><td>Rp1.400.000</td></tr><tr><td>Gajian 10 hari lagi</td><td class="pos">Rp140.000 per hari</td></tr></table><small>Hanya contoh. Angka Anda dihitung dari jawaban Anda sendiri.</small></div>
 <div class="c"><b>Tiga pertanyaan yang akan diajukan</b><ol class="qs"><li>Uang Anda sekarang berapa?</li><li>Gajian tanggal berapa?</li><li>Tagihan tetap tiap bulan apa saja? (boleh dilewati)</li></ol><small>Setelah itu, setiap Anda mencatat pengeluaran, Beranda langsung menunjukkan sisa jatah hari ini. Data hanya tersimpan di perangkat Anda.</small><div class="row"><button class="btn ghost" data-a="demo">Coba dulu dengan data contoh</button></div></div></div></div>`}
 function vHomeP(){if(needSetup())return vWelcome();
 const[f,t]=range('month'),r=sum(f,t),J=jatah(),cy=CYC()?'periode':'bulan',demo=S.tx.some(x=>x.demo);
@@ -96,9 +96,9 @@ li=J.B.slice(0,5).map(b=>`<div class="hr"><div><small>${fd(b.d)} · ${esc(b.n)}<
 return`<div class="c health"><h3>Cara menghitung jatah Anda</h3>`+hr('Total saldo',rp(J.tot),'semua rekening')
 +hr('Tagihan sebelum gajian','−'+rp(J.bt),J.B.length+' tagihan atau utang')+li
 +(J.B.length?'':'<small>Belum ada tagihan tetap atau utang jatuh tempo sebelum gajian. Tambahkan tagihan tetap (kos, cicilan, listrik) agar jatah lebih akurat.</small>')
-+hr('Uang bebas',rp(J.fr),J.fr>0n?rp(J.per)+' per hari ('+J.days+' hari)':'belum cukup untuk tagihan',J.fr<0n?'neg':'pos')
++hr('Sisa setelah tagihan',rp(J.fr),J.fr>0n?rp(J.per)+' per hari ('+J.days+' hari)':'belum cukup untuk tagihan',J.fr<0n?'neg':'pos')
 +an.map(([c,v,av])=>hr('Perlu diperhatikan',rp(v),esc(nm(S.cat,c))+' di atas biasanya ('+rp(av)+')','neg')).join('')
-+`<div class="row"><button class="btn ghost" data-a="billnew">Tambah tagihan tetap</button><button class="btn ghost" data-a="rec">Lihat semua tagihan</button></div><small class="hint">Uang bebas = total saldo dikurangi tagihan berulang dan utang yang jatuh tempo sebelum gajian berikutnya. Jatah per hari = uang bebas dibagi jumlah hari sampai gajian, hari ini ikut dihitung.</small></div>`}
++`<div class="row"><button class="btn ghost" data-a="billnew">Tambah tagihan tetap</button><button class="btn ghost" data-a="rec">Lihat semua tagihan</button></div><small class="hint">Sisa setelah tagihan = total saldo dikurangi tagihan berulang dan utang yang jatuh tempo sebelum gajian berikutnya. Jatah per hari = sisa setelah tagihan dibagi jumlah hari sampai gajian, hari ini ikut dihitung. Uang di rekening tabungan atau dana darurat tetap ikut terhitung di total saldo. Bila tidak ingin memakainya, tambahkan setoran tabungan sebagai tagihan tetap (mis. Tabungan) agar ikut ditahan; ia akan tercatat sebagai pengeluaran.</small></div>`}
 
 /* ---------- Kartu kesehatan keuangan, kini dengan saran langkah ---------- */
 function health(f,t,r){const tot=accs().reduce((s,a)=>s+bal(a),0n),pp=S.pay.filter(p=>p.w===S.active&&p.st==='ok'),rc=pp.filter(p=>p.dir==='recv').reduce((s,p)=>s+sisa(p),0n),db=pp.filter(p=>p.dir!=='recv').reduce((s,p)=>s+sisa(p),0n),nw=tot+rc-db;
