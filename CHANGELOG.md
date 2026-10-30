@@ -1,5 +1,18 @@
 # Catatan Perubahan Finara
 
+## [1.7.3] - 2026-10-30
+
+Rilis perbaikan tampilan. **Tidak ada perubahan rumus, skema, atau data.**
+
+### Diperbaiki
+- Kartu `plancard()` dan `health()` (`js/06b-jatah.js`) di ponsel: baris dua kolom dengan kolom kanan `nowrap` menjepit kolom kiri
+  dan membuat keterangan menimpa label. Kini tiap baris bertumpuk: label + angka (`.hl`), keterangan (`.hnote`), penjelasan (`.hint`, bisa dilipat), saran (`.sg`).
+  Angka tidak pernah dipotong (`white-space:nowrap`; bila terlalu lebar pindah ke baris bawah; `fitAll` mengecilkan huruf angka kartu).
+- Bentrok nama kelas: `.hs` sudah dipakai gaya lama (`float:right`); kelas baru memakai `.hnote` dan `.hli`.
+- Baris "Perlu diperhatikan" menyebut nama kategori dan arti angkanya (pengeluaran periode ini vs rata-rata tiga bulan sebelumnya).
+- Baris "Tabungan yang diamankan" disembunyikan bila target dan nominal tersisih nol; nilai nol ditulis `Rp0`, bukan `−Rp0`.
+- Daftar Tagihan tetap: teks kosong menunjuk ke tombol Tambah tagihan; label tombol dipersingkat agar tidak terpecah dua baris.
+
 ## [1.7.2] - 2026-10-30
 
 ### Fixed — Mode Pribadi

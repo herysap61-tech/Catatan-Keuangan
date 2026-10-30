@@ -28,7 +28,8 @@ function srcsum(){const r=[...document.querySelectorAll('#shc .sa')],o=$('#ao');
 document.addEventListener('input',e=>{const el=e.target;if(el.matches&&el.matches('#shc input[inputmode="numeric"]:not([data-plain])'))fmtNum(el);if(el.classList&&el.classList.contains('sa'))srcsum()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#sh').classList.contains('on'))close()});
 function fit(el,max){el.style.fontSize='';el.style.whiteSpace='';el.style.wordBreak='';if(!(max>0)||!el.getClientRects().length)return;let fs=parseFloat(getComputedStyle(el).fontSize);while(fs>9&&el.scrollWidth>max+.5){fs-=Math.max(.5,fs*.04);el.style.fontSize=fs+'px'}if(el.scrollWidth>max+.5){el.style.whiteSpace='normal';el.style.wordBreak='break-all'}}
-function fitAll(){document.querySelectorAll('.hero b,.hmini strong,.g2 b,.cards b,.big').forEach(e=>fit(e,e.clientWidth));
+function fitAll(){document.querySelectorAll('.health .hv').forEach(e=>fit(e,e.parentElement.clientWidth*.7));
+document.querySelectorAll('.hero b,.hmini strong,.g2 b,.cards b,.big').forEach(e=>fit(e,e.clientWidth));
 document.querySelectorAll('.tx>span:last-child').forEach(e=>fit(e,e.parentElement.clientWidth*.8));
 document.querySelectorAll('td+td').forEach(e=>{const t=e.closest('table'),pe=t.parentElement,ps=getComputedStyle(pe),iw=pe.clientWidth-parseFloat(ps.paddingLeft)-parseFloat(ps.paddingRight);fit(e,Math.min(t.clientWidth,iw)*(t.rows[0].cells.length>2?.34:.55))});
 document.querySelectorAll('.rep-b b').forEach(e=>fit(e,e.parentElement.clientWidth*.6))}

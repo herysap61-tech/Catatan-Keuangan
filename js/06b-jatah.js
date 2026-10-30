@@ -122,19 +122,20 @@ addEventListener('appinstalled',()=>{DEFERRED=null;PBH=true;try{localStorage.set
 /* ---------- Kartu cara hitung ---------- */
 function plancard(J,r){const ms=mon(6).slice(2,5),
 an=Object.entries(r.cat).map(([c,v])=>[c,v,ms.reduce((s,m)=>s+(sum(m.f,m.t).cat[c]||0n),0n)/3n]).filter(([c,v,av])=>av>0n&&v>av*3n/2n).sort((a,b)=>{const da=a[1]-a[2],db=b[1]-b[2];return db>da?1:db<da?-1:0}).slice(0,3);
-const hr=(a,b,c,k)=>`<div class="hr"><div><b>${a}</b></div><div><b class="${k||''}">${b}</b><small>${c}</small></div></div>`,
+const hr=(a,b,c,k)=>`<div class="hr2"><div class="hl"><b>${a}</b><b class="hv ${k||''}">${b}</b></div>${c?`<small class="hnote">${c}</small>`:''}</div>`,
+min=v=>v>0n?'−'+rp(v):rp(v),
 loanLeft=txs().filter(x=>x.st==='ok'&&x.d<=today()&&(x.ty==='loan_in'||x.ty==='loan_prin')).reduce((v,x)=>v+(x.ty==='loan_in'?x.amt:-x.amt),0n),
 loanWarn=loanLeft>0n?`<small class="hint">Perhatian: masih ada pinjaman tercatat ${rp(loanLeft)}. Nilai ini tidak otomatis dikurangkan dari jatah kecuali cicilannya dijadwalkan sebelum gajian. Tambahkan jadwal di tagihan berulang atau catatan utang agar tidak terlewat.</small>`:'',
-li=J.B.slice(0,5).map(b=>`<div class="hr"><div><small>${fd(b.d)} · ${esc(b.n)}</small></div><div><small>${rp(b.a)}</small></div></div>`).join('')+(J.B.length>5?`<small>dan ${J.B.length-5} tagihan lainnya</small>`:'');
+li=J.B.slice(0,5).map(b=>`<div class="hl hli"><small>${fd(b.d)} · ${esc(b.n)}</small><small>${rp(b.a)}</small></div>`).join('')+(J.B.length>5?`<small>dan ${J.B.length-5} tagihan lainnya</small>`:'');
 return`<div class="c health"><h3>Cara menghitung jatah Anda</h3>`+hr('Total saldo',rp(J.tot),'semua rekening')
-+hr('Tagihan sebelum gajian','−'+rp(J.bt),J.B.length+' tagihan atau utang')+li
++hr('Tagihan sebelum gajian',min(J.bt),J.B.length+' tagihan atau utang')+li
 +(J.B.length?'':'<small>Belum ada tagihan tetap atau utang jatuh tempo sebelum gajian.</small>')
 +hr('Sisa setelah tagihan',rp(J.afterBills),'sebelum tabungan dan cadangan')
-+hr('Tabungan yang diamankan','−'+rp(J.savingsHold),'Target '+rp(J.savingsTarget)+' · sudah disisihkan '+rp(J.saved)+' · masih perlu '+rp(J.savingsLeft))
-+hr('Cadangan tak terduga','−'+rp(J.reserve),J.reserveMode==='nominal'?'Nominal tetap yang Anda tentukan':J.reservePercent+'% dari sisa setelah tabungan')
++(J.savingsTarget>0n||J.savingsHold>0n?hr('Tabungan yang diamankan',min(J.savingsHold),'Target '+rp(J.savingsTarget)+' · sudah disisihkan '+rp(J.saved)+' · masih perlu '+rp(J.savingsLeft)):'')
++hr('Cadangan tak terduga',min(J.reserve),J.reserveMode==='nominal'?'Nominal tetap yang Anda tentukan':J.reservePercent+'% dari sisa setelah tabungan')
 +hr('Uang tersedia sampai gajian',rp(J.fr),J.fr>0n?rp(J.per)+' per hari ('+J.days+' hari)':'alokasi belum mencukupi',J.fr<0n?'neg':'pos')
-+an.map(([c,v,av])=>hr('Perlu diperhatikan',rp(v),esc(nm(S.cat,c))+' di atas biasanya ('+rp(av)+')','neg')).join('')
-+loanWarn+`<div class="row"><button class="btn ghost" data-a="billnew">Tambah tagihan tetap</button><button class="btn ghost" data-a="rec">Lihat semua tagihan</button></div><small class="hint">Uang tersedia = total saldo seluruh rekening dikurangi tagihan, tabungan yang diamankan, dan cadangan tak terduga. Pastikan total saldo mencakup rekening tabungan/cadangan juga; nominal 'sudah disisihkan' hanya untuk bagian target tabungan yang memang sudah dipindahkan atau diamankan pada periode berjalan. Jangan masukkan setoran yang sama dua kali. Angka ini estimasi berdasarkan catatan Anda, bukan jaminan uang aman dibelanjakan.</small></div>`}
++an.map(([c,v,av])=>hr('Perlu diperhatikan: '+esc(nm(S.cat,c)),rp(v),'Pengeluaran periode ini, lebih tinggi dari rata-rata tiga bulan sebelumnya ('+rp(av)+').','neg')).join('')
++loanWarn+`<div class="row"><button class="btn ghost" data-a="billnew">Tambah tagihan</button><button class="btn ghost" data-a="rec">Lihat semua tagihan</button></div><small class="hint">Uang tersedia = total saldo seluruh rekening dikurangi tagihan, tabungan yang diamankan, dan cadangan tak terduga. Pastikan total saldo mencakup rekening tabungan/cadangan juga; nominal 'sudah disisihkan' hanya untuk bagian target tabungan yang memang sudah dipindahkan atau diamankan pada periode berjalan. Jangan masukkan setoran yang sama dua kali. Angka ini estimasi berdasarkan catatan Anda, bukan jaminan uang aman dibelanjakan.</small></div>`}
 
 /* ---------- Kartu kesehatan keuangan, kini dengan saran langkah ---------- */
 function health(f,t,r){
@@ -161,7 +162,7 @@ gEm=em10===null?'Catat pengeluaran dan pembayaran cicilan selama beberapa hari a
 gSv=sv10===null?'':sv10<100n?'Sisa arus kas setelah pengeluaran dan pokok pinjaman masih di bawah 10% pemasukan. Tinjau pengeluaran dan cicilan.':sv10<200n?'Naikkan sisa arus kas menuju 20% bila memungkinkan.':'',
 gDr=dr10!==null&&dr10>300n?'Pembayaran pokok dan bunga yang tercatat mencapai '+fmt10(dr10)+'% pemasukan. Angka ini tidak mencakup cicilan yang belum dicatat.':'';
 
-const row=(l,v,s,c,h,g)=>`<div class="hr"><div><b>${l}</b><small>${h}</small>${g?`<small class="sg">Langkah: ${g}</small>`:''}</div><div><b class="${c}">${v}</b><small>${s}</small></div></div>`;
+const row=(l,v,s,c,h,g)=>`<div class="hr2"><div class="hl"><b>${l}</b><b class="hv ${c}">${v}</b></div><small class="hnote">${s}</small><small class="hint">${h}</small>${g?`<small class="sg">Langkah: ${g}</small>`:''}</div>`;
 return`<div class="c health"><h3>Kesehatan keuangan</h3><small>Setiap angka disertai langkah yang bisa Anda lakukan bila perlu.</small>`+row('Kekayaan bersih (estimasi)',rp(nw),'saldo + piutang − utang − pinjaman tercatat',nw<0n?'neg':'pos','Saldo dan piutang dikurangi utang-piutang serta sisa pinjaman dari transaksi Pinjaman diterima dikurangi Bayar pokok. Jika pinjaman yang sama dicatat di kedua tempat, hasil dapat terhitung ganda.',gNw)
 +(PF()==='owner'?row('Kekayaan gabungan (estimasi)',rp(al),'Pribadi + Usaha',al<0n?'neg':'pos','Saldo dan piutang kedua ruang dikurangi utang-piutang dan sisa pinjaman transaksi. Pastikan pinjaman tidak dicatat ganda.',''):'')+row('Daya tahan kas non-pinjaman (estimasi)',em10===null?'–':fmt10(em10)+' bulan',em10===null?'butuh data pengeluaran':em10<30n?'kurang':em10<=60n?'cukup':'tinggi',em10===null?'':em10<30n?'neg':'','Saldo rekening dikurangi sisa pinjaman dari transaksi, dibanding rata-rata pengeluaran dan pembayaran pokok tiga bulan yang tersedia. Utang-piutang yang dicatat terpisah belum dikurangkan; bukan ukuran dana darurat terverifikasi.',gEm)
 +row('Sisa arus kas',sv10===null?'–':fmt10(sv10)+'%',sv10===null?'belum ada pemasukan':sv10>=200n?'baik':sv10>=100n?'cukup':'rendah',sv10===null?'':sv10>=100n?'pos':'neg','Pemasukan dikurangi pengeluaran tercatat dan pembayaran pokok pinjaman, dibanding pemasukan. Rasio dibulatkan satu angka desimal. Tidak sama dengan kenaikan tabungan bersih karena transfer, modal, dan penarikan tidak dihitung.',gSv)

@@ -311,3 +311,16 @@ ol.qs{margin:8px 0 10px;padding-left:22px;line-height:1.7}
 .dash>.d-a.d-w{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;align-items:start}
 .dash>.d-a.d-w>h3:first-child{margin-top:16px}
 }
+
+/* ===== 1.7.3: kartu cara hitung dan kesehatan keuangan, susunan di ponsel ===== */
+.health .hr2{padding:12px 0;border-top:1px solid rgba(128,128,128,.25)}
+.health h3+small,.health h3+.hr2{margin-top:0}
+.health .hl{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 12px}
+.health .hl>b:first-child{flex:1 1 7em;min-width:0;overflow-wrap:break-word}
+.health .hl>b.hv{flex:none;margin-left:auto;white-space:nowrap;text-align:right}
+.health .hl.hli{padding:4px 0 4px 12px}
+.health .hl.hli small{display:block;font-weight:400}
+.health .hl.hli small:last-child{text-align:right;white-space:nowrap}
+.health .hnote{margin-top:2px;white-space:normal}
+.health .hr2 .hint{margin:8px 0 0}
+.health .hr2 .sg{margin-top:8px}
