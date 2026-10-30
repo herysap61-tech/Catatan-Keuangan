@@ -200,18 +200,23 @@ Buka aplikasi lewat `http://localhost` (lihat README), lalu:
 - [ ] Matikan jaringan (DevTools > Network > Offline), muat ulang: aplikasi tetap terbuka.
 - [ ] Setelah rilis: buka tautan lama di perangkat yang sudah memasang, pesan **Versi baru siap** muncul.
 
-## 9. Utang teknis yang diketahui
+## 9. Pengujian dan utang teknis
 
-- Tidak ada tes otomatis untuk logika (hanya `tools/cek.mjs` untuk konsistensi rilis). Daftar uji manual di atas yang jadi pegangan.
+Tes otomatis tersedia untuk integritas rilis (`tools/cek.mjs`), indikator keuangan (`tools/uji-keuangan.mjs`), jatah harian (`tools/uji-jatah.mjs`), kesehatan keuangan Pribadi (`tools/uji-kesehatan-pribadi.mjs`), migrasi data (`tools/uji-migrasi-pribadi.mjs`), pratinjau transaksi masa depan (`tools/uji-pratinjau-pribadi.mjs`), alur transaksi Pribadi (`tools/uji-alur-pribadi.mjs`), serta rekonsiliasi saldo (`tools/uji-rekonsiliasi-pribadi.mjs`). Tes jatah wajib memodelkan saldo rekening dari transaksi sah; jangan hanya menambah transaksi tanpa memperbarui saldo. Daftar uji manual di bagian 8 tetap diperlukan untuk memeriksa alur antarmuka, backup, dan pemulihan.
+
+Utang teknis yang masih ada:
 - Kode padat dan berbagi lingkup global; nama pendek (`S`, `T`, `R`, `Q`, `FM`) dipakai lintas berkas.
 - `styles.css` berlapis per rilis (v1.1–v1.4); ada kemungkinan aturan yang saling menimpa.
 - Catatan rilis 1.0–1.4.0 tidak memiliki tanggal.
 
-## 10. Rumus jatah harian (1.5.0)
+## 10. Rumus jatah harian (1.7.1)
 
-`jatah()` di `06b-jatah.js`: sisa setelah tagihan (variabel `fr`, dulu berlabel "uang bebas") = total saldo − tagihan berulang (`S.rec` jenis expense/loan) dan utang yang jatuh tempo
-sebelum gajian berikutnya. Jatah hari ini = (sisa setelah tagihan + pengeluaran harian hari ini) ÷ jumlah hari sampai gajian (hari ini ikut).
-Sisa jatah = jatah − pengeluaran harian hari ini. Pengeluaran harian tidak memuat transaksi hasil aturan berulang (`rec`) dan
-pembayaran utang (`pay`). Pratinjau dampak di formulir memakai `simTx()`: menambah satu transaksi rekaan ke `S.tx`, menghitung, lalu membuangnya.
+`jatah()` di `06b-jatah.js` menghitung total saldo seluruh rekening ruang aktif dari saldo awal dan transaksi sah sampai hari ini. Dari total tersebut dikurangi: (1) tagihan berulang yang jatuh mulai hari ini sampai sebelum gajian berikutnya, (2) sisa utang yang jatuh tempo sebelum gajian, (3) transaksi satu kali bertanggal masa depan untuk expense/loan_prin/loan_int sebelum gajian, (4) tabungan yang diamankan, dan (5) cadangan persentase atau nominal. Pemasukan masa depan tidak dimasukkan sebelum benar-benar diterima.
+
+Jatah awal hari = (uang tersedia + pengeluaran biasa yang sudah terjadi hari ini) ÷ jumlah hari kalender dari hari ini sampai sehari sebelum gajian. Sisa jatah hari ini = jatah awal hari − pengeluaran biasa hari ini. Pengeluaran berulang dan pembayaran utang tidak dihitung lagi sebagai pengeluaran harian karena sudah ditahan pada daftar tagihan.
+
+Pembayaran utang yang ditautkan ke transaksi masa depan hanya mengurangi sisa kewajiban jika tanggal transaksi tersebut sebelum gajian; transaksi pembayarannya sendiri ditahan sebagai biaya masa depan. Ini mencegah utang dianggap lunas lebih awal atau ditahan dua kali.
+
+Catatan asumsi: transaksi berulang otomatis dicatat saat tanggalnya tiba; ini mengasumsikan tagihan dibayar pada tanggal tersebut. `addBill()` menggeser tanggal jatuh tempo yang sudah lewat atau sama dengan hari ini ke bulan berikutnya. Tagihan yang belum dibayar perlu dicatat sebagai kewajiban terpisah. Tagihan pada tanggal gajian tidak ditahan pada siklus sebelumnya. Sisa pinjaman transaksi tanpa jadwal pembayaran tidak dikurangkan otomatis dari jatah; kartu memberi peringatan agar jadwalnya dicatat.
 
 Versi satu berkas: `node tools/bundel.mjs` (menggabungkan CSS dan JS, membuat CSP berbasis hash).

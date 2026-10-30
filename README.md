@@ -12,8 +12,8 @@ Made by **Herysap61**. Lisensi MIT.
 - Pemasukan, pengeluaran, transfer antar rekening, modal dan penarikan pemilik, pinjaman, refund, koreksi saldo
 - Laporan periode, grafik tren, anggaran bulanan beserta laju pemakaiannya
 - Transaksi berulang, utang-piutang, target tabungan, simulasi tabungan
-- Pribadi: **jatah harian sampai gajian** (angka utama di Beranda), tiga pertanyaan awal, pratinjau dampak saat mencatat, kartu Kesehatan keuangan bersaran, tagihan tetap
-- Usaha: arus kas 30 hari, umur piutang dan utang, jurnal debit-kredit (fitur lanjutan)
+- Pribadi: **jatah harian sampai gajian** (angka utama di Beranda), setelah dikurangi tagihan, tabungan yang diamankan, dan cadangan tak terduga (persentase 10% atau nominal tetap); tiga pertanyaan awal, pratinjau dampak saat mencatat, dan tagihan tetap
+- Usaha: arus kas 30 hari, umur piutang dan utang, jurnal debit-kredit (fitur lanjutan; pengembangan mode ini ditahan sementara)
 - Kekayaan gabungan Pribadi + Usaha
 - Cadangan dan pemulihan (JSON dan CSV), ekspor CSV
 - Mode terang, gelap, atau otomatis
@@ -86,6 +86,23 @@ agar menu **Lainnya > Kirim masukan** muncul (aktifkan **Issues** di repositori)
   dari penyimpanan tidak mengaktifkannya.
 - Belum tersedia: kunci PIN/biometrik, enkripsi cadangan, notifikasi pengingat. Sengaja belum ada
   karena proyek ini untuk percobaan dan portofolio.
+
+## Pengujian sebelum rilis
+
+Jalankan dari folder proyek dengan Node.js 22 atau lebih baru:
+
+```sh
+node tools/cek.mjs
+node tools/uji-keuangan.mjs
+node tools/uji-jatah.mjs
+node tools/uji-kesehatan-pribadi.mjs
+node tools/uji-migrasi-pribadi.mjs
+node tools/uji-pratinjau-pribadi.mjs
+node tools/uji-rekonsiliasi-pribadi.mjs
+node tools/uji-alur-pribadi.mjs
+```
+
+Pengujian ini memeriksa integritas rilis, rumus indikator, jatah harian dengan saldo yang dihitung dari transaksi aktual, kesehatan keuangan Pribadi, serta migrasi skema. Tetap lakukan pengujian manual pada browser, terutama alur backup dan pemulihan.
 
 ## Menjalankan di komputer sendiri
 

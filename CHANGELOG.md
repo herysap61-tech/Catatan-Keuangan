@@ -1,8 +1,61 @@
 # Catatan Perubahan Finara
 
+## [1.7.2] - 2026-10-30
+
+### Fixed — Mode Pribadi
+- Pemulihan JSON kini memvalidasi relasi transaksi dengan rekening, kategori, dan ruang kerja. Transaksi yang relasinya rusak dipertahankan sebagai batal dengan alasan, sehingga tidak diam-diam mengubah saldo/laporan dan riwayat tetap dapat diperiksa.
+- ID duplikat/tidak valid dinormalisasi; referensi dari transaksi, aturan berulang, anggaran, dan pembayaran dipetakan kembali bila memungkinkan. Ruang kerja aktif yang tidak valid kembali ke Pribadi. Referensi pembayaran yang kehilangan transaksi bukti tidak otomatis dianggap sebagai pembayaran manual.
+- Pembayaran utang/piutang yang tertaut kini hanya diakui jika transaksi bukti aktif, berasal dari ruang kerja yang sama, terhubung ke catatan yang tepat, dan jenis transaksinya sesuai. Referensi bukti pembayaran yang sama tidak dihitung dua kali. Ini mencegah transaksi yang salah melunasi kewajiban/piutang.
+- Formulir saldo awal menjelaskan bahwa perubahan saldo awal memengaruhi laporan historis; rekonsiliasi saldo saat ini harus memakai transaksi koreksi.
+
+### Tests
+- `uji-migrasi-pribadi.mjs`: 10 skenario migrasi, validasi relasi rekening/kategori/ruang kerja, ID duplikat, pemetaan ID lama, dan konfigurasi jatah.
+- `uji-alur-pribadi.mjs`: 15 pemeriksaan alur saldo, laporan, transfer, jurnal, pembatalan, edit, pembayaran utang tertaut, dan transaksi masa depan.
+- `uji-rekonsiliasi-pribadi.mjs`: 5 pemeriksaan pratinjau, konfirmasi, koreksi saldo, saldo yang sudah cocok, dan validasi input.
+- Seluruh pengujian sebelumnya tetap dijalankan di GitHub Actions.
+
+### Scope
+- Pengerjaan difokuskan pada Mode Pribadi. Tidak ada perubahan rumus, tampilan, atau alur fitur Mode Usaha. Validasi cadangan adalah pengamanan data bersama; data Usaha yang valid tetap dipertahankan. Skema data tetap 3.
+
+## [1.7.1] - 2026-10-30
+
+### Fixed — Mode Pribadi
+- `jatah()` kini menghitung pembayaran utang yang ditautkan ke transaksi masa depan berdasarkan tanggal pembayaran, sehingga pembayaran setelah gajian tidak keliru dianggap sudah melunasi utang sebelum gajian.
+- `jatah()` kini menahan transaksi satu kali bertanggal masa depan untuk expense, loan_prin, dan loan_int bila tanggalnya sebelum gajian berikutnya. Saldo rekening tetap baru berubah pada tanggal transaksi.
+- `imp()` dan `fbMsg()` menjelaskan dampak transaksi masa depan; pemasukan masa depan tidak dihitung sebelum benar-benar diterima.
+- Panduan saldo awal onboarding diperjelas: masukkan seluruh saldo rekening termasuk tabungan/cadangan karena penahan tabungan dan cadangan dihitung terpisah.
+- `health()` memasukkan pembayaran pokok pinjaman ke rata-rata arus kas keluar untuk daya tahan kas, mengurangi sisa pinjaman tercatat dari kas yang dianggap non-pinjaman, dan menghitung rasio dengan BigInt agar nominal besar tidak kehilangan presisi.
+- Pengubahan tanggal gajian mempertahankan nominal tabungan yang sudah disisihkan; pengguna diberi keterangan untuk menyesuaikannya bila tidak lagi berlaku.
+- Kartu jatah memberi peringatan bila masih ada sisa pinjaman transaksi yang belum memiliki jadwal cicilan sebelum gajian; pinjaman tidak diam-diam disamakan dengan uang bebas.
+- Migrasi menormalkan nominal tabungan/cadangan negatif dari cadangan JSON menjadi nol agar data konfigurasi yang tidak valid tidak menambah uang tersedia.
+
+### Tests
+- `uji-jatah.mjs`: 20 skenario jatah harian dengan saldo rekening dihitung dari transaksi aktual, biaya masa depan, transfer, utang, recurring, dan BigInt.
+- `uji-kesehatan-pribadi.mjs`: 5 pemeriksaan indikator kesehatan Pribadi, pinjaman, pembayaran pokok, rasio, dan nominal besar.
+- `uji-migrasi-pribadi.mjs`: 6 pemeriksaan migrasi skema lama, default konfigurasi, pemeliharaan nominal BigInt, dan penolakan skema lebih baru.
+- `uji-pratinjau-pribadi.mjs`: 7 pemeriksaan pratinjau dan umpan balik transaksi masa depan.
+
+### Scope
+- Fokus perubahan hanya Mode Pribadi. Tampilan dan logika Mode Usaha tidak diubah.
+- Tidak ada perubahan skema data (`SCHEMA` tetap 3).
+
+
 Catatan untuk **pengembang** (apa yang berubah di kode dan kenapa). Catatan untuk **pengguna**
 ada di `versi.js` (tampil di aplikasi: Lainnya > Tentang > Riwayat versi).
 Format: bagian terbaru di atas. Penomoran: lihat `docs/PANDUAN-PEMBARUAN.md`.
+
+## [1.6.2] - 2026-10-30
+
+### Fixed
+- Kekayaan bersih memperhitungkan saldo pinjaman transaksi (`loan_in` dikurangi `loan_prin`) sebagai kewajiban.
+- Kekayaan gabungan menghitung saldo rekening dan kewajiban Pribadi serta Usaha dari ruang kerja masing-masing, bukan memakai filter ruang kerja aktif.
+- Sisa arus kas memperhitungkan pembayaran pokok pinjaman selain pengeluaran.
+- Label dan penjelasan indikator diperjelas agar pembayaran cicilan tercatat tidak disalahartikan sebagai seluruh kewajiban cicilan.
+- Jatah harian dan daya tahan kas diberi keterangan estimasi dan keterbatasan data agar tidak memberi rasa aman palsu.
+
+### Notes
+- Jika pinjaman yang sama dicatat sekaligus sebagai transaksi pinjaman dan utang-piutang, nilai kewajiban dapat terhitung ganda. Pengguna perlu merekonsiliasi pencatatannya.
+- Indikator cicilan hanya memakai pembayaran yang benar-benar dicatat; jadwal cicilan yang belum dicatat tidak dapat diketahui aplikasi.
 
 ## [1.6.1] - 2026-10-30
 
@@ -217,3 +270,16 @@ Rilis perapian struktur. **Tidak ada perubahan fitur, tampilan, maupun format da
 
 ## [1.1] - tanggal tidak tercatat
 - Pembaruan tampilan dan kenyamanan pakai (rincian tidak tercatat).
+
+
+## [1.7.0] - 2026-10-30
+
+### Changed
+- Jatah harian menghitung uang tersedia setelah tagihan, tabungan yang diamankan, dan cadangan tak terduga.
+- Pengaturan tabungan memisahkan target periode gajian, jumlah yang sudah disisihkan, dan sisa target yang masih perlu diamankan. Jumlah tabungan yang dilindungi adalah nilai terbesar antara target dan jumlah yang sudah disisihkan, sehingga tidak ada setoran yang dihitung dua kali selama seluruh rekening tetap masuk dalam total saldo.
+- Cadangan tak terduga dapat dihitung dengan persentase (default 10%) atau nominal tetap; hanya satu metode aktif. Persentase diterapkan pada sisa setelah tagihan dan tabungan.
+- Skema data naik ke 3; migrasi mempertahankan data lama dan menambahkan pengaturan jatah secara default.
+
+### Safety
+- Pengaturan baru tersimpan di cadangan JSON lengkap. CSV tetap merupakan ekspor parsial sebagaimana dokumentasi.
+- Tidak mengubah transaksi, saldo awal, tagihan, atau catatan utang yang sudah ada.

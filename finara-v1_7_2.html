@@ -1,0 +1,1226 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-gbtTWqCwCx6lrIWUTADsvKoFg0hw1k1Y9W8Mbhwy6Kg=' 'sha256-0wiKPYul7ZeRruZZucGIkwqKy0mSb5z6doX4+Q6evio=' 'sha256-5GEeTb6RAS4cCX36vXfmWz3cxaYtHO0JFtVe9gaQo2E=' 'sha256-ggkQ3f7pVKIWZdHnvR0awiw0eDVuY9x7TOQOV/Ghqtk=' 'sha256-YpdzVyLHuG+WDUCX8BoIuGnZHuOltTZs44CxJLCsMfg=' 'sha256-ZY1vqiEWzpVJw5V7bJLex9eEOkyiiHLIKIx9/guL5Bs=' 'sha256-vu9Shb9PFStHiHWwDKplmqmJM2iNiay1c7hDTadtdUk=' 'sha256-i9rq/i3s+EBkw6EUSAQa3zNVB5ixUp62lnwEkkIEtQ8=' 'sha256-KHveRbPmCym3yJfn7GrldTcAFGynMBQMZu22zoF9YvY=' 'sha256-59WS+OzRFEJ1h1D27hvt3deqbZbqyMSpf8PMoavTe1A=' 'sha256-oXeWkWgmEc1czahNpHeBsLE3DY4ibAtn00lmCFP7u78=' 'sha256-yyBDKyi2Z++cJDXbIMHOQ+G5bhG/xEKkqMD4fYt/FFc=' 'sha256-oRnB0j9pLZ8LnYK+ILPobIkup6NiEngSUpa47ndlwD4=' 'sha256-z69gELeSzGlDPxNaLvzQ7WYyYODEdItjIN8j1FZXMek=' 'sha256-unAE69PCy1Mm021erAwNTFwQTaL2d7Y/WsxRLtsa6X8='; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eef1ec" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0b160e" media="(prefers-color-scheme: dark)">
+<!--
+FINARA · versi satu berkas (mandiri)
+Semua CSS dan JavaScript sudah digabung di berkas ini; tidak ada permintaan ke internet.
+Fitur offline otomatis (service worker) dan pemasangan ke layar utama hanya aktif pada versi web (https).
+Untuk memperbarui kode, pakai paket lengkap (ZIP), bukan berkas ini.
+-->
+<title>Finara</title>
+<meta name="description" content="Finara: pencatat keuangan pribadi dan usaha. Made by Herysap61.">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Finara"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="author" content="Herysap61"><meta property="og:title" content="Finara"><meta property="og:description" content="Pencatat keuangan pribadi dan usaha. Gratis, jalan offline, data tersimpan di perangkat Anda."><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzFhNGExZiIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExNiAxMTYpIHNjYWxlKDExLjQpIj48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTUiIGhlaWdodD0iMTMiIHJ4PSIzLjUiIGZpbGw9IiNhNmVlNmIiLz48cmVjdCB4PSI3IiB5PSIxMCIgd2lkdGg9IjE1IiBoZWlnaHQ9IjEzIiByeD0iMy41IiBmaWxsPSIjZThmOGQ2IiBmaWxsLW9wYWNpdHk9Ii45MiIvPjwvZz48L3N2Zz4K" type="image/svg+xml">
+
+<style>
+/* ============================================================
+   FINARA · styles.css
+   Seluruh tampilan. Urutan: dasar & tema (atas) lalu lapisan
+   per rilis di bawah, ditandai komentar "===== vX =====".
+   Rilis baru: tambahkan gaya baru di AKHIR berkas dengan penanda
+   versi, jangan menyisipkan di tengah. Warna memakai variabel
+   :root (mode terang) dan :root[data-theme=dark] / prefers-color-scheme.
+   ============================================================ */
+:root{--bg:#eef1ec;--sf:#fff;--ink:#0e2212;--mu:#657568;--ln:#e5eae3;--field:#f2f5f0;--pos:#1f7a35;--neg:#c23b2b;--sh:0 10px 30px rgba(14,40,20,.12);--rail:272px;color-scheme:light;
+--p-ac:#1a4a1f;--p-on:#fff;--p-ac2:#a6ee6b;--p-on2:#10300f;--p-tint:#e8f8d6;--p-at:#1a4a1f;
+--u-ac:#0f4c52;--u-on:#fff;--u-ac2:#8fe6da;--u-on2:#06302f;--u-tint:#dcf5f1;--u-at:#0f4c52}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b160e;--sf:#142218;--ink:#ecf6e8;--mu:#93a698;--ln:#213a29;--field:#0f1c13;--pos:#7fdc8f;--neg:#ff8d7a;--sh:0 10px 30px rgba(0,0,0,.5);color-scheme:dark;
+--p-ac:#a6ee6b;--p-on:#10300f;--p-tint:#1d3a24;--p-at:#a6ee6b;--u-ac:#8fe6da;--u-on:#06302f;--u-tint:#15363a;--u-at:#8fe6da}}
+:root[data-theme="dark"]{--bg:#0b160e;--sf:#142218;--ink:#ecf6e8;--mu:#93a698;--ln:#213a29;--field:#0f1c13;--pos:#7fdc8f;--neg:#ff8d7a;--sh:0 10px 30px rgba(0,0,0,.5);color-scheme:dark;
+--p-ac:#a6ee6b;--p-on:#10300f;--p-tint:#1d3a24;--p-at:#a6ee6b;--u-ac:#8fe6da;--u-on:#06302f;--u-tint:#15363a;--u-at:#8fe6da}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:96px}
+body{--ac:var(--p-ac);--on:var(--p-on);--ac2:var(--p-ac2);--on2:var(--p-on2);--tint:var(--p-tint);--at:var(--p-at);margin:0;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Plus Jakarta Sans","Avenir Next","Segoe UI",Roboto,system-ui,sans-serif;font-variant-numeric:tabular-nums;touch-action:manipulation;padding:0 env(safe-area-inset-right) calc(116px + env(safe-area-inset-bottom)) env(safe-area-inset-left)}
+body[data-mode="u"]{--ac:var(--u-ac);--on:var(--u-on);--ac2:var(--u-ac2);--on2:var(--u-on2);--tint:var(--u-tint);--at:var(--u-at)}
+body.lock{overflow:hidden}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+p{margin:.6em 0}
+.rail{display:contents}
+header{position:sticky;top:0;z-index:11;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(env(safe-area-inset-top) + 12px) 18px 10px;background:var(--bg)}
+.brand{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.brand h1{margin:0;display:flex;align-items:center;gap:9px;font-weight:800;font-size:clamp(23px,6.5vw,27px);letter-spacing:-.02em}
+.brand h1::before{content:"";flex:none;width:26px;height:26px;background:var(--at);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='0' y='0' width='15' height='13' rx='3.5'/%3E%3Crect x='7' y='10' width='15' height='13' rx='3.5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='0' y='0' width='15' height='13' rx='3.5'/%3E%3Crect x='7' y='10' width='15' height='13' rx='3.5'/%3E%3C/svg%3E") center/contain no-repeat}
+.tag{font-size:12px;font-weight:600;margin-top:3px;color:var(--mu)}
+.by{font-size:12px;font-weight:600;color:var(--mu);margin-top:3px;letter-spacing:.01em}.by b{color:var(--at);font-weight:800}
+.credit{text-align:center;color:var(--mu);font-size:12px;margin:22px 0 4px}.credit b{color:var(--at)}
+.pw{font-size:11px;color:var(--mu);margin-top:2px}.pw b{color:var(--at);font-weight:800;letter-spacing:.06em}
+.hr{display:flex;gap:8px;align-items:center;flex:none}
+.seg{display:flex;background:var(--sf);border-radius:999px;padding:4px;box-shadow:0 1px 2px rgba(14,40,20,.06)}
+.seg button{min-height:36px;padding:0 16px;border:0;border-radius:999px;background:none;color:var(--mu);font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background-color .15s,color .15s}
+.seg button.on{background:var(--ac);color:var(--on)}
+.hb{width:40px;height:40px;border-radius:50%;border:0;background:var(--sf);color:var(--at);font:inherit;font-weight:800;font-size:16px;flex:none;cursor:pointer;box-shadow:0 1px 2px rgba(14,40,20,.08)}
+.hb.off{background:var(--sf);color:var(--mu);opacity:.8}
+main{--pad:18px;max-width:680px;margin:0 auto;padding:4px var(--pad)}
+h2{font-size:clamp(22px,5.5vw,28px);line-height:1.2;font-weight:800;letter-spacing:-.5px;margin:14px 0 12px;text-wrap:balance}
+h3{font-size:16px;font-weight:700;margin:24px 0 8px}
+small{display:block;color:var(--mu);font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+.bf{overflow-wrap:anywhere}
+.hero{container-type:inline-size;position:relative;isolation:isolate;background:var(--ac2);color:var(--on2);border-radius:32px;padding:24px 22px 22px;margin:10px 0;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;z-index:-1;border-radius:50%;background:rgba(255,255,255,.3)}
+.hero::before{width:230px;height:230px;right:-70px;top:-90px}
+.hero::after{width:170px;height:170px;right:34px;bottom:-100px;background:rgba(255,255,255,.18)}
+.hero small{color:var(--on2);opacity:.75;font-weight:600;font-size:14px}
+.hero b{display:block;margin-top:6px;font-size:clamp(2rem,9vw,2.9rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;white-space:nowrap}
+.qa{display:flex;gap:10px;margin-top:22px}
+.qa .btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 14px}
+.hero .btn{background:#12381a;color:#fff}.hero .btn.ghost{background:rgba(255,255,255,.62);color:#10300f;box-shadow:none}
+.c{background:var(--sf);border-radius:24px;padding:16px;margin:10px 0;box-shadow:0 1px 2px rgba(14,40,20,.04)}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.g2>div{container-type:inline-size;min-width:0}
+.g2 b{display:block;margin-top:2px;font-size:1.3rem;line-height:1.25;white-space:nowrap}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.btn{min-height:48px;padding:0 24px;border:0;border-radius:999px;background:var(--ac);color:var(--on);font:inherit;font-weight:700;cursor:pointer}
+.btn.ghost{background:var(--tint);color:var(--ink);box-shadow:none}
+.chip{flex:none;min-height:40px;padding:0 16px;border:0;border-radius:999px;background:var(--sf);color:var(--ink);font:inherit;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer;box-shadow:0 1px 2px rgba(14,40,20,.05)}
+.chip.on{background:var(--ac);color:var(--on)}
+.chips{flex-wrap:nowrap;overflow-x:auto;margin-inline:calc(-1*var(--pad));padding:0 var(--pad);scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.btn,.chip,.tx,.list-btn,.fab,nav button,nav b{transition:background-color .15s,color .15s,transform .1s,filter .15s}
+.btn:active,.chip:active,.list-btn:active,.fab:active{transform:scale(.98)}
+.tx{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;width:100%;margin:0;padding:13px 4px;border:0;border-bottom:1px solid var(--ln);border-radius:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.tx:last-child{border-bottom:0}
+.tx.v{opacity:.55;text-decoration:line-through;cursor:default}
+.gr{flex:1 1 130px;min-width:0;font-weight:600;overflow-wrap:break-word}.gr{font-size:15px;line-height:1.35}.gr small{font-weight:400;font-size:12.5px;margin-top:2px}
+.tx>span:last-child{flex:none;margin-left:auto;font-weight:700;white-space:nowrap}
+.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;background:var(--tint);color:var(--at);flex:none}
+.av.pos{background:color-mix(in srgb,var(--pos) 15%,var(--sf));color:var(--pos)}
+.av.neg{background:color-mix(in srgb,var(--neg) 14%,var(--sf));color:var(--neg)}
+.lst,.d-b{background:var(--sf);border-radius:28px;padding:4px 16px;box-shadow:0 1px 2px rgba(14,40,20,.04)}
+.d-b{margin:10px 0;padding:6px 16px 8px}
+.d-b>h3:first-child{margin:12px 0 4px}
+.lst .empty,.d-b .empty{padding:28px 8px}
+.bar{height:10px;background:var(--tint);border-radius:5px;overflow:hidden;margin:6px 0 14px}.bar i{display:block;height:100%;background:var(--ac2);border-radius:5px}.bar i.over{background:var(--neg)}
+body[data-mode="p"] .bar i{background:var(--ac)}
+table{width:100%;border-collapse:collapse}td{padding:10px 0;border-bottom:1px solid var(--ln);vertical-align:top}tr:last-child td{border:0}td+td{text-align:right;font-weight:700;white-space:nowrap;padding-left:12px}
+.hint{cursor:pointer;background:var(--tint);color:var(--ink);border-radius:14px;padding:10px 12px;margin:10px 0;font-size:13px;line-height:1.45}
+.hint.fold{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.hs{float:right;margin:0 0 0 8px;background:var(--field);box-shadow:none}
+body.nohint .hint{display:none}
+.empty{color:var(--mu);padding:24px 8px;text-align:center}
+.list-btn{position:relative;display:block;width:100%;margin:8px 0;padding:17px 46px 17px 18px;border:0;border-radius:20px;background:var(--sf);color:inherit;font:inherit;font-weight:600;text-align:left;cursor:pointer;box-shadow:0 1px 2px rgba(14,40,20,.04)}
+.list-btn::after{content:"";position:absolute;right:22px;top:50%;width:8px;height:8px;border:solid var(--mu);border-width:2px 2px 0 0;transform:translateY(-50%) rotate(45deg)}
+.tools{display:grid;gap:8px;margin-bottom:12px}.tools input,.tools select{margin:0;background-color:var(--sf)}
+.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr))}
+.cards .c{margin:0;container-type:inline-size}.cards b{display:block;margin-top:2px;font-size:1.5rem;white-space:nowrap}
+.d-a>h3:first-child,.rep-b>h3:first-child{margin-top:16px}
+label{display:block;margin:14px 0 0;font-size:13px;font-weight:600;color:var(--mu)}
+input,select,textarea{display:block;width:100%;min-height:50px;margin-top:6px;padding:12px 16px;border:0;border-radius:16px;background:var(--field);color:var(--ink);font:inherit;font-size:16px;font-weight:500;box-shadow:none}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:0;box-shadow:none}
+select{-webkit-appearance:none;appearance:none;padding-right:42px;background-repeat:no-repeat;background-position:right 14px center;background-size:16px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23778a7b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
+input[type=date]{-webkit-appearance:none;appearance:none;text-align:left}
+textarea{height:120px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.4;resize:vertical}#rs{font-size:16px}
+nav{position:fixed;z-index:12;left:max(14px,env(safe-area-inset-left));right:max(14px,env(safe-area-inset-right));bottom:calc(env(safe-area-inset-bottom) + 10px);display:flex;gap:2px;padding:8px 6px 7px;background:var(--sf);border-radius:30px;box-shadow:var(--sh)}
+nav button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:0;border:0;background:none;color:var(--mu);font:inherit;font-size:10.5px;font-weight:600;cursor:pointer}
+nav b{display:grid;place-items:center;width:44px;max-width:100%;height:36px;border-radius:999px}
+nav button.on{color:var(--ink);font-weight:700}nav button.on b{background:var(--ac);color:var(--on)}
+nav span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fab{position:fixed;z-index:12;right:max(18px,env(safe-area-inset-right));bottom:calc(env(safe-area-inset-bottom) + 96px);display:flex;align-items:center;justify-content:center;gap:8px;min-width:58px;height:58px;padding:0;border:0;border-radius:50%;background:var(--ac2);color:var(--on2);font:inherit;font-weight:700;box-shadow:0 10px 24px rgba(20,60,20,.28);cursor:pointer}.fab span{display:none}
+#sh{position:fixed;inset:0;z-index:20;display:none;align-items:flex-end;justify-content:center;background:rgba(8,24,12,.5);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+#sh.on{display:flex;animation:fade .2s}
+#shc:focus{outline:none}#shc{width:100%;max-width:640px;max-height:92vh;max-height:92dvh;overflow:auto;overscroll-behavior:contain;background:var(--sf);border-radius:32px 32px 0 0;padding:10px 20px calc(env(safe-area-inset-bottom) + 20px);box-shadow:var(--sh)}
+#shc::before{content:"";display:block;width:44px;height:4px;border-radius:2px;background:var(--ln);margin:0 auto 10px}
+#sh.on #shc{animation:up .3s cubic-bezier(.2,.8,.2,1)}
+#shc .row .btn{flex:1 1 150px}
+#shc .c{background:var(--field);box-shadow:none}
+#shc .tx{padding-inline:2px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom) + 108px);max-width:calc(100% - 32px);padding:11px 18px;border-radius:999px;background:#12381a;color:#fff;font-size:14px;font-weight:600;text-align:center;z-index:30;display:none;box-shadow:var(--sh)}
+.rep-b b{white-space:nowrap}
+.c.acc{padding-right:40px}
+.acc{display:block;width:100%;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer;position:relative;padding-right:40px}
+.acc::after{content:"";position:absolute;right:18px;top:50%;width:8px;height:8px;border:solid var(--mu);border-width:2px 2px 0 0;transform:translateY(-50%) rotate(45deg)}
+#ao[readonly]{opacity:.75}
+.srow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 40px;gap:8px;align-items:start;margin-top:8px}.srow input{margin:0}
+.sx{width:40px;height:50px;border:0;border-radius:16px;background:var(--field);color:var(--mu);font:inherit;font-size:22px;cursor:pointer}
+@media(max-width:480px){.srow{grid-template-columns:minmax(0,1fr) 40px}.srow .sn{grid-column:1/-1}}
+tr.sub td{padding:4px 0 4px 14px;font-size:14px;color:var(--mu);border-bottom:0}tr.sub td+td{font-weight:600}
+.say{min-height:1.4em;margin-top:4px;color:var(--at);font-weight:600}
+@keyframes fade{from{opacity:0}}@keyframes up{from{transform:translateY(40px);opacity:.6}}@keyframes pop{from{transform:scale(.96);opacity:0}}
+@media(hover:hover){.btn:hover,.fab:hover{filter:brightness(1.08)}.tx:hover:not(.v){background:color-mix(in srgb,var(--tint) 55%,transparent)}.list-btn:hover{background:color-mix(in srgb,var(--sf) 92%,var(--ac2))}.chip:not(.on):hover{box-shadow:inset 0 0 0 1px var(--mu)}nav button:not(.on):hover{color:var(--ink)}}
+.ana{display:block}
+.an{padding:18px 16px 14px}
+.an-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.an-h>div{flex:1;min-width:0}
+.big{display:block;margin-top:2px;font-size:clamp(1.55rem,7vw,2rem);font-weight:800;letter-spacing:-.02em;white-space:nowrap;line-height:1.2}
+.shd2{display:block;font-size:1.05rem;font-weight:800;margin-top:2px}
+.pill{flex:none;display:inline-flex;align-items:center;padding:9px 14px;border-radius:999px;background:var(--sf);box-shadow:inset 0 0 0 1px var(--ln);font-size:13px;font-weight:700;white-space:nowrap}
+.ch{max-height:230px;--bk:color-mix(in srgb,var(--ink) 78%,var(--sf));display:block;width:100%;height:auto;margin-top:8px;overflow:visible;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.an{--bk:color-mix(in srgb,var(--ink) 78%,var(--sf))}
+.ch text{font-family:inherit}.ch .ax{fill:var(--mu);font-size:10px;font-weight:600}
+.ch .hit,.ch .hx{fill:transparent;cursor:pointer}
+.ch .tl,.ch .tc,.ch .tb,.ch .tt,.ch .tc0,.ch .tc1{pointer-events:none}
+.ch .tc{fill:var(--sf);stroke:var(--ac);stroke-width:2.5}
+.ch .tb{fill:#12381a}.ch .tt{fill:#fff;font-size:10.5px;font-weight:700}
+.ce{padding:28px 8px}
+.lgd{display:flex;gap:16px;margin-top:8px;font-size:12px;font-weight:600;color:var(--mu)}.lgd i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.lgd i.dash{width:16px;height:0;border-radius:0;border-top:2px dashed var(--ink);background:none;opacity:.7;vertical-align:middle}
+.rd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:10px;font-size:12px;font-weight:600;color:var(--mu)}.rd i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}.rd b{color:var(--ink);font-weight:800}.rd .rl{color:var(--ink);font-weight:800;font-size:13px}
+.dl{font-weight:700;font-size:12.5px;margin-top:4px}.dl.up{color:var(--neg)}.dl.dn{color:var(--pos)}.dl.na{color:var(--mu)}
+.wk{display:flex;gap:14px;align-items:flex-end;justify-content:space-between;padding:18px 16px}
+.wk-l{flex:1 1 0;min-width:0}
+.wk-b{flex:0 0 44%;display:flex;gap:5px;align-items:stretch;height:86px}
+.wb{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.wb u{display:flex;align-items:flex-end;width:100%;flex:1;text-decoration:none}
+.wb i{display:block;width:100%;border-radius:6px;background:color-mix(in srgb,var(--ac2) 30%,var(--sf))}
+.wb.on i{background:var(--ac2)}
+.wb em{font-style:normal;font-size:10px;font-weight:600;color:var(--mu);line-height:1}
+.dnt{display:grid;place-items:center;margin:4px 0 10px}.dnt svg{width:min(190px,62%);height:auto;overflow:visible}
+.li{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ln)}.li:last-child{border:0}
+.li i{width:10px;height:10px;border-radius:50%;flex:none}.li span{flex:1;min-width:0;font-weight:600}.li small{font-weight:400}.li b{font-weight:700;white-space:nowrap}
+.shd{display:flex;align-items:center;justify-content:space-between;gap:8px}.shd h3{margin:18px 0 8px}
+.lk{border:0;background:none;color:var(--at);font:inherit;font-weight:700;font-size:14px;cursor:pointer;padding:6px 0;margin-top:10px}
+.d-s{min-width:0}
+.bcard{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-height:150px;padding:16px;border:0;border-radius:24px;color:#fff;font:inherit;text-align:left;cursor:pointer;background:linear-gradient(135deg,#25702f,#0f3318);box-shadow:0 6px 16px rgba(15,50,20,.16)}
+.bcard::before,.bcard::after{content:"";position:absolute;z-index:-1;border-radius:50%}
+.bcard::before{width:180px;height:180px;right:-60px;top:-70px;background:radial-gradient(circle at 35% 35%,rgba(166,238,107,.5),rgba(166,238,107,0) 70%)}
+.bcard::after{width:150px;height:150px;left:-50px;bottom:-85px;background:rgba(255,255,255,.07)}
+.bcard.v1{background:linear-gradient(135deg,#2f8a55,#14452e)}
+.bcard.v2{background:linear-gradient(135deg,#1c3a26,#0a150e)}
+.bcard.v3{background:linear-gradient(135deg,#c4f7a0,#8fdc5a);color:#10300f}
+body[data-mode="u"] .bcard.v0{background:linear-gradient(135deg,#17757a,#0a343a)}
+body[data-mode="u"] .bcard.v1{background:linear-gradient(135deg,#2a8f8a,#124c52)}
+body[data-mode="u"] .bcard.v2{background:linear-gradient(135deg,#1d3550,#0b1624)}
+body[data-mode="u"] .bcard.v3{background:linear-gradient(135deg,#b6f3ea,#78d8cb);color:#06302f}
+.bt{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;min-width:0}.bt svg{flex:none}.bn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bm small{color:inherit;opacity:.75}.cards .bcard b{margin-top:2px;font-size:1.4rem;font-weight:800}
+.bf{font-size:12px;opacity:.75;font-weight:500}
+.bcard.add{align-items:center;justify-content:center;background:none;color:var(--mu);box-shadow:inset 0 0 0 2px var(--ln);font-weight:700;font-size:14px}
+.bcard.add::before,.bcard.add::after{display:none}
+.strip{scroll-padding-inline:var(--pad);display:flex;overflow-x:auto;gap:12px;scroll-snap-type:x mandatory;margin-inline:calc(-1*var(--pad));padding:2px var(--pad) 30px;margin-bottom:-20px;scrollbar-width:none}.strip::-webkit-scrollbar{display:none}
+.strip .bcard{flex:0 0 min(78%,250px);scroll-snap-align:start}
+.cards.bc{grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr))}
+@media(min-width:720px){.strip{margin-inline:0;padding-inline:0}.strip .bcard{flex-basis:250px}.big{font-size:2rem}}
+@media(min-width:1024px){
+.d-s{grid-column:1/-1}
+.ana{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;align-items:start}
+.ana>.c:nth-child(2){grid-column:2;grid-row:1/span 2}
+.ana>.c:nth-child(1){grid-column:1}.ana>.c:nth-child(3){grid-column:1}}
+@media(max-width:719px){.tag,.pw{display:none}}
+@media(max-width:380px){.g2{grid-template-columns:1fr}header{flex-wrap:wrap}.hr{width:100%}.seg{flex:1}.seg button{flex:1}}
+@media(max-width:360px){main{--pad:14px}header{padding-inline:14px}.seg button{padding:0 12px}.hero{padding:20px 18px;border-radius:28px}.c{padding:14px}.tx{gap:10px}.av{width:38px;height:38px}nav button{font-size:10px}nav b{width:38px}.qa .btn{padding:0 8px;font-size:14px}}
+@media(min-width:720px){
+main{--pad:28px;max-width:780px;padding-top:8px}header{padding-inline:28px}
+nav{left:50%;right:auto;width:min(560px,calc(100% - 48px));transform:translateX(-50%)}
+.fab{right:28px}.chips{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
+.tools{grid-template-columns:1fr 240px}.cards,.menu{grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr))}.menu{display:grid;gap:0 12px}
+#sh{align-items:center;padding:24px}#shc{max-width:600px;max-height:88vh;max-height:88dvh;border-radius:32px;padding:26px 30px}#shc::before{display:none}#sh.on #shc{animation:pop .22s ease-out}}
+@media(min-width:1024px){
+:root{--rail:272px}
+body{padding:0 0 40px var(--rail)}
+.rail{display:flex;flex-direction:column;position:fixed;inset:0 auto 0 0;width:var(--rail);padding:30px 16px 20px;background:var(--sf);border-right:1px solid var(--ln);overflow-y:auto;z-index:15}
+header{position:static;flex-direction:column;align-items:stretch;gap:18px;padding:0 8px 26px;background:none}
+.rail .seg{background:var(--field);flex:1;box-shadow:none}.seg button{flex:1}.rail .hb{background:var(--field);box-shadow:none}
+nav{position:static;flex-direction:column;gap:4px;width:auto;padding:0;background:none;border-radius:0;box-shadow:none;transform:none}
+nav button{flex-direction:row;justify-content:flex-start;gap:12px;padding:8px 10px;border-radius:18px;font-size:15px}
+nav button.on{background:var(--tint)}nav b{width:38px;height:38px;border-radius:50%}
+main{--pad:40px;max-width:1120px;padding:32px var(--pad) 56px}
+h2{font-size:32px;margin:0 0 16px}
+.dash{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:0 24px;align-items:start}
+.dash .stats{align-self:stretch;align-content:center;margin:10px 0}.d-a,.d-b{min-width:0}
+.hero{padding:30px 28px 26px}
+.rep{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 24px;align-items:start}.rep>.c{margin-top:10px}
+.lst{padding:6px 22px}.d-b{padding:6px 22px 8px}
+.fab{bottom:32px;right:40px;padding:0 26px;border-radius:999px}.fab span{display:inline}
+#toast{left:calc(50% + var(--rail)/2);bottom:32px}}
+@media(min-width:1440px){:root{--rail:288px}main{max-width:1240px}}
+@media(max-height:500px) and (orientation:landscape) and (max-width:1023px){
+header{padding-top:calc(env(safe-area-inset-top) + 6px);padding-bottom:4px}.tag,.pw{display:none}.brand h1{font-size:22px}
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+nav{left:50%;right:auto;transform:translateX(-50%);width:min(520px,calc(100% - 200px));padding:4px;border-radius:24px;bottom:calc(env(safe-area-inset-bottom) + 8px)}
+nav button{flex-direction:row;justify-content:center;gap:6px;min-height:40px;font-size:12px}nav b{width:30px;height:30px}
+.fab{width:52px;min-width:52px;height:52px;bottom:calc(env(safe-area-inset-bottom) + 12px);right:max(16px,env(safe-area-inset-right))}
+#toast{bottom:calc(env(safe-area-inset-bottom) + 76px)}
+#sh{padding:8px}#shc{max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+#spl{position:fixed;inset:0;z-index:50;display:grid;place-content:center;justify-items:center;gap:6px;background:var(--bg);transition:opacity .4s;animation:spl 0s 3s forwards}
+#spl.x{opacity:0;pointer-events:none}#spl img{width:76px;height:76px;border-radius:22px;box-shadow:var(--sh)}
+#spl b{font-size:30px;font-weight:800;letter-spacing:-.02em;margin-top:8px}#spl small{font-weight:600}#spl small b{font-size:inherit;margin:0;color:var(--at);font-weight:800}
+@keyframes spl{to{visibility:hidden}}
+
+.tx{touch-action:pan-y}.tx.sw{transition:none;position:relative;background:var(--sf)}
+.tx.sw::after{content:"Batalkan";position:absolute;left:100%;top:0;bottom:0;width:100vw;display:flex;align-items:center;padding-left:16px;background:var(--neg);color:var(--bg);font-weight:700;font-size:13px}
+.lst,.d-b{overflow:hidden}
+
+/* ===== Pembaruan UI/UX v1.1 ===== */
+header{-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);background:color-mix(in srgb,var(--bg) 88%,transparent)}
+@media(min-width:1024px){header{background:none;-webkit-backdrop-filter:none;backdrop-filter:none}}
+::selection{background:var(--ac2);color:var(--on2)}
+.hero{background:linear-gradient(150deg,var(--ac2),color-mix(in srgb,var(--ac2) 80%,#fff))}
+.hero .hm{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.4);font-size:13px;font-weight:700;color:var(--on2)}
+.hero .hm i{font-style:normal}
+.btn{min-height:50px}
+.tx{min-height:64px}
+.chip{min-height:42px}
+@media(min-width:361px){nav button{font-size:11px}}
+nav b{transition:background-color .2s,color .2s,width .2s}
+nav button.on b{width:52px}
+.dh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:16px 4px 2px;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--mu)}
+.dh span+span{text-transform:none;letter-spacing:0;font-size:13px}
+.lst .dh:first-child,.d-b .dh:first-of-type{padding-top:10px}
+.tx:has(+.dh){border-bottom:0}
+.qk{margin:8px 0 0}
+.qk .chip{min-height:36px;padding:0 14px;background:var(--field);box-shadow:none}
+#fa{font-size:24px;font-weight:800;letter-spacing:-.01em}
+.tin{animation:tabin .28s ease-out}
+@keyframes tabin{from{opacity:0;transform:translateY(8px)}}
+#shc>.row:last-child{position:sticky;bottom:0;z-index:2;margin:14px -4px 0;padding:14px 4px calc(env(safe-area-inset-bottom) + 6px);background:linear-gradient(to bottom,transparent,var(--sf) 24%)}
+.empty{line-height:1.6}
+#toast button{min-height:32px}
+body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:calc(env(safe-area-inset-bottom) + 22px);background:var(--bg);z-index:11;pointer-events:none}@media(min-width:1024px){body::after{display:none}}
+
+/* ===== v1.2 ===== */
+:root{--mu:#4f6054}
+nav button{font-size:11px}.ch .ax{font-size:11px}.pw{font-size:12px}
+.bar i.warn{background:#d99a1c}
+.pn{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0}.pn b{flex:1;text-align:center}.pn .chip{min-width:44px;font-size:20px;padding:0}.pn .chip:disabled{opacity:.35}
+.tools.t2{grid-template-columns:1fr 1fr}.tools.t2 label{margin:0}.tools.t2 .btn{grid-column:1/-1}
+details{margin:14px 0}summary{cursor:pointer;font-weight:700;color:var(--at);min-height:32px}
+@media print{.rail,nav,.fab,#toast,.pn,.row,.chips,body::after{display:none!important}body{padding:0!important;background:#fff;color:#000}main{max-width:none}.c{box-shadow:none;border:1px solid #ccc;break-inside:avoid}}
+
+/* ===== v1.3 ===== */
+.pf{display:block;text-align:left;margin-bottom:8px}.pf small{display:block;font-weight:400}.pf.on{outline:2px solid var(--at)}
+.health .hr{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid rgba(128,128,128,.25)}.health .hr>div:last-child{text-align:right;white-space:nowrap}.health small{display:block}
+
+/* ===== v1.4 ===== */
+.mb{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:12px;z-index:5;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:#2f8f46;color:#fff}.mb.u{background:#2f7fd1}body[data-mode="u"]{--at:#2f7fd1}
+.rv{margin:0 0 14px}.rv b{display:block}.rv small{margin-bottom:4px}.rv p{margin:2px 0}
+
+/* ===== v1.4.6 ===== */
+h3.mh{margin:22px 4px 2px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mu)}
+.list-btn.danger{color:var(--neg)}
+
+/* ===== v1.5.0: jatah harian, tiga pertanyaan, dampak, saran ===== */
+#toast{border-radius:20px;line-height:1.4;padding:11px 20px}
+.hj>small{display:block}
+.hj .hsub{margin-top:10px;font-size:14px;font-weight:600;opacity:.9}
+.hj .hbar{height:10px;background:rgba(255,255,255,.5);border-radius:5px;overflow:hidden;margin:16px 0 4px}
+.hj .hbar i{display:block;height:100%;background:#12381a;border-radius:5px;min-width:0}
+.hj.bad>b{color:#8f1d12}.hj.bad .hbar i{background:#9b1c10}
+.hmini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 10px;padding:12px 0 2px;border-top:1px solid rgba(16,48,15,.22)}
+.hmini span{display:block;min-width:0}
+.hmini em{display:block;font-style:normal;font-size:12px;font-weight:600;color:var(--on2);opacity:.75}
+.hmini strong{display:block;font-size:15px;font-weight:800;white-space:nowrap}
+.hj .lk{color:var(--on2);text-decoration:underline;padding:2px 0;margin:0;font-size:13px}
+.hj.prom>b{white-space:normal;font-size:clamp(1.55rem,6.8vw,2.1rem);line-height:1.2;letter-spacing:-.02em}
+.hj.prom .qa{margin-top:20px}
+ol.qs{margin:8px 0 10px;padding-left:22px;line-height:1.7}
+.stp{display:flex;align-items:center;gap:6px;margin:6px 0 0}.stp i{width:28px;height:6px;border-radius:3px;background:var(--ln)}.stp i.on{background:var(--ac)}.stp small{margin-left:6px;font-weight:700}
+.brow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px 40px;gap:8px;align-items:start;margin-top:8px}.brow input{margin:0}
+@media(max-width:480px){.brow{grid-template-columns:minmax(0,1fr) 64px 40px}.brow .bnm{grid-column:1/-1}}
+.imp{margin:12px 0 0;padding:0;border-radius:16px;background:var(--tint);font-size:13px;line-height:1.5}
+.imp:not(:empty){padding:12px 14px}
+.imp>b{display:block;margin-bottom:4px;font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:var(--mu)}
+.imp>div{display:flex;justify-content:space-between;gap:12px}.imp>div>span:last-child{text-align:right;font-weight:700}
+.imp>p{margin:6px 0 0}
+.sg{margin-top:6px;padding:7px 10px;border-radius:12px;background:var(--tint);color:var(--ink);white-space:normal}
+.health .hr>div:first-child{min-width:0;white-space:normal}
+.demo-b{border:2px dashed var(--ln)}
+.c.res{text-align:center}
+.hj.prom>b+small{margin-top:12px}
+.imp>div>span:first-child{flex:none}
+
+/* ===== 1.6.0: susunan Beranda dan kartu pasang aplikasi ===== */
+.d-w,.dcol{min-width:0}
+.inst{border:2px dashed var(--ln)}
+.d-b .shd h3{margin:12px 0 4px}.d-b .shd .lk{margin-top:0}
+@media(min-width:1024px){
+.dash>.d-w{grid-column:1/-1}
+.dash>.d-a.d-w{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;align-items:start}
+.dash>.d-a.d-w>h3:first-child{margin-top:16px}
+}
+
+</style></head>
+<body data-mode="p"><div id="spl" aria-hidden="true"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzFhNGExZiIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDExNiAxMTYpIHNjYWxlKDExLjQpIj48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTUiIGhlaWdodD0iMTMiIHJ4PSIzLjUiIGZpbGw9IiNhNmVlNmIiLz48cmVjdCB4PSI3IiB5PSIxMCIgd2lkdGg9IjE1IiBoZWlnaHQ9IjEzIiByeD0iMy41IiBmaWxsPSIjZThmOGQ2IiBmaWxsLW9wYWNpdHk9Ii45MiIvPjwvZz48L3N2Zz4K" alt=""><b>Finara</b><small>Made by <b>Herysap61</b></small></div>
+<aside class="rail"><header><div class="brand"><h1>Finara</h1><span class="by">Made by <b>Herysap61</b></span><span class="pw">Powered by <b>KALSARA</b></span></div><div class="hr"><div class="seg" id="seg"></div><button class="hb" data-a="hint" aria-label="Tampilkan atau sembunyikan bantuan">?</button></div></header><nav id="nav" aria-label="Navigasi utama"></nav></aside>
+<main id="m"><noscript><div class="c"><b>Finara belum bisa berjalan di tampilan ini</b><small>Pratinjau WhatsApp atau Files tidak menjalankan aplikasi. Buka lewat tautan web di Safari atau Chrome, bukan dari file yang dikirim.</small></div></noscript></main>
+<button class="fab" data-a="add:expense" aria-label="Catat transaksi"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Catat</span></button>
+<div id="sh"><div id="shc" role="dialog" aria-modal="true" aria-label="Jendela formulir" tabindex="-1"></div></div><div id="toast" role="status" aria-live="polite"></div>
+<script>
+/* ============================================================
+   FINARA · config.js
+   Pengaturan yang jarang berubah. Ubah di sini, bukan di js/.
+   ============================================================ */
+
+// Tautan formulir masukan (mis. halaman "Issues" repositori Anda).
+// Jika diisi, menu Lainnya > "Kirim masukan" muncul otomatis.
+// Jika kosong, menu itu disembunyikan. Opsional.
+const FEEDBACK_URL='';
+
+</script>
+<script>
+/* ============================================================
+   FINARA · versi.js
+   SATU-SATUNYA tempat nomor versi dan catatan pembaruan dicatat.
+   Dibaca oleh: aplikasi (layar Tentang & Riwayat versi), sw.js
+   (nama cache), dan tools/cek.mjs (pemeriksaan otomatis).
+
+   CARA MEMPERBARUI (tiap rilis, 3 langkah):
+     1. Ubah VER dan TGL di bawah.
+     2. Tambahkan entri baru PALING ATAS pada RIWAYAT (v harus sama
+        dengan VER, t harus sama dengan TGL, u = daftar perubahan
+        dalam bahasa yang dipahami pengguna).
+     3. Tambahkan bagian baru di CHANGELOG.md (untuk pengembang).
+   Aturan penomoran dan daftar periksa lengkap: docs/PANDUAN-PEMBARUAN.md
+
+   Privasi: berkas ini tidak memuat data pribadi, akun, atau alamat
+   repositori. Jangan menuliskannya di catatan versi.
+   ============================================================ */
+const VER='1.7.2',TGL='2026-10-30';
+const RIWAYAT=[
+{v:'1.7.2',t:'2026-10-30',u:['Validasi pemulihan cadangan memastikan transaksi hanya memakai rekening dan kategori yang benar serta berada di ruang kerja yang sama','Transaksi dari cadangan yang relasinya rusak tetap disimpan sebagai batal agar riwayat tidak hilang, tetapi tidak mengubah saldo atau laporan','ID data ganda atau tidak valid dinormalisasi dan referensi lama dipetakan agar data sah tetap terhubung','Rekonsiliasi saldo rekening Pribadi kini membuat transaksi koreksi terpisah tanpa mengubah pendapatan, pengeluaran, atau saldo awal','Penjelasan saldo awal diperjelas agar pengguna tidak mengubah saldo historis ketika hanya ingin mencocokkan saldo rekening sekarang','Pengujian alur transaksi diperluas ke saldo, laporan, transfer, jurnal, pembatalan, perubahan transaksi, pembayaran utang, dan koreksi saldo']},
+{v:'1.7.1',t:'2026-10-30',u:['Biaya satu kali yang dijadwalkan sebelum gajian kini ikut ditahan dalam perhitungan jatah, meski saldo baru berubah pada tanggal transaksi','Pratinjau transaksi masa depan menjelaskan apakah biaya ikut mengurangi uang tersedia sebelum gajian','Saldo awal pada panduan pertama kini meminta seluruh rekening dihitung, termasuk tabungan dan cadangan','Daya tahan kas memperhitungkan pembayaran pokok pinjaman dan mengurangi sisa pinjaman tercatat; rasio memakai perhitungan presisi BigInt','Jika pinjaman masih tercatat tanpa jadwal cicilan, kartu jatah memberi peringatan agar tidak dianggap uang bebas','Pembayaran utang yang baru dijadwalkan setelah gajian tidak lagi dianggap sudah lunas sebelum tanggal pembayarannya','Pengujian Mode Pribadi diperluas dengan saldo aktual, biaya terjadwal, utang, transfer, dan nominal besar']},
+{v:'1.7.0',t:'2026-10-30',u:['Jatah harian kini menghitung total saldo dikurangi tagihan, tabungan yang diamankan, dan cadangan tak terduga sebelum dibagi sampai gajian','Pengaturan tabungan mencatat target per periode gajian dan nominal yang sudah disisihkan agar tidak dihitung dua kali','Cadangan tak terduga memiliki dua metode: persentase (awal 10%) atau nominal tetap; hanya metode yang dipilih yang dihitung','Pengaturan baru dimigrasikan dengan aman dan disertakan dalam cadangan lengkap; data lama tetap dipertahankan']},
+{v:'1.6.2',t:'2026-10-30',u:['Perbaikan akurasi: kekayaan bersih kini memperhitungkan sisa pinjaman dari transaksi Pinjaman diterima dikurangi pembayaran pokok','Perbaikan: perhitungan kekayaan gabungan menghitung saldo Pribadi dan Usaha di ruang kerja masing-masing','Perbaikan indikator: sisa arus kas kini memperhitungkan pembayaran pokok pinjaman; pembayaran cicilan diberi label sesuai data yang benar-benar tercatat','Pencegahan salah tafsir: jatah harian dan daya tahan kas kini dijelaskan sebagai estimasi, bukan jaminan uang aman dibelanjakan atau dana darurat terverifikasi']},
+{v:'1.6.1',t:'2026-10-30',u:['Perbaikan: saat Finara dipasang di HP, jam, baterai, dan sinyal tidak lagi tertutup karena aplikasi tidak lagi dibuka dalam mode layar penuh']},
+{v:'1.6.0',t:'2026-10-30',u:['Beranda ditata ulang agar lebih rapi: jatah hari ini, pemasukan dan pengeluaran, lalu Rekening saya, diikuti kartu penjelasan, anggaran, tren, dan kesehatan keuangan. Rincian transaksi terbaru kini di paling bawah, dengan tombol Lihat semua','Pada layar lebar, kartu-kartu di Beranda tersusun dua kolom','Tombol Pasang Finara di perangkat ini kembali: muncul sebagai kartu di Beranda dan di Lainnya, lengkap dengan petunjuk untuk iPhone dan peramban yang tidak punya tombol pasang otomatis. Hilang sendiri setelah Finara terpasang, atau bila Anda pilih Nanti saja']},
+{v:'1.5.1',t:'2026-10-30',u:['Istilah uang bebas diganti sisa setelah tagihan, agar jelas bahwa angka ini baru dikurangi tagihan dan utang, belum tabungan atau dana darurat','Kartu cara hitung kini menjelaskan bahwa uang di rekening tabungan tetap terhitung, dan cara menahannya lewat tagihan tetap']},
+{v:'1.5.0',t:'2026-10-30',u:['Beranda kini menjawab satu pertanyaan: berapa uang yang aman dipakai hari ini sampai gajian (jatah harian)','Pengguna baru cukup menjawab tiga pertanyaan, lalu jatah harian langsung tampil sebelum mencatat apa pun','Setiap kali mencatat, Finara menunjukkan dampaknya ke saldo dan jatah, sebelum dan sesudah disimpan','Tampilan lebih sederhana: pinjaman dan utang-piutang dipindah ke fitur lanjutan di Lainnya (bila Anda sudah punya datanya, tetap tampil). Mode Usaha tidak berubah','Kartu Kesehatan keuangan kini disertai langkah yang disarankan. Perbaikan kecil: Beranda ikut diperbarui setelah transaksi berulang dijeda atau dihapus']},
+{v:'1.4.6',t:'2026-10-30',u:['Menu Lainnya dikelompokkan (Catatan keuangan, Data dan cadangan, Tampilan dan profil, Bantuan), dan hapus data dipisahkan di bagian bawah','Tombol konfirmasi menyesuaikan aksi, mis. "Ya, hapus" atau "Ya, pulihkan"','Hapus semua data kini menawarkan unduh cadangan lebih dulu','Petunjuk penggunaan untuk cadangan dan pemulihan disesuaikan dengan tombol yang ada di layar']},
+{v:'1.4.5',t:'2026-10-30',u:['Perbaikan: rincian rekening tidak lagi menampilkan daftar transaksi dua kali','Perbaikan: kolom tanggal gajian tidak lagi menampilkan keterangan nominal ("1 rupiah")','Perbaikan: membatalkan modal atau penarikan pemilik di Usaha kini ikut membatalkan pasangannya di Pribadi, dan mengubahnya ikut menyesuaikan pasangannya','Perbaikan: simulasi tabungan tidak lagi menampilkan "undefined NaN" untuk waktu yang sangat lama','Keamanan: file cadangan yang diubah pihak lain tidak bisa lagi menjalankan kode, dan aplikasi dibatasi agar tidak terhubung ke internet']},
+{v:'1.4.4',t:'2026-10-29',u:['Perapian internal kode; tampilan dan fitur tidak berubah']},
+{v:'1.4.3',t:'2026-10-29',u:['Struktur kode dirapikan agar mudah dirawat dan dikembangkan; tampilan dan fitur tidak berubah','Pemasangan versi baru lebih andal: semua berkas diunduh ulang agar tidak tercampur versi lama']},
+{v:'1.4.2',t:'2026-10-29',u:['Font dari Google Fonts dihapus, memakai font bawaan perangkat','Aplikasi tidak lagi menghubungi server mana pun']},
+{v:'1.4.1',t:'2026-10-29',u:['Penanda versi dan tanggal pembaruan di dalam aplikasi','Layar Riwayat versi di menu Tentang']},
+{v:'1.4.0',t:'',u:['Penanda mode Pribadi atau Usaha','Hapus data per ruang kerja','Pasangan otomatis modal dan penarikan pemilik','Kekayaan gabungan','Rencana sampai gajian: uang bebas dipakai, tagihan, pengeluaran tak biasa','Simulasi tabungan','Arus kas 30 hari serta umur piutang dan utang untuk usaha']},
+{v:'1.3',t:'',u:['Pilihan profil: Perorangan, Perorangan dengan usaha, Bisnis','Kartu Kesehatan keuangan','Siklus gajian']},
+{v:'1.2',t:'',u:['Penyempurnaan tampilan (rincian tidak tercatat)']},
+{v:'1.1',t:'',u:['Pembaruan tampilan dan kenyamanan pakai (rincian tidak tercatat)']}
+];
+
+// Menempelkan penanda versi ke <head> (hanya di halaman, bukan di service worker).
+if(typeof document!=='undefined'){[['finara-version',VER],['finara-updated',TGL]].forEach(function(p){var m=document.createElement('meta');m.name=p[0];m.content=p[1];document.head.appendChild(m)})}
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/01-dasar.js
+   DASAR: konstanta, pemformat angka/tanggal/rupiah, escape HTML
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+const $=s=>document.querySelector(s),K='bukukas.v1',MAXD=36;
+const BLN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const tglId=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?(+m[3])+' '+BLN[+m[2]-1]+' '+m[1]:'tanggal tidak tercatat'}; // isi FEEDBACK_URL dengan tautan GitHub Issues agar menu Kirim masukan muncul
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const grp=b=>b.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const rp=n=>{n=BigInt(n);return(n<0n?'−':'')+'Rp'+grp(n<0n?-n:n)};
+const B=v=>typeof v==='bigint'?v:typeof v==='number'?(isFinite(v)?BigInt(Math.round(v)):0n):/^-?\d+$/.test(String(v))?BigInt(v):0n;
+const NB=ds=>ds.length>MAXD?-1n:BigInt(ds||'0');
+const J=o=>JSON.stringify(o,(k,v)=>typeof v==='bigint'?v.toString():v);
+const pad=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const today=()=>ymd(new Date()),fd=s=>s.split('-').reverse().join('/');
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36);
+const hash=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return(h>>>0).toString(16)};
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/02-data.js
+   DATA: jenis transaksi, bentuk data awal, muat/simpan, migrasi skema, toast
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+// Jenis transaksi: s = pengaruh ke total saldo; cat = jenis kategori; only = khusus workspace
+const T={income:{l:'Pendapatan',s:1,cat:'in'},expense:{l:'Pengeluaran',s:-1,cat:'out'},transfer:{l:'Transfer',s:0},
+capital:{l:'Modal pemilik',s:1,only:'u'},draw:{l:'Penarikan pemilik',s:-1,only:'u'},loan_in:{l:'Pinjaman diterima',s:1},
+loan_prin:{l:'Bayar pokok pinjaman',s:-1},loan_int:{l:'Bayar bunga pinjaman',s:-1,cat:'out'},refund:{l:'Refund/retur',s:1,cat:'out',only:'u'},
+adjp:{l:'Koreksi saldo (+)',s:1},adjm:{l:'Koreksi saldo (−)',s:-1}};
+const TH={income:'Uang masuk dari penghasilan atau penjualan. Saldo rekening bertambah, dan jumlahnya masuk ke pendapatan serta laba. Jurnal: debit rekening, kredit pendapatan.',expense:'Uang keluar untuk biaya. Saldo rekening berkurang, dan jumlahnya masuk ke pengeluaran sehingga mengurangi laba. Jurnal: debit beban, kredit rekening.',transfer:'Memindahkan uang antar rekening Anda sendiri. Total uang tidak berubah, jadi tidak dihitung sebagai pendapatan atau pengeluaran.',capital:'Uang pribadi yang Anda masukkan ke usaha. Saldo usaha bertambah, tetapi ini bukan penjualan sehingga tidak menambah laba. Dicatat sebagai modal pemilik.',draw:'Uang usaha yang Anda ambil untuk diri sendiri. Saldo usaha berkurang, tetapi ini bukan biaya sehingga tidak mengurangi laba.',loan_in:'Uang pinjaman yang masuk. Saldo bertambah dan kewajiban (utang) naik, tetapi ini bukan pendapatan.',loan_prin:'Cicilan pokok pinjaman. Saldo berkurang dan kewajiban turun, tetapi ini bukan beban. Bunganya dicatat terpisah.',loan_int:'Bunga pinjaman adalah biaya. Saldo berkurang dan laba ikut berkurang.',refund:'Uang kembali dari pembelian atau biaya yang dibatalkan. Saldo bertambah dan mengurangi pengeluaran pada kategori itu, bukan dihitung sebagai pendapatan.',adjp:'Menyesuaikan saldo agar sama dengan kenyataan, misalnya setelah menghitung uang tunai. Hanya mengubah saldo, tidak masuk pendapatan atau beban.',adjm:'Menyesuaikan saldo agar sama dengan kenyataan, misalnya ada selisih hitung. Hanya mengubah saldo, tidak masuk pendapatan atau beban.'};
+function fresh(){const a=(w,n)=>({id:uid(),w,name:n,open:0n}),c=(w,k,n)=>({id:uid(),w,k,name:n});
+return{active:'p',profile:null,payday:1,acc:[a('p','Tunai'),a('p','Bank'),a('u','Kas usaha'),a('u','Bank usaha')],
+cat:[c('p','in','Gaji'),c('p','in','Pendapatan lain'),c('p','out','Makan'),c('p','out','Transportasi'),c('p','out','Tagihan'),c('p','out','Belanja'),c('p','out','Lainnya'),
+c('u','in','Penjualan'),c('u','in','Pendapatan lain'),c('u','out','Pembelian barang'),c('u','out','Biaya operasional'),c('u','out','Gaji karyawan'),c('u','out','Lainnya')],
+tx:[],bud:[],log:[],schema:3,rec:[],pay:[],goal:[],jatahCfg:{tabungan:0n,disisihkan:0n,periode:'',cadanganMode:'persen',cadanganPersen:10,cadanganNominal:0n}}}
+let S,tab='home',R={p:'month',o:0,f:today(),t:today()},Q={q:'',ty:''},FM={},PEND=null;
+const SCHEMA=3;
+function migrate(s){
+if(!s||typeof s!=='object'||!Array.isArray(s.acc))return null;
+const v=s.schema||1;if(v>SCHEMA)return'new';
+const DT=/^\d{4}-\d{2}-\d{2}$/;
+for(const k of['tx','cat','bud','log','rec','pay','goal'])if(!Array.isArray(s[k]))s[k]=[];
+// Normalisasi ruang kerja dan ID. ID ganda di dalam satu jenis data
+// diperbaiki agar satu transaksi tidak diterapkan ke dua rekening.
+const OKID=/^[A-Za-z0-9_-]{1,40}$/;
+const idMaps={acc:new Map(),cat:new Map(),tx:new Map(),pay:new Map(),rec:new Map(),goal:new Map()};
+for(const k of['acc','cat','tx','pay','rec','goal']){
+ const seen=new Set();
+ s[k]=s[k].filter(e=>e&&typeof e==='object');
+ for(const e of s[k]){
+  if(e.w!=='p'&&e.w!=='u')e.w='p';
+  const old=String(e.id??'');let id=old;
+  if(!OKID.test(id)||seen.has(id)){let n;do{n=uid()}while(seen.has(n));e.id=n;id=n}
+  if(!idMaps[k].has(old))idMaps[k].set(old,id);
+  seen.add(id);
+ }
+}
+// Konversi nominal prima dilakukan sebelum validasi relasi.
+for(const a of s.acc){a.open=B(a.open);if(Array.isArray(a.src))a.src=a.src.filter(x=>x&&typeof x==='object').map(x=>({...x,amt:B(x.amt)}))}
+for(const x of s.tx)x.amt=B(x.amt);
+for(const b of s.bud)b.lim=B(b.lim);
+for(const r of s.rec)if(r.tpl)r.tpl.amt=B(r.tpl.amt);
+for(const p of s.pay){p.amt=B(p.amt);if(!Array.isArray(p.paid))p.paid=[];p.paid=p.paid.filter(x=>x&&typeof x==='object').map(x=>({...x,amt:B(x.amt)}))}
+for(const g of s.goal){g.t=B(g.t);g.s=B(g.s)}
+if(!['person','owner','biz'].includes(s.profile))s.profile=null;
+if(s.active!=='p'&&s.active!=='u')s.active='p';
+// Perbaiki referensi setelah ID tidak valid/ganda dinormalisasi.
+const remap=(m,v)=>typeof v==='string'&&m.has(v)?m.get(v):v;
+for(const x of s.tx){x.a=remap(idMaps.acc,x.a);x.to=remap(idMaps.acc,x.to);x.c=remap(idMaps.cat,x.c);if(x.pair!==undefined)x.pair=remap(idMaps.tx,x.pair);if(x.pay!==undefined)x.pay=remap(idMaps.pay,x.pay);if(x.rec!==undefined)x.rec=remap(idMaps.rec,x.rec)}
+for(const r of s.rec)if(r.tpl){r.tpl.a=remap(idMaps.acc,r.tpl.a);r.tpl.to=remap(idMaps.acc,r.tpl.to);r.tpl.c=remap(idMaps.cat,r.tpl.c)}
+for(const b of s.bud)b.c=remap(idMaps.cat,b.c);
+for(const p of s.pay)for(const v of p.paid||[])if(v.tx!==undefined)v.tx=remap(idMaps.tx,v.tx);
+s.payday=(+s.payday>=1&&+s.payday<=28)?Math.floor(+s.payday):1;
+const jc=s.jatahCfg&&typeof s.jatahCfg==='object'?s.jatahCfg:{},NN=x=>{const n=B(x);return n>0n&&n.toString().length<=MAXD?n:0n};
+s.jatahCfg={tabungan:NN(jc.tabungan),disisihkan:NN(jc.disisihkan),periode:typeof jc.periode==='string'&&DT.test(jc.periode)?jc.periode:'',cadanganMode:jc.cadanganMode==='nominal'?'nominal':'persen',cadanganPersen:Number.isInteger(+jc.cadanganPersen)&&+jc.cadanganPersen>=0&&+jc.cadanganPersen<=100?+jc.cadanganPersen:10,cadanganNominal:NN(jc.cadanganNominal)};
+// Peta referensi bertipe mencegah transaksi menunjuk rekening/kategori
+// yang hilang atau berasal dari ruang kerja berbeda.
+const accById=new Map(s.acc.map(a=>[a.id,a]));
+const catById=new Map(s.cat.map(c=>[c.id,c]));
+const payById=new Map(s.pay.map(p=>[p.id,p]));
+const validDate=d=>typeof d==='string'&&DT.test(d)&&(()=>{const z=new Date(d+'T00:00:00Z');return Number.isFinite(z.getTime())&&z.toISOString().slice(0,10)===d})();
+const validAmount=n=>n>0n&&n.toString().length<=MAXD;
+// Jangan membuang transaksi rusak diam-diam: pertahankan sebagai batal
+// sehingga riwayat masih dapat diperiksa, tetapi jangan biarkan memengaruhi angka.
+for(const x of s.tx){
+ const a=accById.get(x.a),to=x.ty==='transfer'?accById.get(x.to):null,c=T[x.ty]?.cat?catById.get(x.c):null;
+ const invalid=!T[x.ty]||!validDate(x.d)||!validAmount(x.amt)||!a||a.w!==x.w||
+  (T[x.ty]?.only&&T[x.ty].only!==x.w)||
+  (x.ty==='transfer'&&(!to||to.w!==x.w||to.id===a.id))||
+  (T[x.ty]?.cat&&(!c||c.w!==x.w||c.k!==T[x.ty].cat));
+ if(invalid||!['ok','void'].includes(x.st)){x.st='void';x.invalidReason='Data transaksi tidak lengkap atau referensinya tidak cocok; tidak dihitung.'}
+ else x.st=x.st==='void'?'void':'ok';
+ x.to=typeof x.to==='string'?x.to:'';x.c=typeof x.c==='string'?x.c:'';
+ for(const f of['pair','pay','rec'])if(x[f]!==undefined&&typeof x[f]!=='string')delete x[f];
+}
+// Aturan berulang yang referensinya rusak dinonaktifkan, bukan dijalankan.
+s.rec=s.rec.filter(r=>r&&r.tpl&&T[r.tpl.ty]&&['week','month','year'].includes(r.freq)&&validDate(r.next));
+for(const r of s.rec){r.on=r.on===true;const a=accById.get(r.tpl.a),to=r.tpl.ty==='transfer'?accById.get(r.tpl.to):null,c=T[r.tpl.ty]?.cat?catById.get(r.tpl.c):null;
+ if(!validAmount(r.tpl.amt)||!a||a.w!==r.w||(T[r.tpl.ty]?.only&&T[r.tpl.ty].only!==r.w)||(r.tpl.ty==='transfer'&&(!to||to.w!==r.w||to.id===a.id))||(T[r.tpl.ty]?.cat&&(!c||c.w!==r.w||c.k!==T[r.tpl.ty].cat)))r.on=false;
+}
+// Catatan utang/piutang dinormalisasi tanpa menghapus pembayaran yang sudah ada.
+s.pay=s.pay.filter(p=>p&&typeof p.who==='string'&&['pay','recv'].includes(p.dir)&&validAmount(p.amt));
+for(const p of s.pay){p.st=p.st==='ok'||p.st==='void'?p.st:'void';if(!validDate(p.due))p.due=today();p.paid=p.paid.filter(v=>validAmount(v.amt)&&(!v.d||validDate(v.d)));for(const v of p.paid)if(v.tx!==undefined&&typeof v.tx!=='string')delete v.tx}
+// Referensi antarobjek yang tidak ditemukan dibuang agar tidak menunjuk data lain.
+const ids=new Set(s.tx.map(x=>x.id));
+// Referensi pembayaran yang hilang sengaja dipertahankan: pa() akan menilainya 0,
+// sehingga Finara tidak menganggap utang sudah dibayar bila transaksi buktinya hilang.
+const validPayIds=new Set(s.pay.map(p=>p.id));
+for(const x of s.tx){if(x.pay&&!validPayIds.has(x.pay))delete x.pay;if(x.rec&&!s.rec.some(r=>r.id===x.rec))delete x.rec;if(x.pair&&!ids.has(x.pair))delete x.pair}
+for(const b of s.bud){if(typeof b.w!=='string'||!['p','u'].includes(b.w))b.w='p';if(!catById.has(b.c)||catById.get(b.c).w!==b.w||catById.get(b.c).k!=='out')b.lim=0n}
+s.bud=s.bud.filter(b=>b.lim>0n);
+s.goal=s.goal.filter(g=>typeof g.n==='string'&&validAmount(g.t)&&g.s>=0n);
+s.schema=SCHEMA;return s
+}
+let raw=null;try{raw=localStorage.getItem(K);S=JSON.parse(raw);if(S&&(S.schema||1)<SCHEMA)try{localStorage.setItem(K+'.v'+(S.schema||1),raw)}catch(e){}}catch(e){S=null}
+const m0=migrate(S);if(m0==='new'){document.body.innerHTML='<div style="padding:24px;font:16px/1.5 sans-serif"><b>Data berasal dari versi Finara yang lebih baru.</b><p>Perbarui aplikasi agar data tidak rusak. Data Anda tidak diubah.</p></div>';throw new Error('schema baru')}
+if(raw&&!m0){try{localStorage.setItem(K+'.rusak',raw)}catch(e){}}
+S=m0||fresh();
+function save(){try{localStorage.setItem(K,J(S))}catch(e){toast('Penyimpanan peramban tidak tersedia. Buat cadangan manual.')}}
+let TT;function toastU(t,fn){const e=$('#toast');e.textContent=t;const b=document.createElement('button');b.textContent='Urungkan';b.style.cssText='margin-left:12px;border:0;background:none;color:#a6ee6b;font:inherit;font-weight:800;text-decoration:underline;cursor:pointer';b.onclick=()=>{fn();e.style.display='none'};e.append(b);e.style.display='block';e.style.pointerEvents='auto';clearTimeout(TT);TT=setTimeout(()=>e.style.display='none',6000)}
+function toast(t,ms){try{navigator.vibrate&&navigator.vibrate(8)}catch(x){}const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(TT);TT=setTimeout(()=>e.style.display='none',ms||2600)}
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/03-hitung.js
+   HITUNG: rekening, kategori, saldo, rentang periode, ringkasan (sum)
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+const accs=()=>S.acc.filter(a=>a.w===S.active),cats=k=>S.cat.filter(c=>c.w===S.active&&c.k===k),txs=()=>S.tx.filter(x=>x.w===S.active);
+const nm=(l,id)=>(l.find(v=>v.id===id)||{}).name||'—',cmp=(a,b)=>b.d.localeCompare(a.d)||b.at-a.at;
+const eff=x=>x.ty==='transfer'?0n:BigInt(T[x.ty].s)*x.amt;
+function bal(a){let b=a.open;const td=today();for(const x of txs()){if(x.st!=='ok'||x.d>td)continue;if(x.ty==='transfer'){if(x.a===a.id)b-=x.amt;if(x.to===a.id)b+=x.amt}else if(x.a===a.id)b+=eff(x)}return b}
+function range(p,o){const n=new Date();if(o&&p!=='x'){if(p==='day')n.setDate(n.getDate()+o);else if(p==='week')n.setDate(n.getDate()+7*o);else if(p==='month')n.setMonth(n.getMonth()+o,1);else n.setFullYear(n.getFullYear()+o)}const y=n.getFullYear(),m=n.getMonth();
+if(p==='day')return[ymd(n),ymd(n)];
+if(p==='week'){const d=new Date(y,m,n.getDate()-((n.getDay()+6)%7));return[ymd(d),ymd(new Date(d.getFullYear(),d.getMonth(),d.getDate()+6))]}
+if(p==='month'){const d=S.payday||1;if(d>1&&!U()){const b=m-(new Date().getDate()>=d?0:1);return[ymd(new Date(y,b,d)),ymd(new Date(y,b+1,d-1))]}return[ymd(new Date(y,m,1)),ymd(new Date(y,m+1,0))]}
+if(p==='year')return[y+'-01-01',y+'-12-31'];return R.f>R.t?[R.t,R.f]:[R.f,R.t]}
+function sum(f,t){const r={inc:0n,exp:0n,cap:0n,draw:0n,lin:0n,lpr:0n,adj:0n,cat:{},cin:{},flow:0n};let before=0n;
+for(const a of accs())before+=a.open;
+for(const x of txs()){if(x.st!=='ok')continue;if(x.d<f){before+=eff(x);continue}if(x.d>t)continue;const a=x.amt;r.flow+=eff(x);
+switch(x.ty){case'income':r.inc+=a;r.cin[x.c]=(r.cin[x.c]||0n)+a;break;
+case'expense':case'loan_int':r.exp+=a;r.cat[x.c]=(r.cat[x.c]||0n)+a;break;
+case'refund':r.exp-=a;r.cat[x.c]=(r.cat[x.c]||0n)-a;break;
+case'capital':r.cap+=a;break;case'draw':r.draw+=a;break;case'loan_in':r.lin+=a;break;case'loan_prin':r.lpr+=a;break;case'adjp':r.adj+=a;break;case'adjm':r.adj-=a}}
+r.net=r.inc-r.exp;r.start=before;r.end=before+r.flow;return r}
+const U=()=>S.active==='u',CYC=()=>!U()&&S.payday>1,PF=()=>S.profile||'owner',PN={person:'Perorangan',owner:'Perorangan dengan usaha',biz:'Bisnis'};let TH0=null;
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/04-komponen.js
+   KOMPONEN: ikon, avatar kategori, daftar transaksi, anggaran
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+const sv=p=>'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';
+const IC={home:sv('<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'),tx:sv('<path d="M7 7h13M16 3l4 4-4 4M17 17H4M8 13l-4 4 4 4"/>'),rep:sv('<path d="M5 21V10M12 21V4M19 21v-7"/>'),acc:sv('<path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H5a2 2 0 0 1-2-2z"/><circle cx="17" cy="14.5" r="1"/>'),more:sv('<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>')};
+const DOTS='<circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>';
+const CI=[[/makan|minum|food/i,'<path d="M6 3v7a2 2 0 0 0 4 0V3M8 3v18M17 3c-2 2-3 5-3 8h3v10"/>','#d9822b'],
+[/transport|bensin|parkir|kendara/i,'<path d="M5 16V9l2-4h10l2 4v7M3 16h18M7 19v-3M17 19v-3"/>','#2f7fd1'],
+[/tagihan|listrik|pdam|pulsa|internet/i,'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/>','#8a5cd6'],
+[/belanja|beli|barang/i,'<path d="M5 8h14l-1 12H6zM9 8a3 3 0 0 1 6 0"/>','#d6498a'],
+[/gaji|penjualan|pendapatan|omzet/i,'<path d="M3 7h18v12H3zM3 11h18M12 14v1"/>','#1f9a4f'],
+[/operasional|biaya|sewa/i,'<path d="M14 6l4 4-9 9H5v-4zM12 8l4 4"/>','#0f8f96']];
+const cic=id=>{const n=nm(S.cat,id),m=CI.find(v=>v[0].test(n)),c=m?m[2]:'#6b7c70';return`<i class="av" style="background:color-mix(in srgb,${c} 16%,var(--sf));color:${c}">${sv(m?m[1]:DOTS)}</i>`};
+const avi=(x,s)=>x.c?cic(x.c):`<i class="av ${s}">${x.ty==='transfer'?'⇄':T[x.ty].s>0?'↓':'↑'}</i>`;
+function dlab(d){const t=today();if(d===t)return'Hari ini';if(d===dAdd(t,-1))return'Kemarin';const w=new Date(d+'T00:00:00');return DN[w.getDay()]+', '+w.getDate()+' '+MN[w.getMonth()]+(d.slice(0,4)!==t.slice(0,4)?' '+d.slice(0,4):'')}
+function list(a,flt){if(!a.length)return listRows(a,flt);const g=[];for(const x of a){const l=g[g.length-1];if(l&&l.d===x.d)l.r.push(x);else g.push({d:x.d,r:[x]})}
+return g.map(h=>{let n=0n;for(const x of h.r)if(x.st==='ok')n+=eff(x);return`<div class="dh"><span>${dlab(h.d)}</span>${n?`<span class="${n<0n?'neg':'pos'}">${n>0n?'+':''}${rp(n)}</span>`:''}</div>`+listRows(h.r,false)}).join('')}
+function listRows(a,flt){if(!a.length&&flt)return'<div class="empty">Tidak ada transaksi yang cocok dengan pencarian atau filter.</div>';if(!a.length)return U()?'<div class="empty">Belum ada transaksi. Mulai dengan mengisi saldo awal: buka tab Rekening, ketuk rekening (mis. Kas usaha), lalu Ubah nama dan saldo awal. Setelah itu ketuk + untuk mencatat transaksi pertama.<div class="row" style="justify-content:center"><button class="btn" data-a="add:expense">Catat transaksi pertama</button></div></div>':'<div class="empty">Belum ada transaksi. Catat pengeluaran pertama Anda, dan sisa jatah harian di Beranda langsung berubah.<div class="row" style="justify-content:center"><button class="btn" data-a="add:expense">Catat transaksi pertama</button></div></div>';
+return a.map(x=>{const t=T[x.ty],v=x.st!=='ok',s=x.ty==='transfer'?'':t.s>0?'pos':'neg';
+const sub=x.ty==='transfer'?nm(S.acc,x.a)+' → '+nm(S.acc,x.to):nm(S.acc,x.a);
+return`<${v?'div':'button'} class="tx${v?' v':''}" ${v?'':'data-a="edit:'+esc(x.id)+'"'}${v||x.pay?'':' data-sw="'+esc(x.id)+'"'}>${avi(x,s)}<span class="gr">${esc(t.l)}${x.c?' · '+esc(nm(S.cat,x.c)):''}<small>${fd(x.d)} · ${esc(sub)}${x.n?' · '+esc(x.n):''}${v?' · dibatalkan':''}</small></span><span class="${s}">${t.s<0?'−':t.s>0?'+':''}${rp(x.amt)}</span></${v?'div':'button'}>`}).join('')}
+function bud(){const[f,t]=range('month'),r=sum(f,t),b=S.bud.filter(v=>v.w===S.active);
+if(!b.length)return'<div class="c"><small>Anggaran belum diatur. Buka Lainnya › Anggaran.</small></div>';
+return'<h3>Anggaran bulan ini</h3><div class="c">'+b.map(v=>{const u=r.cat[v.c]||0n,p=u<=0n?0:u>=v.lim?100:Number(u*100n/v.lim);
+return`<div>${esc(nm(S.cat,v.c))}<small>${rp(u)} dari ${rp(v.lim)}${u>v.lim?' · melewati batas bulan ini':p>=80?' · hampir habis':''}</small><div class="bar"><i class="${u>v.lim?'over':p>=80?'warn':''}" style="width:${p}%"></i></div></div>`}).join('')+'</div>'}
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/05-grafik.js
+   GRAFIK: grafik garis/area SVG, tren, kartu mingguan & laju anggaran
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+/* ===== Grafik & kartu rekening: hanya tampilan, data dibaca lewat sum()/bal() yang sudah ada ===== */
+const MN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],DN=['Min','Sen','Sel','Rab','Kam','Jum','Sab'],PAL=['#2f8f46','#e0a526','#2f7fd1','#d6498a','#8a5cd6','#d9822b','#0f8f96','#c23b2b'];
+const num=v=>Number(v),dAdd=(s,n)=>{const[y,m,d]=s.split('-').map(Number);return ymd(new Date(y,m-1,d+n))};
+const r1=v=>Math.round(v*10)/10,pc=v=>(Math.round(v*10)/10).toString().replace('.',',');
+const shortRp=v=>{const n=Math.abs(num(v)),s=v<0n?'−':'';if(n>=1e15)return s+'999+ T';if(n>=1e12)return s+pc(n/1e12)+' T';if(n>=1e9)return s+pc(n/1e9)+' M';if(n>=1e6)return s+pc(n/1e6)+' jt';if(n>=1e3)return s+Math.round(n/1e3)+' rb';return s+Math.round(n)};
+const mon=k=>{const n=new Date(),y=n.getFullYear(),m=n.getMonth(),o=[];for(let i=k-1;i>=0;i--){const a=new Date(y,m-i,1);o.push({f:ymd(a),t:ymd(new Date(a.getFullYear(),a.getMonth()+1,0)),l:MN[a.getMonth()]})}return o};
+let CID=0;
+const sm=P=>{let d='M'+P[0][0]+' '+P[0][1];for(let i=1;i<P.length;i++){const a=P[i-1],c=P[i],m=r1((a[0]+c[0])/2);d+='C'+m+' '+a[1]+' '+m+' '+c[1]+' '+c[0]+' '+c[1]}return d};
+const tipg=(x,y,t)=>{const w=Math.round(t.length*6.1+18),bx=Math.max(2,Math.min(358-w,x-w/2));return{w,bx,by:y-34<2?y+10:y-34}};
+function area(pts,o){o=o||{};const W=360,H=o.h||150,pl=16,pr=16,pt=36,pb=24,n=pts.length,id='g'+(++CID);
+const vs=pts.map(p=>num(p.v));if(!n||vs.every(v=>v===0))return'<div class="empty ce">Belum ada data untuk grafik.</div>';
+const mx=Math.max(...vs,0),mn=Math.min(...vs,0),rg=(mx-mn)||1,X=i=>n<2?W/2:pl+i*(W-pl-pr)/(n-1),Y=v=>pt+(1-(v-mn)/rg)*(H-pt-pb);
+const P=vs.map((v,i)=>[r1(X(i)),r1(Y(v))]),d=sm(P),md=o.ma?sm(o.ma.map((v,i)=>[r1(X(i)),r1(Y(v))])):'';
+const bt=H-pb,ai=o.peak?vs.indexOf(Math.max(...vs)):n-1,st=Math.ceil(n/6),step=n<2?W:(W-pl-pr)/(n-1);
+const g=tipg(P[ai][0],P[ai][1],pts[ai].t);
+const grid=[0,1,2].map(k=>{const y=r1(pt+k*(bt-pt)/2);return`<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="var(--ln)" stroke-width="1" stroke-dasharray="3 5"/>`}).join('');
+const zero=mn<0?`<line x1="${pl}" x2="${W-pr}" y1="${r1(Y(0))}" y2="${r1(Y(0))}" stroke="var(--mu)" stroke-width="1" opacity=".5"/>`:'';
+const lab=pts.map((p,i)=>(i%st===0||(i===n-1&&(n-1)%st>=st/2))?`<text class="ax" x="${P[i][0]}" y="${H-6}" text-anchor="middle">${p.l}</text>`:'').join('');
+const hits=pts.map((p,i)=>`<rect class="hit" x="${r1(X(i)-step/2)}" y="0" width="${r1(step)}" height="${H}" data-x="${P[i][0]}" data-y="${P[i][1]}" data-t="${p.t}"/>`).join('');
+return`<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'Grafik')}"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--ac2);stop-opacity:.6"/><stop offset="1" style="stop-color:var(--ac2);stop-opacity:0"/></linearGradient></defs>${grid}${zero}<path d="${d}L${P[n-1][0]} ${bt}L${P[0][0]} ${bt}Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="var(--ac)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${md?`<path d="${md}" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" opacity=".7"/>`:''}${lab}<line class="tl" x1="${P[ai][0]}" x2="${P[ai][0]}" y1="${pt-4}" y2="${bt}" stroke="var(--ac)" stroke-width="1.5"/><circle class="tc" cx="${P[ai][0]}" cy="${P[ai][1]}" r="5"/><rect class="tb" x="${g.bx}" y="${g.by}" width="${g.w}" height="22" rx="8"/><text class="tt" x="${g.bx+g.w/2}" y="${g.by+15}" text-anchor="middle">${pts[ai].t}</text>${hits}</svg>`}
+function tipSet(h){const s=h.ownerSVGElement;if(!s)return;const x=+h.dataset.x,y=+h.dataset.y,t=h.dataset.t,g=tipg(x,y,t),a=(c,o)=>{const e=s.querySelector(c);if(e)for(const k in o)e.setAttribute(k,o[k])};
+a('.tl',{x1:x,x2:x});a('.tc',{cx:x,cy:y});a('.tb',{x:g.bx,y:g.by,width:g.w});a('.tt',{x:g.bx+g.w/2,y:g.by+15});const tt=s.querySelector('.tt');if(tt&&tt.textContent!==t)tt.textContent=t}
+['pointerover','pointerdown'].forEach(ev=>document.addEventListener(ev,e=>{const h=e.target.closest&&e.target.closest('.hit');if(h)tipSet(h)}));
+function weekCard(){const n=new Date(),mo=ymd(new Date(n.getFullYear(),n.getMonth(),n.getDate()-((n.getDay()+6)%7))),L=['S','S','R','K','J','S','M'],N=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'],ti=(n.getDay()+6)%7,cu=[];let tc=0n,tp=0n;
+for(let i=0;i<7;i++){const a=sum(dAdd(mo,i),dAdd(mo,i)).exp,b=sum(dAdd(mo,i-7),dAdd(mo,i-7)).exp;cu.push(a>0n?a:0n);tc+=a;tp+=b}
+const mx=Math.max(1,...cu.map(num)),p=tp>0n?Number((tc-tp)*1000n/tp)/10:null,cls=p===null?'na':p>0?'up':'dn',tx=p===null?'Belum ada data minggu lalu':(p>0?'▲ ':p<0?'▼ ':'')+pc(Math.abs(p))+'% dari minggu lalu';
+return`<div class="c wk"><div class="wk-l"><small>${U()?'Pengeluaran usaha':'Pengeluaran saya'}</small><b class="big">${rp(tc>0n?tc:0n)}</b><small class="dl ${cls}">${tx}</small></div><div class="wk-b" role="img" aria-label="Pengeluaran per hari minggu ini">${cu.map((v,i)=>`<span class="wb${i===ti?' on':''}" title="${N[i]}: ${rp(v)}"><u><i style="height:${Math.max(6,Math.round(num(v)/mx*100))}%"></i></u><em>${L[i]}</em></span>`).join('')}</div></div>`}
+function buckets(p,f,t){const B=[];
+if(p==='year'){const y=+f.slice(0,4);for(let m=0;m<12;m++)B.push({f:ymd(new Date(y,m,1)),t:ymd(new Date(y,m+1,0)),l:MN[m],tl:MN[m]+' '+y})}
+else{let a=f,b=t;if(p==='day'){a=dAdd(t,-6);b=t}
+const span=Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/864e5)+1;
+if(span<=62){for(let i=0;i<span;i++){const d=dAdd(a,i),wd=new Date(d+'T00:00:00').getDay();B.push({f:d,t:d,l:span<=7?DN[wd]:String(+d.slice(8)),tl:(+d.slice(8))+' '+MN[+d.slice(5,7)-1]})}}
+else{let y=+a.slice(0,4),m=+a.slice(5,7)-1;const ey=+b.slice(0,4),em=+b.slice(5,7)-1;if((ey-y)*12+em-m+1>60){const st=Math.ceil((ey-y+1)/60),p4=v=>String(v).padStart(4,'0');for(let yy=y;yy<=ey;yy+=st){const ye=Math.min(yy+st-1,ey),s0=p4(yy)+'-01-01',e0=p4(ye)+'-12-31';B.push({f:s0<a?a:s0,t:e0>b?b:e0,l:String(yy),tl:st>1?yy+'–'+ye:String(yy)})}}else while((y<ey||y===ey&&m<=em)&&B.length<120){const s=ymd(new Date(y,m,1)),e=ymd(new Date(y,m+1,0));B.push({f:s<a?a:s,t:e>b?b:e,l:MN[m],tl:MN[m]+' '+y});if(++m>11){m=0;y++}}}}
+return B}
+function periodLabel(p,f,t){return p==='day'?(f===today()?'Hari ini':fd(f)):p==='week'?fd(f)+' – '+fd(t):p==='month'?(f.slice(8)==='01'?MN[+f.slice(5,7)-1]+' '+f.slice(0,4):fd(f)+' – '+fd(t)):p==='year'?f.slice(0,4):fd(f)+' – '+fd(t)}
+function expTrend(p,f,t,r){const bk=buckets(p,f,t),pts=bk.map(b=>{const e=sum(b.f,b.t).exp,v=e>0n?e:0n;return{l:b.l,v,t:b.tl+' · '+rp(v)}}),vs=pts.map(q=>num(q.v)),n=vs.length,daily=n>0&&bk[0].f===bk[0].t,w=n>=20?7:3,k=(w-1)/2;
+const ma=n>=4&&vs.some(v=>v>0)?vs.map((_,i)=>{let s=0,c=0;for(let j=i-k;j<=i+k;j++)if(j>=0&&j<n){s+=vs[j];c++}return s/c}):null;
+let tr='';if(ma){const mean=vs.reduce((a,b)=>a+b,0)/n,xm=(n-1)/2;let sx=0,sxy=0;vs.forEach((v,i)=>{sxy+=(i-xm)*(v-mean);sx+=(i-xm)*(i-xm)});const rel=mean&&sx?sxy/sx*(n-1)/mean:0;
+tr=rel>.15?'<small class="dl up">▲ Tren pengeluaran naik</small>':rel<-.15?'<small class="dl dn">▼ Tren pengeluaran turun</small>':'<small class="dl na">● Tren pengeluaran stabil</small>'}
+return`<div class="c an"><div class="an-h"><div><small>Pengeluaran</small><b class="big">${rp(r.exp>0n?0n-r.exp:0n)}</b>${tr}</div><span class="pill">${esc(periodLabel(p,f,t))}</span></div>${area(pts,{peak:true,h:215,ma:ma,aria:'Tren pengeluaran periode ini'})}${ma?`<div class="lgd"><span><i style="background:var(--ac)"></i>Pengeluaran</span><span><i class="dash"></i>Rata-rata ${w} ${daily?'hari':'bulan'}</span></div>`:''}</div>`}
+const rdh=(m,i,e)=>`<span class="rl">${m}</span><span><i style="background:var(--pos)"></i>Pemasukan <b>${i}</b></span><span><i style="background:var(--neg)"></i>Pengeluaran <b>${e}</b></span>`;
+function lineChart(ms){const W=360,H=170,pl=42,pr=14,pt=14,pb=24,n=ms.length;
+if(!n||ms.every(m=>m.i===0n&&m.e===0n))return'<div class="empty ce">Belum ada data untuk grafik.</div>';
+const mx=Math.max(1,...ms.flatMap(m=>[num(m.i),num(m.e)])),X=i=>n<2?W/2:pl+i*(W-pl-pr)/(n-1),Y=v=>pt+(1-v/mx)*(H-pt-pb),bt=H-pb,step=n<2?W:(W-pl-pr)/(n-1),L=n-1;
+const PI=ms.map((m,i)=>[r1(X(i)),r1(Y(num(m.i)))]),PE=ms.map((m,i)=>[r1(X(i)),r1(Y(num(m.e)))]);
+const grid=[0,1,2].map(q=>{const y=r1(pt+q*(bt-pt)/2),v=BigInt(Math.round(mx*(1-q/2)));return`<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="var(--ln)" stroke-dasharray="3 5"/><text class="ax" x="${pl-7}" y="${y+3}" text-anchor="end">${shortRp(v)}</text>`}).join('');
+const dots=(P,c)=>P.map(q=>`<circle cx="${q[0]}" cy="${q[1]}" r="3" fill="var(--sf)" stroke="${c}" stroke-width="2"/>`).join('');
+const lab=ms.map((m,i)=>`<text class="ax" x="${PI[i][0]}" y="${H-6}" text-anchor="middle">${m.l}</text>`).join('');
+const hits=ms.map((m,i)=>`<rect class="hx" x="${r1(X(i)-step/2)}" y="0" width="${r1(step)}" height="${H}" data-x="${PI[i][0]}" data-y="${PI[i][1]},${PE[i][1]}" data-m="${m.l}" data-i="${rp(m.i)}" data-e="${rp(m.e)}"/>`).join('');
+return`<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="Garis pemasukan dan pengeluaran 6 bulan terakhir">${grid}${lab}<line class="tl" x1="${PI[L][0]}" x2="${PI[L][0]}" y1="${pt-4}" y2="${bt}" stroke="var(--mu)" stroke-width="1" stroke-dasharray="3 3"/><path d="${sm(PE)}" fill="none" stroke="var(--neg)" stroke-width="2.5" stroke-linecap="round"/><path d="${sm(PI)}" fill="none" stroke="var(--pos)" stroke-width="2.5" stroke-linecap="round"/>${dots(PE,'var(--neg)')}${dots(PI,'var(--pos)')}<circle class="tc0" cx="${PI[L][0]}" cy="${PI[L][1]}" r="5.5" fill="var(--pos)" stroke="var(--sf)" stroke-width="2"/><circle class="tc1" cx="${PE[L][0]}" cy="${PE[L][1]}" r="5.5" fill="var(--neg)" stroke="var(--sf)" stroke-width="2"/>${hits}</svg><div class="rd">${rdh(ms[L].l,rp(ms[L].i),rp(ms[L].e))}</div>`}
+function tipSet2(h){const s=h.ownerSVGElement;if(!s)return;const x=h.dataset.x,y=h.dataset.y.split(','),a=(c,o)=>{const e=s.querySelector(c);if(e)for(const k in o)e.setAttribute(k,o[k])};a('.tl',{x1:x,x2:x});a('.tc0',{cx:x,cy:y[0]});a('.tc1',{cx:x,cy:y[1]});const rd=s.parentElement.querySelector('.rd');if(rd){const h2=rdh(h.dataset.m,h.dataset.i,h.dataset.e);if(rd.innerHTML!==h2)rd.innerHTML=h2}}
+['pointerover','pointerdown'].forEach(ev=>document.addEventListener(ev,e=>{const h=e.target.closest&&e.target.closest('.hx');if(h)tipSet2(h)}));
+function flowCard(){const ms=mon(6).map(m=>{const s=sum(m.f,m.t);return{l:m.l,i:s.inc,e:s.exp>0n?s.exp:0n}});return`<div class="c an"><div class="an-h"><div><small>Pemasukan vs pengeluaran</small><b class="shd2">6 bulan terakhir</b></div></div>${lineChart(ms)}</div>`}
+function budPace(){const b=S.bud.filter(v=>v.w===S.active&&v.lim>0n);if(!b.length)return'';
+const n=new Date(),y=n.getFullYear(),m=n.getMonth(),D=new Date(y,m+1,0).getDate(),dy=n.getDate(),ids=b.map(v=>v.c),lim=b.reduce((s,v)=>s+v.lim,0n)
+const day=i=>{const d=ymd(new Date(y,m,i)),c=sum(d,d).cat;return ids.reduce((s,k)=>s+(c[k]||0n),0n)};
+const cum=[];let tot=0n;for(let i=1;i<=dy;i++){tot+=day(i);cum.push(tot)}
+const proj=tot*BigInt(D)/BigInt(dy),over=tot>lim,pOver=proj>lim,left=lim-tot,rem=D-dy+1;
+const W=360,H=170,pl=42,pr=14,pt=16,pb=24,bt=H-pb,top=Math.max(num(lim),num(proj),num(tot),1)*1.08,X=i=>r1(pl+(i-1)*(W-pl-pr)/(D-1)),Y=v=>r1(pt+(1-v/top)*(bt-pt));
+const A=cum.map((v,i)=>[X(i+1),Y(num(v))]),ly=Y(num(lim)),id='g'+(++CID);
+const grid=[0,1,2].map(q=>{const yy=r1(pt+q*(bt-pt)/2);return`<line x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}" stroke="var(--ln)" stroke-dasharray="3 5"/><text class="ax" x="${pl-7}" y="${yy+3}" text-anchor="end">${shortRp(BigInt(Math.round(top*(1-q/2))))}</text>`}).join('');
+const xl=[1,8,15,22,D].map(i=>`<text class="ax" x="${X(i)}" y="${H-6}" text-anchor="middle">${i}</text>`).join('');
+const area=A.length>1?`<path d="${sm(A)}L${A[A.length-1][0]} ${bt}L${A[0][0]} ${bt}Z" fill="url(#${id})"/>`:'';
+const line=A.length>1?`<path d="${sm(A)}" fill="none" stroke="${over?'var(--neg)':'var(--ac)'}" stroke-width="2.5" stroke-linecap="round"/>`:'';
+const pj=dy<D?`<line x1="${A[A.length-1][0]}" y1="${A[A.length-1][1]}" x2="${X(D)}" y2="${Y(num(proj))}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="2 4" stroke-linecap="round" opacity=".6"/>`:'';
+const st=over?`<small class="dl up">▲ Melewati anggaran ${rp(-left)}</small>`:pOver?`<small class="dl up">▲ Proyeksi akhir bulan ${rp(proj)}, melewati batas</small>`:`<small class="dl dn">▼ Laju aman, proyeksi akhir bulan ${rp(proj)}</small>`;
+const tip=!over&&left>0n?`<small>Sisa ${rp(left)}${rem>0?' · sekitar '+rp(left/BigInt(rem))+' per hari':''}</small>`:'';
+return`<h3>Laju anggaran bulan ini</h3><div class="c an"><small>Pengeluaran kategori beranggaran</small><b class="big">${rp(tot)}</b>${st}${tip}<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="Laju pengeluaran dibanding batas anggaran bulan ini"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:${over?'var(--neg)':'var(--ac2)'};stop-opacity:.45"/><stop offset="1" style="stop-color:${over?'var(--neg)':'var(--ac2)'};stop-opacity:0"/></linearGradient></defs>${grid}${xl}<line x1="${pl}" x2="${W-pr}" y1="${ly}" y2="${ly}" stroke="var(--neg)" stroke-width="1.5" stroke-dasharray="6 4"/><line x1="${X(1)}" y1="${Y(num(lim)/D)}" x2="${X(D)}" y2="${ly}" stroke="var(--mu)" stroke-width="1.5" stroke-dasharray="2 4" opacity=".8"/>${area}${line}${pj}<circle cx="${A[A.length-1][0]}" cy="${A[A.length-1][1]}" r="5" fill="var(--sf)" stroke="${over?'var(--neg)':'var(--ac)'}" stroke-width="2.5"/></svg><div class="lgd"><span><i style="background:${over?'var(--neg)':'var(--ac)'}"></i>Aktual</span><span><i class="dash" style="border-top-color:var(--mu)"></i>Laju ideal</span><span><i class="dash" style="border-top-color:var(--neg);opacity:1"></i>Batas ${shortRp(lim)}</span></div></div>`}
+function ana(p,f,t,r){return`<div class="ana">${weekCard()}${expTrend(p,f,t,r)}${flowCard()}</div>`}
+function trendBal(){const ms=mon(6),pts=ms.map(m=>{const v=sum(m.f,m.t).end;return{l:m.l,v,t:m.l+' · '+rp(v)}}),a=pts[4].v,b=pts[5].v,p=a!==0n?Number((b-a)*1000n/(a<0n?-a:a))/10:null,cls=p===null?'na':p>0?'dn':p<0?'up':'na',tx=p===null?'Tren 6 bulan terakhir':(p>0?'▲ ':p<0?'▼ ':'')+pc(Math.abs(p))+'% dari bulan lalu';
+return`<h3>Tren saldo</h3><div class="c an"><small>Saldo akhir tiap bulan</small><small class="dl ${cls}">${tx}</small>${area(pts,{aria:'Tren saldo 6 bulan terakhir'})}</div>`}
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/06-layar.js
+   LAYAR: kartu rekening, Beranda, Transaksi, Laporan, Rekening, Lainnya, profil, kartu rencana/bisnis/kesehatan
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+const wsv='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H5a2 2 0 0 1-2-2z"/><circle cx="17" cy="14.5" r="1"/></svg>';
+function bcards(add){return accs().map((a,i)=>`<button class="bcard v${i%4}" data-a="accdet:${a.id}"><span class="bt">${wsv}<span class="bn">${esc(a.name)}</span></span><span class="bm"><small>Saldo</small><b>${rp(bal(a))}</b></span><span class="bf">Saldo awal ${rp(a.open)}</span></button>`).join('')+(add?'<button class="bcard add" data-a="accnew"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Tambah rekening</span></button>':'')}
+function strip(){return`<section class="d-s d-w"><div class="shd"><h3>Rekening saya</h3><button class="lk" data-a="tab:acc">Lihat semua</button></div><div class="cards strip">${bcards(true)}</div></section>`}
+function catBlock(o){const e=Object.entries(o).filter(v=>v[1]>0n).sort((a,b)=>b[1]>a[1]?1:b[1]<a[1]?-1:0);if(!e.length)return'';const tot=e.reduce((s,v)=>s+v[1],0n),T=num(tot),R=54,C=2*Math.PI*R,gap=e.length>1?2:0;let off=0;
+const seg=e.map(([c,v],i)=>{const len=num(v)/T*C,s=`<circle cx="70" cy="70" r="${R}" fill="none" stroke="${PAL[i%PAL.length]}" stroke-width="18" stroke-dasharray="${r1(Math.max(len-gap,.5))} ${r1(C)}" stroke-dashoffset="${r1(-off)}" transform="rotate(-90 70 70)"><title>${esc(nm(S.cat,c))}: ${rp(v)}</title></circle>`;off+=len;return s}).join('');
+return`<h3>Pengeluaran per kategori</h3><div class="c"><div class="dnt"><svg viewBox="0 0 140 140" role="img" aria-label="Komposisi pengeluaran per kategori"><circle cx="70" cy="70" r="${R}" fill="none" stroke="var(--tint)" stroke-width="18"/>${seg}<text x="70" y="66" text-anchor="middle" class="ax" style="font-size:9px">Total</text><text x="70" y="84" text-anchor="middle" style="font-size:15px;font-weight:800;fill:var(--ink)">${shortRp(tot)}</text></svg></div>${e.map(([c,v],i)=>`<div class="li" role="button" tabindex="0" data-a="catgo:${c}"><i style="background:${PAL[i%PAL.length]}"></i><span>${esc(nm(S.cat,c))}<small>${pc(num(v)/T*100)}%</small></span><b>${rp(v)}</b></div>`).join('')}</div>`}
+function start(){if(S.tx.length||accs().some(a=>a.open))return'';return`<div class="c"><b>Selamat datang di Finara</b><small>Mulai dalam dua langkah singkat.</small><div class="row"><button class="btn" data-a="tab:acc">1. Isi saldo awal</button><button class="btn ghost" data-a="add:expense">2. Catat transaksi</button></div><div class="row"><button class="btn ghost" data-a="demo">Coba dengan data contoh</button></div></div>`}
+// 1.5.0: Beranda Pribadi ada di 06b-jatah.js (vHomeP); Beranda Usaha tetap di sini.
+function vHome(){return U()?vHomeU():vHomeP()}
+function vHomeU(){const[f,t]=range('month'),r=sum(f,t),tot=accs().reduce((s,a)=>s+bal(a),0n);
+return`<div class="dash"><div class="hero"><small>Total saldo ${U()?'usaha':'pribadi'}</small><b>${rp(tot)}</b><span class="hm">Selisih ${CYC()?'periode':'bulan'} ini <i>${r.net>0n?'+':''}${rp(r.net)}</i></span>${CYC()?`<small>Periode ${fd(f)} – ${fd(t)} · gajian berikutnya ${Math.round((new Date(dAdd(t,1))-new Date(today()))/864e5)} hari lagi</small>`:''}<div class="qa"><button class="btn" data-a="add:expense"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Catat</button><button class="btn ghost" data-a="add:transfer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h13M16 3l4 4-4 4M17 17H4M8 13l-4 4 4 4"/></svg>Transfer</button></div></div>
+<div class="c g2 stats"><div><small>Pemasukan ${CYC()?'periode':'bulan'} ini</small><b class="pos">${rp(r.inc)}</b></div><div><small>Pengeluaran ${CYC()?'periode':'bulan'} ini</small><b class="neg">${rp(r.exp)}</b></div></div>
+${start()}${strip()}<div class="d-a d-w"><div class="dcol">${bizcard()}${nudge()}${due()}</div><div class="dcol">${trendBal()}${bud()}${budPace()}</div></div><section class="d-b d-w"><div class="shd"><h3>Transaksi terbaru</h3><button class="lk" data-a="tab:tx">Lihat semua</button></div>${list(txs().sort(cmp).slice(0,5))}</section></div>`}
+function vTx(){const q=Q.q.toLowerCase();
+const a=txs().filter(x=>(!Q.ty||x.ty===Q.ty)&&(!Q.ac||x.a===Q.ac||x.to===Q.ac)&&(!Q.cg||x.c===Q.cg)&&(!Q.df||x.d>=Q.df)&&(!Q.dt||x.d<=Q.dt)&&(!q||(x.n+' '+nm(S.cat,x.c)+' '+nm(S.acc,x.a)+' '+T[x.ty].l).toLowerCase().includes(q))).sort(cmp);
+return`<h2>Transaksi</h2><small class="hint">Tips: geser transaksi ke kiri untuk membatalkannya, atau buka transaksinya lalu ketuk Batalkan. Pembatalan bisa diurungkan.</small><div class="tools"><input id="q" type="search" autocomplete="off" aria-label="Cari transaksi" placeholder="Cari catatan, kategori, rekening" value="${esc(Q.q)}"><select id="qt" aria-label="Filter jenis transaksi"><option value="">Semua jenis</option>${Object.keys(T).filter(k=>tyOK(k,Q.ty)).map(k=>`<option value="${k}" ${Q.ty===k?'selected':''}>${T[k].l}</option>`).join('')}</select></div><div class="tools t2"><select id="qa" aria-label="Filter rekening"><option value="">Semua rekening</option>${accs().map(v=>opt(v.id,v.name,Q.ac)).join('')}</select><select id="qg" aria-label="Filter kategori"><option value="">Semua kategori</option>${S.cat.filter(c=>c.w===S.active).map(v=>opt(v.id,v.name,Q.cg)).join('')}</select><label>Dari<input type="date" id="qf" value="${Q.df||''}"></label><label>Sampai<input type="date" id="qd" value="${Q.dt||''}"></label>${Q.ac||Q.cg||Q.df||Q.dt||Q.ty||Q.q?'<button class="btn ghost" data-a="qclr">Hapus semua filter</button>':''}</div><div class="lst">${list(a,!!(Q.q||Q.ty||Q.ac||Q.cg||Q.df||Q.dt))}</div>`}
+function vRep(){const[f,t]=range(R.p,R.o),r=sum(f,t),P=[['day','Hari ini'],['week','Minggu ini'],['month','Bulan ini'],['year','Tahun ini'],['x','Kustom']];
+const row=(l,v,c)=>v||c?`<tr><td>${l}</td><td class="${c||''}">${rp(v)}</td></tr>`:'';
+const br=(o,lab)=>{const e=Object.entries(o).filter(v=>v[1]>0n).sort((a,b)=>b[1]>a[1]?1:b[1]<a[1]?-1:0),m=e.length?e[0][1]:1n;
+return e.length?`<h3>${lab}</h3><div class="c">`+e.map(([c,v])=>`<div>${esc(nm(S.cat,c))} <b style="float:right">${rp(v)}</b><div class="bar"><i style="width:${Number(v*100n/m)}%"></i></div></div>`).join('')+'</div>':''};
+return`<h2>Laporan</h2><div class="row chips" role="group" aria-label="Periode laporan">${P.map(p=>`<button class="chip ${R.p===p[0]?'on':''}" data-a="per:${p[0]}">${p[1]}</button>`).join('')}</div>
+${R.p!=='x'?`<div class="pn"><button class="chip" data-a="pnav:-1" aria-label="Periode sebelumnya">‹</button><b>${periodLabel(R.p,f,t)}</b><button class="chip" data-a="pnav:1" aria-label="Periode berikutnya" ${R.o>=0?'disabled':''}>›</button></div>`:''}${R.p==='x'?`<div class="g2"><label>Dari<input type="date" id="rf" min="1900-01-01" max="2100-12-31" value="${R.f}"></label><label>Sampai<input type="date" id="rt" min="1900-01-01" max="2100-12-31" value="${R.t}"></label></div>`:''}
+<small>${fd(f)} – ${fd(t)}</small>${ana(R.p,f,t,r)}<div class="rep"><div class="c"><table>${row('Saldo awal',r.start,'')||`<tr><td>Saldo awal</td><td>${rp(r.start)}</td></tr>`}
+<tr><td>${U()?'Penjualan dan pendapatan':'Pemasukan'}</td><td class="pos">${rp(r.inc)}</td></tr>
+<tr><td>${U()?'Beban':'Pengeluaran'}</td><td class="neg">${rp(r.exp)}</td></tr>
+<tr><td><b>${U()?'Laba bersih (uang masuk − keluar)':'Sisa bersih'}</b></td><td class="${r.net<0n?'neg':'pos'}">${rp(r.net)}</td></tr>
+${row('Modal pemilik',r.cap)}${row('Penarikan pemilik',r.draw)}${row('Pinjaman diterima',r.lin)}${row('Pokok pinjaman dibayar',r.lpr)}${row('Koreksi saldo',r.adj)}
+<tr><td>Saldo akhir</td><td>${rp(r.end)}</td></tr></table>
+<small class="hint">Transfer antar rekening tidak dihitung. ${U()?'Modal, pinjaman, dan pokok pinjaman bukan pendapatan atau beban; bunga dihitung sebagai beban.':'Pinjaman diterima dan cicilan pokok tidak dihitung sebagai pemasukan atau pengeluaran; bunga dihitung sebagai pengeluaran.'}</small>${[r.net<0n&&'Pengeluaran lebih besar daripada pemasukan, jadi selisih bersih negatif.',U()&&'Laba dasar = pendapatan dikurangi beban, dihitung saat uang benar-benar bergerak (basis kas).',(r.cap||r.lin)&&'Modal dan pinjaman menambah saldo tetapi bukan pendapatan, jadi laba tidak berubah.',(r.draw||r.lpr)&&'Penarikan pemilik dan pokok pinjaman mengurangi saldo tetapi bukan beban, jadi laba tidak berkurang.',r.adj&&'Koreksi saldo hanya menyesuaikan saldo agar sama dengan kenyataan.'].filter(Boolean).map(h=>`<small class="hint">${h}</small>`).join('')}</div>
+<div class="rep-b">${catBlock(r.cat)}${br(r.cin,'Pendapatan per kategori')}
+<div class="row"><button class="btn ghost" data-a="csv:p">Ekspor CSV periode ini</button><button class="btn ghost" data-a="print">Cetak / simpan PDF</button></div></div></div>`}
+function vAcc(){const a=accs();return`<h2>Rekening</h2><small class="hint">Ketuk sebuah rekening untuk melihat rincian dan mengisi atau mengubah saldo awalnya. Saldo dihitung ulang dari saldo awal ditambah semua transaksi sah. Transaksi yang dibatalkan tidak dihitung, dan transfer hanya memindahkan uang antar rekening.</small><div class="cards bc">${bcards(false)}</div>
+<div class="row"><button class="btn" data-a="accnew">Tambah rekening</button><button class="btn ghost" data-a="add:transfer">Transfer</button></div>`}
+let DEFERRED=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();DEFERRED=e;if(tab==='more'||tab==='home')render()});
+const themeLabel=()=>{let t='auto';try{t=localStorage.getItem('finara.theme')||'auto'}catch(e){}return{auto:'Otomatis',light:'Terang',dark:'Gelap'}[t]};
+function applyTheme(){let t='auto';try{t=localStorage.getItem('finara.theme')||'auto'}catch(e){}const r=document.documentElement;if(t==='auto')delete r.dataset.theme;else r.dataset.theme=t;
+const c={light:'#eef1ec',dark:'#0b160e'};document.querySelectorAll('meta[name=theme-color]').forEach((m,i)=>{if(t==='auto'){m.content=i?c.dark:c.light;m.media=i?'(prefers-color-scheme: dark)':'(prefers-color-scheme: light)'}else{m.content=c[t];m.removeAttribute('media')}})}
+applyTheme();
+let ADV=false,ADVP=false;try{ADVP=localStorage.getItem('finara.adv')==='1';ADV=ADVP&&S.active==='u'}catch(e){}
+function vMore(){const adv=LJ(),pd='Tanggal gajian: '+(S.payday>1?'tanggal '+S.payday:'awal bulan (tanggal 1)');
+const G=[
+...(U()?[['Catatan keuangan',[['bud','Anggaran'],['rec','Transaksi berulang'],['plist','Utang-piutang'],['catmgr','Kelola kategori']]]]
+:[['Jatah harian',[['payday',pd],['rec','Tagihan tetap dan transaksi berulang']]],
+['Catatan keuangan',[['bud','Anggaran'],['goal','Target tabungan'],['catmgr','Kelola kategori'],...(adv?[['plist','Utang-piutang'],['sim','Simulasi tabungan']]:[]),...(!U()&&!hasAdv()?[['lanjut',LANJUT?'Sembunyikan fitur lanjutan':'Tampilkan fitur lanjutan (pinjaman, utang-piutang)']]:[])]]]),
+...(U()?[['Akuntansi',[['adv',ADV?'Sembunyikan fitur lanjutan':'Tampilkan fitur lanjutan (akuntansi)'],...(ADV?[['jurnal','Debit-kredit dan neraca'],['log','Riwayat perubahan']]:[])]]]:[]),
+['Data dan cadangan',[['bk','Cadangan dan pulihkan'],['csv:a','Ekspor semua transaksi ruang kerja ini (CSV)'],...(S.tx.some(x=>x.demo)?[['democlear','Hapus data contoh']]:[['demo','Isi dengan data contoh (untuk mencoba)']])]],
+['Tampilan dan profil',[['theme','Tema tampilan: '+themeLabel()],['prof','Profil pengguna: '+PN[PF()]],...(STANDALONE()?[]:[['install','Pasang Finara di perangkat ini']])]],
+['Bantuan',[['help','Petunjuk penggunaan'],['info','Tentang dan keterbatasan'],...(FEEDBACK_URL?[['feedback','Kirim masukan']]:[])]],
+['Hapus data',[['wipews','Hapus data ruang '+(U()?'Usaha':'Pribadi')+' saja'],['wipe','Hapus semua data']],'danger']];
+return`<h2>Lainnya</h2>${G.map(g=>`<h3 class="mh">${g[0]}</h3><div class="menu">${g[1].map(v=>`<button class="list-btn${g[2]?' '+g[2]:''}" data-a="${v[0]}">${v[1]}</button>`).join('')}</div>`).join('')}<p class="credit">Finara v${VER} · Made by <b>Herysap61</b></p>`}
+function applyProfile(){const p=PF();if(p==='person')S.active='p';else if(p==='biz')S.active='u';ADV=ADVP&&U();
+T.income.l=U()?'Pendapatan':'Pemasukan';T.loan_prin.l=U()?'Bayar pokok pinjaman':'Bayar cicilan (pokok)';T.loan_int.l=U()?'Bayar bunga pinjaman':'Bayar bunga atau denda';
+if(!TH0)TH0={i:TH.income,e:TH.expense,t:TH.transfer};TH.income=U()?TH0.i:'Uang masuk, misalnya gaji atau bonus. Saldo rekening bertambah, sisa setelah tagihan sampai gajian naik, dan jatah harian Anda ikut naik.';TH.expense=U()?TH0.e:'Uang keluar untuk kebutuhan sehari-hari. Saldo rekening berkurang, pengeluaran periode ini bertambah, dan sisa jatah harian Anda berkurang.';TH.transfer=U()?TH0.t:'Memindahkan uang antar rekening Anda sendiri, misalnya dari bank ke tunai. Total uang tidak berubah, jadi jatah harian tidak terpengaruh dan tidak dihitung sebagai pemasukan atau pengeluaran.';
+$('#seg').style.display=p==='owner'?'':'none';let m=$('#mb');if(!m){m=document.createElement('div');m.id='mb';document.body.appendChild(m)}m.className='mb '+S.active;m.textContent=U()?'Mode Usaha':'Mode Pribadi';m.style.display=p==='owner'?'':'none';document.body.dataset.mode=S.active}
+const dd=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
+function bizcard(){const P=S.pay.filter(p=>p.w==='u'&&p.st==='ok'&&sisa(p)>0n),td=today(),tot=accs().reduce((s,a)=>s+bal(a),0n),bk=['Belum jatuh tempo','Telat 1–30 hari','Telat 31–60 hari','Telat lebih dari 60 hari'],
+ag=dir=>{const o=bk.map(()=>0n);for(const p of P.filter(p=>(p.dir==='recv')===dir)){const l=dd(p.due,td);o[l<=0?0:l<=30?1:l<=60?2:3]+=sisa(p)}return o},R=ag(true),D=ag(false),lim=dAdd(td,30),
+inn=P.filter(p=>p.dir==='recv'&&p.due<=lim).reduce((s,p)=>s+sisa(p),0n),out=P.filter(p=>p.dir!=='recv'&&p.due<=lim).reduce((s,p)=>s+sisa(p),0n),pr=tot+inn-out,
+hr=(a,b,c,k)=>`<div class="hr"><div><b>${a}</b></div><div><b class="${k||''}">${b}</b><small>${c}</small></div></div>`;
+return`<div class="c health"><h3>Arus kas 30 hari ke depan</h3>`+hr('Saldo kas sekarang',rp(tot),'')+hr('Piutang jatuh tempo',rp(inn),'akan masuk')+hr('Utang jatuh tempo',rp(out),'akan keluar')+hr('Proyeksi saldo',rp(pr),pr<0n?'berisiko kekurangan kas':'aman',pr<0n?'neg':'pos')
++`<h3>Umur piutang dan utang</h3>`+bk.map((b,i)=>hr(b,'Piutang '+rp(R[i]),'Utang '+rp(D[i]))).join('')+`<small class="hint">Perkiraan dari tanggal jatuh tempo yang Anda isi, belum termasuk penjualan atau biaya yang belum tercatat.</small></div>`}
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/06b-jatah.js   (baru di 1.5.0)
+   JATAH HARIAN (mode Pribadi): hitungan jatah(), Beranda perorangan,
+   layar sambutan, kartu cara hitung, kartu kesehatan bersaran,
+   umpan balik setelah mencatat, pratinjau dampak di formulir,
+   penanda "fitur lanjutan".
+   Dimuat setelah 06-layar.js dan sebelum 07; fungsi di sini dipanggil
+   saat aplikasi berjalan, jadi boleh memakai fungsi dari berkas bernomor
+   lebih besar (addP, sisa, dst.). Lihat docs/PETA-KODE.md.
+   ============================================================ */
+
+/* ---------- Fitur lanjutan (Pribadi) ----------
+   Mode sederhana hanya menampilkan Pemasukan, Pengeluaran, Transfer.
+   Jenis lain (pinjaman, cicilan) dan utang-piutang muncul bila fitur lanjutan
+   dinyalakan, atau otomatis bila pengguna sudah punya datanya. */
+let LANJUT=false;try{LANJUT=localStorage.getItem('finara.lanjut')==='1'}catch(e){}
+const BASIC=['income','expense','transfer'];
+const hasAdv=()=>S.tx.some(x=>x.w==='p'&&!BASIC.includes(x.ty)&&!['adjp','adjm'].includes(x.ty))||S.pay.some(p=>p.w==='p'&&p.st!=='void');
+const LJ=()=>U()||LANJUT||hasAdv();
+const tyOK=(k,cur)=>(!T[k].only||U()||k===cur)&&(LJ()||BASIC.includes(k)||k===cur);
+
+/* ---------- Hitungan jatah harian ----------
+   Uang tersedia = total saldo − tagihan − tabungan yang diamankan − cadangan tak terduga.
+   Jatah hari ini (A) = (sisa setelah tagihan + pengeluaran harian hari ini) ÷ jumlah hari sampai gajian (hari ini ikut dihitung).
+   Sisa jatah (rem)  = A − pengeluaran harian hari ini.
+   Pengeluaran harian = jenis "expense" yang bukan hasil transaksi berulang dan bukan pembayaran utang
+   (keduanya sudah dihitung lewat tagihan). next = jatah per hari mulai besok bila hari ini tidak belanja lagi. */
+function jatah(){
+const[f,t]=range('month'),np=dAdd(t,1),td=today(),days=Math.max(1,dd(td,np)),tot=accs().reduce((s,a)=>s+bal(a),0n),B=[];
+for(const q of S.rec){if(q.w!==S.active||!q.on||!['expense','loan_prin','loan_int'].includes(q.tpl.ty))continue;let d=q.next,g=0;while(d<np&&g++<12){if(d>=td)B.push({d,a:q.tpl.amt,n:q.tpl.n||'Tagihan berulang'});d=addP(d,q.freq,q.dom)}}
+const sisaSampai=(p)=>{const seen=new Set(),paid=(p.paid||[]).reduce((v,z)=>{if(z.tx){if(seen.has(z.tx))return v;seen.add(z.tx);const x=S.tx.find(t=>t.id===z.tx);return x&&x.w===p.w&&x.pay===p.id&&x.st==='ok'&&x.d<np&&x.ty===(p.dir==='recv'?'income':'expense')?v+x.amt:v}return(!z.d||z.d<=td)?v+z.amt:v},0n),left=p.amt-paid;return left>0n?left:0n};
+for(const p of S.pay)if(p.w===S.active&&p.st==='ok'&&p.dir!=='recv'&&sisaSampai(p)>0n&&p.due<np)B.push({d:p.due,a:sisaSampai(p),n:'Utang: '+p.who});
+// Pengeluaran satu kali yang sudah dijadwalkan sebelum gajian juga harus
+// ditahan sekarang, meski saldo rekening baru berubah pada tanggal transaksi.
+for(const x of txs())if(x.st==='ok'&&x.d>td&&x.d<np&&['expense','loan_prin','loan_int'].includes(x.ty))B.push({d:x.d,a:x.amt,n:x.n||T[x.ty].l});
+B.sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:0);
+const bt=B.reduce((s,b)=>s+b.a,0n),afterBills=tot-bt;
+// Target tabungan berlaku untuk satu periode gajian. Jumlah aktual yang sudah
+// disisihkan hanya menjadi pembanding; uang yang dilindungi adalah max(target, aktual).
+const cfg=S.jatahCfg||{},period=range('month')[0],saved=cfg.periode===period?(cfg.disisihkan||0n):0n;
+const savingsTarget=cfg.tabungan||0n,savingsHold=savingsTarget>saved?savingsTarget:saved,savingsLeft=savingsTarget>saved?savingsTarget-saved:0n;
+// Total saldo mencakup semua rekening, termasuk rekening tabungan. Karena itu
+// target tabungan penuh dikurangi tepat satu kali; 'sudah disisihkan' hanya
+// memisahkan target yang sudah diamankan vs yang masih perlu diamankan.
+const afterSavings=afterBills-savingsHold;
+const reserve=cfg.cadanganMode==='nominal'?(cfg.cadanganNominal||0n):(afterSavings>0n?afterSavings*BigInt(cfg.cadanganPersen||0)/100n:0n);
+const fr=afterSavings-reserve;let out=0n;
+for(const x of txs())if(x.st==='ok'&&x.d===td&&x.ty==='expense'&&!x.rec&&!x.pay)out+=x.amt;
+const A=(fr+out)/BigInt(days);
+return{f,t,np,days,tot,B,bt,afterBills,savingsTarget,savingsHold,saved,savingsLeft,afterSavings,reserve,reserveMode:cfg.cadanganMode||'persen',reservePercent:cfg.cadanganPersen??10,reserveNominal:cfg.cadanganNominal||0n,period,fr,out,A,rem:A-out,per:fr>0n?fr/BigInt(days):0n,next:days>1&&fr>0n?fr/BigInt(days-1):0n}}
+// Jalankan fn dengan satu transaksi rekaan ditambahkan sementara (untuk pratinjau dampak).
+function simTx(o,fn){const t={id:'_sim',w:S.active,st:'ok',at:Date.now(),c:'',to:'',n:'',...o};S.tx.push(t);try{return fn()}finally{const i=S.tx.indexOf(t);if(i>=0)S.tx.splice(i,1)}}
+// Belum ada uang yang tercatat sama sekali: jatah belum bisa dihitung.
+const needSetup=()=>!accs().some(a=>a.open>0n)&&!txs().some(x=>x.st==='ok'&&T[x.ty].s>0);
+// Tambah tagihan tetap bulanan (aturan berulang). Tagihan yang tanggalnya sudah lewat/hari ini dianggap sudah dibayar bulan ini.
+function addBill(n,amt,dom,acc){const cs=cats('out'),c=cs.find(v=>/tagihan/i.test(v.name))||cs[0];if(!c||!acc)return false;const td=today();let nx=td.slice(0,7)+'-'+pad(dom);if(nx<=td)nx=addP(nx,'month',dom);
+S.rec.push({id:uid(),w:S.active,tpl:{ty:'expense',a:acc,to:'',c:c.id,amt,n},freq:'month',dom,next:nx,on:true});logA('','tagihan tetap',n+' '+rp(amt));return true}
+
+/* ---------- Umpan balik setelah mencatat (toast) ---------- */
+function fbMsg(ty,d){const td=today();if(d>td){const J=jatah(),biaya=['expense','loan_prin','loan_int'].includes(ty);return biaya&&d<J.np?'Tersimpan. Biaya sebelum gajian sudah ditahan dalam jatah; saldo rekening berubah pada '+tglId(d)+'.':'Tersimpan. Transaksi masa depan belum mengubah saldo atau jatah sampai tanggalnya tiba.';}
+if(needSetup())return'Tersimpan. Isi saldo awal lewat Beranda (Hitung jatah harian saya) agar jatah harian bisa dihitung.';
+const J=jatah();if(ty==='transfer')return'Tersimpan. Total uang tidak berubah, jatah harian aman.';
+if(J.fr<0n)return'Tersimpan. Uang belum cukup untuk tagihan sampai gajian (kurang '+rp(-J.fr)+').';
+if(ty==='expense'&&d===td)return J.rem<0n?'Tersimpan. Melebihi jatah hari ini '+rp(-J.rem)+(J.days>1?'. Jatah besok jadi '+rp(J.next)+'.':'.'):'Tersimpan. Sisa jatah hari ini '+rp(J.rem)+'.';
+if(ty==='income')return'Tersimpan. Uang tersedia sampai gajian jadi '+rp(J.fr)+', alokasi hari ini '+rp(J.A)+'.';
+return'Tersimpan. Uang tersedia sampai gajian: '+rp(J.fr)+'.'}
+
+/* ---------- Pratinjau dampak di formulir transaksi baru ---------- */
+function imp(){const el=$('#imp');if(!el)return;el.innerHTML='';if(FM.id||U())return;
+const ty=$('#fty').value,ds=$('#fa').value.replace(/\D/g,''),a=$('#fac').value,to=$('#fto').value,d=$('#fd').value;
+if(!ds||ds.length>MAXD||!a||!/^\d{4}-\d{2}-\d{2}$/.test(d)||BigInt(ds)<=0n)return;
+const amt=BigInt(ds),ac=S.acc.find(v=>v.id===a);if(!ac)return;const td=today(),L=[];
+const ln=(l,x,y)=>L.push(`<div><span>${l}</span><span>${rp(x)} → <span class="${y<0n?'neg':''}">${rp(y)}</span></span></div>`);
+const future=d>td,toa=ty==='transfer'?S.acc.find(v=>v.id===to):null,b0=bal(ac),b20=toa?bal(toa):0n,J0=jatah();
+const n=simTx({d,ty,a,to:toa?to:'',amt},()=>({j:jatah(),b:bal(ac),b2:toa?bal(toa):0n}));let p='';
+if(!future){ln('Saldo '+esc(ac.name),b0,n.b);if(toa)ln('Saldo '+esc(toa.name),b20,n.b2)}else{
+ln('Saldo '+esc(ac.name),b0,n.b);if(toa)ln('Saldo '+esc(toa.name),b20,n.b2);
+if(ty==='expense'||ty==='loan_prin'||ty==='loan_int')p=n.j.fr!==J0.fr?'Biaya ini sudah ditahan dari uang tersedia karena jatuh sebelum gajian. Saldo rekening baru berubah pada tanggal transaksi.':'Tanggal biaya berada di luar periode sampai gajian; belum mengurangi jatah sekarang.';
+else p='Tanggal masa depan: saldo baru berubah pada tanggal transaksi. Pemasukan masa depan tidak dimasukkan ke jatah sebelum benar-benar diterima.';
+}
+if(ty==='transfer')p='Total uang tidak berubah, jadi jatah harian tidak terpengaruh.';
+else if(needSetup())p='Saldo awal belum diisi, jadi hitungan jatah belum bisa ditampilkan. Isi lewat Beranda (Hitung jatah harian saya).';
+else{ln('Uang tersedia sampai gajian',J0.fr,n.j.fr);
+if(ty==='expense'&&d===td){ln('Sisa jatah hari ini',J0.rem,n.j.rem);if(n.j.rem<0n)p='Melebihi jatah hari ini, sehingga jatah hari-hari berikutnya ikut menyusut.'}
+else if(!future&&ty!=='expense')ln('Jatah hari ini',J0.A,n.j.A)}
+el.innerHTML='<b>Dampak jika disimpan</b>'+L.join('')+(p?'<p>'+p+'</p>':'')}
+
+/* ---------- Beranda perorangan ---------- */
+function heroJ(J){const ng=J.fr<0n,ov=!ng&&J.rem<0n,pc0=J.A>0n?Math.min(100,Math.max(0,Number(J.out*100n/J.A))):(J.out>0n?100:0);
+const lab=ng?'Uang belum cukup sampai gajian':ov?'Melebihi alokasi hari ini':'Estimasi alokasi hari ini',big=ng?'Kurang '+rp(-J.fr):rp(J.rem);
+const sub=ng?'Saldo '+rp(J.tot)+', tagihan '+rp(J.bt)+', tabungan dan cadangan '+rp(J.tot-J.bt-J.fr)+'. Periksa saldo dan pengaturan jatah.'
+:ov?(J.days>1?'Jatah hari-hari berikutnya menyusut jadi '+rp(J.next)+' per hari.':'Besok sudah gajian.')
+:S.tx.length?'Dari jatah '+rp(J.A)+' hari ini, terpakai '+rp(J.out)+'.':'Catat pengeluaran pertama Anda, dan angka ini langsung berubah.';
+return`<div class="hero hj${ng||ov?' bad':''}"><small>${lab}</small><b>${big}</b>${ng?'':`<div class="hbar" role="img" aria-label="Jatah hari ini terpakai ${pc0}%"><i style="width:${pc0}%"></i></div>`}<small class="hsub">${sub}</small>
+<div class="hmini"><span><em>Total saldo</em><strong>${rp(J.tot)}</strong></span><span><em>Tagihan</em><strong>−${rp(J.bt)}</strong></span><span><em>Siap digunakan</em><strong>${rp(J.fr)}</strong></span></div>
+<small>Estimasi rata-rata setelah tagihan, tabungan, dan cadangan yang Anda atur; bukan batas aman mutlak. Dibagi ${J.days} hari sampai gajian ${tglId(J.np)}. <button class="lk" data-a="payday">Ubah tanggal gajian</button></small>
+<div class="qa"><button class="btn" data-a="add:expense"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Catat</button><button class="btn ghost" data-a="add:transfer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h13M16 3l4 4-4 4M17 17H4M8 13l-4 4 4 4"/></svg>Transfer</button></div></div>`}
+// Layar pertama untuk pengguna yang belum punya uang tercatat: janji, contoh hitungan, tiga pertanyaan.
+function vWelcome(){return`<div class="dash"><div class="hero hj prom"><small>Selamat datang di Finara</small><b>Perkirakan alokasi rata-rata harian dari saldo dan tagihan sampai gajian.</b><small>Jawab 3 pertanyaan singkat. Hasilnya langsung tampil, sebelum Anda mencatat apa pun.</small><div class="qa"><button class="btn" data-a="onb">Hitung jatah harian saya</button></div></div>
+<div class="d-a"><div class="c"><b>Begini cara menghitungnya</b><table><tr><td>Uang Anda sekarang</td><td>Rp2.000.000</td></tr><tr><td>Tagihan tetap sebelum gajian</td><td>−Rp600.000</td></tr><tr><td>Tabungan yang diamankan</td><td>Rp0</td></tr><tr><td>Cadangan tak terduga (10%)</td><td>−Rp140.000</td></tr><tr><td>Uang tersedia</td><td>Rp1.260.000</td></tr><tr><td>Gajian 10 hari lagi</td><td class="pos">Rp126.000 per hari</td></tr></table><small>Hanya contoh. Angka Anda dihitung dari jawaban Anda sendiri.</small></div>
+<div class="c"><b>Tiga pertanyaan yang akan diajukan</b><ol class="qs"><li>Uang Anda sekarang berapa?</li><li>Gajian tanggal berapa?</li><li>Tagihan tetap tiap bulan apa saja? (boleh dilewati)</li></ol><small>Setelah itu, setiap Anda mencatat pengeluaran, Beranda langsung menunjukkan sisa jatah hari ini. Data hanya tersimpan di perangkat Anda.</small><div class="row"><button class="btn ghost" data-a="demo">Coba dulu dengan data contoh</button></div></div></div></div>`}
+// 1.6.0: urutan Beranda Pribadi (atas ke bawah):
+//  1 jatah hari ini · 2 pemasukan/pengeluaran · 3 rekening · 4 perhatian (utang jatuh tempo, cadangan, pasang aplikasi)
+//  5 cara hitung · 6 anggaran · 7 tren · 8 kesehatan keuangan · 9 transaksi terbaru (paling bawah)
+//  Layar lebar: kelompok 4-8 jadi dua kolom (kiri: 4-5, kanan: 6-8) lewat dua <div class="dcol">; di HP tetap satu kolom berurutan.
+function vHomeP(){if(needSetup())return vWelcome();
+const[f,t]=range('month'),r=sum(f,t),J=jatah(),cy=CYC()?'periode':'bulan',demo=S.tx.some(x=>x.demo);
+return`<div class="dash">${heroJ(J)}<div class="c g2 stats"><div><small>Pemasukan ${cy} ini</small><b class="pos">${rp(r.inc)}</b></div><div><small>Pengeluaran ${cy} ini</small><b class="neg">${rp(r.exp)}</b></div></div>
+${strip()}<div class="d-a d-w"><div class="dcol">${demo?'<div class="c demo-b"><b>Ini data contoh</b><small>Angka di atas berasal dari data contoh, bukan uang Anda.</small><div class="row"><button class="btn ghost" data-a="democlear">Hapus data contoh dan mulai dari nol</button></div></div>':''}${due()}${nudge()}${installCard()}${plancard(J,r)}</div><div class="dcol">${S.bud.some(v=>v.w===S.active)?bud()+budPace():''}${S.tx.length?trendBal():''}${health(f,t,r)}</div></div>
+<section class="d-b d-w"><div class="shd"><h3>Transaksi terbaru</h3><button class="lk" data-a="tab:tx">Lihat semua</button></div>${list(txs().sort(cmp).slice(0,5))}</section></div>`}
+
+/* ---------- Pasang Finara di perangkat (dikembalikan di 1.6.0) ----------
+   Kartu di Beranda + tombol di Lainnya. Chrome/Edge/Android memakai prompt bawaan (DEFERRED dari 06-layar.js);
+   iPhone dan peramban lain mendapat petunjuk manual. Disembunyikan bila sudah dibuka sebagai aplikasi. */
+const STANDALONE=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}};
+const ISIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+let PBH=false;try{PBH=localStorage.getItem('finara.pasang')==='1'}catch(e){}
+function installCard(){if(STANDALONE()||PBH||!/^https?:$/.test(location.protocol))return'';
+return`<div class="c inst"><b>Pasang Finara di perangkat ini</b><small>Buka dari layar utama seperti aplikasi biasa, tampil layar penuh, dan tetap jalan tanpa internet.</small><div class="row"><button class="btn" data-a="install">Pasang sekarang</button><button class="btn ghost" data-a="instno">Nanti saja</button></div></div>`}
+addEventListener('appinstalled',()=>{DEFERRED=null;PBH=true;try{localStorage.setItem('finara.pasang','1')}catch(e){}if(tab==='home'||tab==='more')render();toast('Finara terpasang')});
+
+/* ---------- Kartu cara hitung ---------- */
+function plancard(J,r){const ms=mon(6).slice(2,5),
+an=Object.entries(r.cat).map(([c,v])=>[c,v,ms.reduce((s,m)=>s+(sum(m.f,m.t).cat[c]||0n),0n)/3n]).filter(([c,v,av])=>av>0n&&v>av*3n/2n).sort((a,b)=>{const da=a[1]-a[2],db=b[1]-b[2];return db>da?1:db<da?-1:0}).slice(0,3);
+const hr=(a,b,c,k)=>`<div class="hr"><div><b>${a}</b></div><div><b class="${k||''}">${b}</b><small>${c}</small></div></div>`,
+loanLeft=txs().filter(x=>x.st==='ok'&&x.d<=today()&&(x.ty==='loan_in'||x.ty==='loan_prin')).reduce((v,x)=>v+(x.ty==='loan_in'?x.amt:-x.amt),0n),
+loanWarn=loanLeft>0n?`<small class="hint">Perhatian: masih ada pinjaman tercatat ${rp(loanLeft)}. Nilai ini tidak otomatis dikurangkan dari jatah kecuali cicilannya dijadwalkan sebelum gajian. Tambahkan jadwal di tagihan berulang atau catatan utang agar tidak terlewat.</small>`:'',
+li=J.B.slice(0,5).map(b=>`<div class="hr"><div><small>${fd(b.d)} · ${esc(b.n)}</small></div><div><small>${rp(b.a)}</small></div></div>`).join('')+(J.B.length>5?`<small>dan ${J.B.length-5} tagihan lainnya</small>`:'');
+return`<div class="c health"><h3>Cara menghitung jatah Anda</h3>`+hr('Total saldo',rp(J.tot),'semua rekening')
++hr('Tagihan sebelum gajian','−'+rp(J.bt),J.B.length+' tagihan atau utang')+li
++(J.B.length?'':'<small>Belum ada tagihan tetap atau utang jatuh tempo sebelum gajian.</small>')
++hr('Sisa setelah tagihan',rp(J.afterBills),'sebelum tabungan dan cadangan')
++hr('Tabungan yang diamankan','−'+rp(J.savingsHold),'Target '+rp(J.savingsTarget)+' · sudah disisihkan '+rp(J.saved)+' · masih perlu '+rp(J.savingsLeft))
++hr('Cadangan tak terduga','−'+rp(J.reserve),J.reserveMode==='nominal'?'Nominal tetap yang Anda tentukan':J.reservePercent+'% dari sisa setelah tabungan')
++hr('Uang tersedia sampai gajian',rp(J.fr),J.fr>0n?rp(J.per)+' per hari ('+J.days+' hari)':'alokasi belum mencukupi',J.fr<0n?'neg':'pos')
++an.map(([c,v,av])=>hr('Perlu diperhatikan',rp(v),esc(nm(S.cat,c))+' di atas biasanya ('+rp(av)+')','neg')).join('')
++loanWarn+`<div class="row"><button class="btn ghost" data-a="billnew">Tambah tagihan tetap</button><button class="btn ghost" data-a="rec">Lihat semua tagihan</button></div><small class="hint">Uang tersedia = total saldo seluruh rekening dikurangi tagihan, tabungan yang diamankan, dan cadangan tak terduga. Pastikan total saldo mencakup rekening tabungan/cadangan juga; nominal 'sudah disisihkan' hanya untuk bagian target tabungan yang memang sudah dipindahkan atau diamankan pada periode berjalan. Jangan masukkan setoran yang sama dua kali. Angka ini estimasi berdasarkan catatan Anda, bukan jaminan uang aman dibelanjakan.</small></div>`}
+
+/* ---------- Kartu kesehatan keuangan, kini dengan saran langkah ---------- */
+function health(f,t,r){
+// Hitung setiap ruang kerja secara mandiri agar saldo gabungan tidak memakai
+// transaksi ruang aktif untuk rekening ruang kerja lain.
+const cashFor=w=>S.acc.filter(a=>a.w===w).reduce((total,a)=>{let b=a.open;for(const x of S.tx){if(x.w!==w||x.st!=='ok'||x.d>today())continue;if(x.ty==='transfer'){if(x.a===a.id)b-=x.amt;if(x.to===a.id)b+=x.amt}else if(x.a===a.id)b+=BigInt(T[x.ty].s)*x.amt}return total+b},0n);
+const loanFor=w=>{let v=0n;for(const x of S.tx)if(x.w===w&&x.st==='ok'&&x.d<=today()){if(x.ty==='loan_in')v+=x.amt;else if(x.ty==='loan_prin')v-=x.amt}return v>0n?v:0n};
+const payFor=(w,dir)=>S.pay.filter(p=>p.w===w&&p.st==='ok'&&p.dir===dir).reduce((v,p)=>v+sisa(p),0n);
+const cash= cashFor(S.active),rc=payFor(S.active,'recv'),db=payFor(S.active,'pay'),loan=loanFor(S.active),nw=cash+rc-db-loan;
+const ms=mon(6).slice(2,5).map(m=>{const z=sum(m.f,m.t);return z.exp+z.lpr}).filter(v=>v>0n),av=ms.length?ms.reduce((s,v)=>s+v,0n)/BigInt(ms.length):0n;
+// Rasio dihitung sepenuhnya dengan BigInt agar nominal besar tidak kehilangan presisi
+// saat dikonversi ke Number. Hasil disimpan dalam satuan persepuluh.
+const ratio10=(n,d,scale)=>{if(d<=0n)return null;const neg=n<0n,a=neg?-n:n,q=(a*scale+d/2n)/d;return neg?-q:q};
+const fmt10=v=>{if(v===null)return'–';const a=v<0n?-v:v;return(v<0n?'−':'')+(a/10n)+'.'+(a%10n)};
+const runwayCash=cash>loan?cash-loan:0n,em10=av>0n?ratio10(runwayCash,av,10n):null;
+const ins=txs().filter(x=>x.st==='ok'&&x.d>=f&&x.d<=t&&(x.ty==='loan_prin'||x.ty==='loan_int')).reduce((s,x)=>s+x.amt,0n),dr10=r.inc>0n?ratio10(ins,r.inc,1000n):null;
+// Sisa arus kas setelah beban dan pembayaran pokok, bukan sekadar pendapatan dikurangi beban.
+const sv10=r.inc>0n?ratio10(r.inc-r.exp-r.lpr,r.inc,1000n):null;
+const allCash=cashFor('p')+cashFor('u'),allReceivable=payFor('p','recv')+payFor('u','recv'),allPayable=payFor('p','pay')+payFor('u','pay'),allLoan=loanFor('p')+loanFor('u'),al=allCash+allReceivable-allPayable-allLoan;
+const top=Object.entries(r.cat).filter(v=>v[1]>0n).sort((a,b)=>b[1]>a[1]?1:-1)[0],cy=CYC()?'periode':'bulan';
+const need=av*3n-runwayCash;
+const gNw=nw<0n?'Kewajiban tercatat lebih besar daripada saldo dan piutang. Periksa juga apakah pinjaman yang sama dicatat di transaksi dan daftar utang-piutang.':'',
+gEm=em10===null?'Catat pengeluaran dan pembayaran cicilan selama beberapa hari agar daya tahan kas bisa diperkirakan.':em10<30n&&need>0n?'Kas non-pinjaman tercatat belum mencapai 3 bulan pengeluaran dan pembayaran pokok rata-rata. Utang-piutang yang dicatat terpisah belum dikurangkan.':'',
+gSv=sv10===null?'':sv10<100n?'Sisa arus kas setelah pengeluaran dan pokok pinjaman masih di bawah 10% pemasukan. Tinjau pengeluaran dan cicilan.':sv10<200n?'Naikkan sisa arus kas menuju 20% bila memungkinkan.':'',
+gDr=dr10!==null&&dr10>300n?'Pembayaran pokok dan bunga yang tercatat mencapai '+fmt10(dr10)+'% pemasukan. Angka ini tidak mencakup cicilan yang belum dicatat.':'';
+
+const row=(l,v,s,c,h,g)=>`<div class="hr"><div><b>${l}</b><small>${h}</small>${g?`<small class="sg">Langkah: ${g}</small>`:''}</div><div><b class="${c}">${v}</b><small>${s}</small></div></div>`;
+return`<div class="c health"><h3>Kesehatan keuangan</h3><small>Setiap angka disertai langkah yang bisa Anda lakukan bila perlu.</small>`+row('Kekayaan bersih (estimasi)',rp(nw),'saldo + piutang − utang − pinjaman tercatat',nw<0n?'neg':'pos','Saldo dan piutang dikurangi utang-piutang serta sisa pinjaman dari transaksi Pinjaman diterima dikurangi Bayar pokok. Jika pinjaman yang sama dicatat di kedua tempat, hasil dapat terhitung ganda.',gNw)
++(PF()==='owner'?row('Kekayaan gabungan (estimasi)',rp(al),'Pribadi + Usaha',al<0n?'neg':'pos','Saldo dan piutang kedua ruang dikurangi utang-piutang dan sisa pinjaman transaksi. Pastikan pinjaman tidak dicatat ganda.',''):'')+row('Daya tahan kas non-pinjaman (estimasi)',em10===null?'–':fmt10(em10)+' bulan',em10===null?'butuh data pengeluaran':em10<30n?'kurang':em10<=60n?'cukup':'tinggi',em10===null?'':em10<30n?'neg':'','Saldo rekening dikurangi sisa pinjaman dari transaksi, dibanding rata-rata pengeluaran dan pembayaran pokok tiga bulan yang tersedia. Utang-piutang yang dicatat terpisah belum dikurangkan; bukan ukuran dana darurat terverifikasi.',gEm)
++row('Sisa arus kas',sv10===null?'–':fmt10(sv10)+'%',sv10===null?'belum ada pemasukan':sv10>=200n?'baik':sv10>=100n?'cukup':'rendah',sv10===null?'':sv10>=100n?'pos':'neg','Pemasukan dikurangi pengeluaran tercatat dan pembayaran pokok pinjaman, dibanding pemasukan. Rasio dibulatkan satu angka desimal. Tidak sama dengan kenaikan tabungan bersih karena transfer, modal, dan penarikan tidak dihitung.',gSv)
++row('Pembayaran cicilan tercatat',dr10===null?'–':fmt10(dr10)+'%',dr10===null?'belum ada pemasukan':dr10<=300n?'sehat':dr10<=400n?'waspada':'tinggi',dr10===null?'':dr10<=300n?'pos':'neg','Pembayaran pokok dan bunga yang sudah dicatat pada periode ini dibanding pemasukan. Tidak mengukur seluruh cicilan terjadwal atau kewajiban yang belum dicatat. Rasio dibulatkan satu angka desimal.',gDr)
++`<small class="hint">Angka merupakan estimasi berdasarkan data yang dicatat, bukan pemeriksaan rekening atau kontrak. Pinjaman yang sama jangan dicatat sekaligus sebagai transaksi pinjaman dan utang-piutang tanpa rekonsiliasi.</small></div>`}
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/07-render-formulir.js
+   RENDER & FORMULIR: render(), jendela sheet, konfirmasi, formulir transaksi
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+function render(){applyProfile();runRec();document.body.dataset.mode=S.active;
+$('#seg').innerHTML=[['p','Pribadi'],['u','Usaha']].filter(v=>PF()==='owner'||(PF()==='person')===(v[0]==='p')).map(v=>`<button class="${S.active===v[0]?'on':''}" data-a="mode:${v[0]}">${v[1]}</button>`).join('');
+$('#nav').innerHTML=[['home',IC.home,'Beranda'],['tx',IC.tx,'Transaksi'],['rep',IC.rep,'Laporan'],['acc',IC.acc,'Rekening'],['more',IC.more,'Lainnya']].map(v=>`<button class="${tab===v[0]?'on':''}" data-a="tab:${v[0]}"${tab===v[0]?' aria-current="page"':''}><b>${v[1]}</b><span>${v[2]}</span></button>`).join('');
+$('#m').innerHTML={home:vHome,tx:vTx,rep:vRep,acc:vAcc,more:vMore}[tab]();applyHint();
+const q=$('#q');if(q)q.oninput=e=>{Q.q=e.target.value;const p=e.target.selectionStart;render();const n=$('#q');n.focus();n.setSelectionRange(p,p)};
+[['qa','ac'],['qg','cg'],['qf','df'],['qd','dt']].forEach(([i,k])=>{const e=$('#'+i);if(e)e.onchange=()=>{Q[k]=e.value;render()}});
+const qt=$('#qt');if(qt)qt.onchange=e=>{Q.ty=e.target.value;render()};
+['rf','rt'].forEach(i=>{const e=$('#'+i);if(e)e.onchange=()=>{const cl=v=>v<'1900-01-01'?'1900-01-01':v>'2100-12-31'?'2100-12-31':v;R.f=cl($('#rf').value||R.f);R.t=cl($('#rt').value||R.t);render()}})}
+let LASTF=null;const BG=['.rail','#m','.fab'];
+function sheet(h){if(!$('#sh').classList.contains('on'))LASTF=document.activeElement;$('#shc').innerHTML='<button class="hb hs" data-a="hint" aria-label="Tampilkan atau sembunyikan bantuan">?</button>'+h;$('#sh').classList.add('on');document.body.classList.add('lock');$('#shc').scrollTop=0;fmtInit();applyHint();BG.forEach(s=>{const e=$(s);if(e)e.inert=true});$('#shc').focus({preventScroll:true})}
+const close=()=>{$('#sh').classList.remove('on');document.body.classList.remove('lock');BG.forEach(s=>{const e=$(s);if(e)e.inert=false});if(LASTF&&LASTF.focus&&document.contains(LASTF))try{LASTF.focus({preventScroll:true})}catch(e){}LASTF=null};
+function ask(msg,a,p,l){sheet(`<h2>Konfirmasi</h2><p>${msg}</p><div class="row"><button class="btn" data-a="${a}:${p||''}">${l||'Ya, lanjutkan'}</button><button class="btn ghost" data-a="close">Kembali</button></div>`)}
+const opt=(v,l,s)=>`<option value="${esc(v)}" ${v===s?'selected':''}>${esc(l)}</option>`;
+function txForm(id,ty0){const x=id?S.tx.find(v=>v.id===id):null;FM={id};const ty=x?x.ty:ty0||'expense';
+sheet(`<h2>${x?'Ubah':ty==='transfer'?'Transfer antar rekening':'Catat transaksi'}</h2>${x?'<small class="hint">Perubahan dihitung ulang ke saldo dan laporan, dan tercatat di log. Pakai Batalkan transaksi jika ingin mengeluarkannya dari perhitungan.</small>':''}
+${x?'':`<div class="row chips" id="tq" role="group" aria-label="Jenis cepat">${['expense','income','transfer'].map(k=>`<button type="button" class="chip" data-a="fty:${k}">${T[k].l}</button>`).join('')}</div>`}<label id="lty"${x||LJ()?'':' style="display:none"'}>Jenis<select id="fty">${Object.keys(T).filter(k=>tyOK(k,ty)).map(k=>opt(k,T[k].l,ty)).join('')}</select></label>
+<small id="th" class="hint"></small><label>Tanggal<input type="date" id="fd" value="${x?x.d:today()}"></label><small class="hint">Laporan memakai tanggal ini, bukan waktu Anda mengetik.</small>
+<label>Nominal (Rp)<input id="fa" inputmode="numeric" placeholder="0" value="${x?x.amt:''}"></label><div class="row chips qk" role="group" aria-label="Tambah nominal cepat">${[10000,50000,100000,500000].map(v=>`<button type="button" class="chip" data-a="qamt:${v}">+${shortRp(BigInt(v))}</button>`).join('')}<button type="button" class="chip" data-a="qamt:clr">Hapus</button></div><div id="imp" class="imp" aria-live="polite"></div>
+<label><span id="lac">Rekening</span><select id="fac">${accs().map(a=>opt(a.id,a.name,x?x.a:LAST.a)).join('')}</select></label>
+<label id="lto">Ke rekening (tujuan)<select id="fto"></select></label>
+<label id="lc">Kategori<select id="fc"></select></label>
+<datalist id="nl">${NL()}</datalist><label>Catatan<input id="fn" list="nl" autocomplete="off" maxlength="120" value="${esc(x?x.n:'')}"></label>${x?(ADV&&x.st==='ok'&&jr(x)?`<small>Jurnal: debit ${esc(lname(jr(x)[0]))}, kredit ${esc(lname(jr(x)[1]))}</small>`:''):`<label>Ulangi<select id="fr"><option value="">Tidak berulang</option><option value="week">Setiap minggu</option><option value="month">Setiap bulan</option><option value="year">Setiap tahun</option></select><small class="hint">Transaksi berikutnya dicatat otomatis saat aplikasi dibuka.</small></label>`}<p id="err" class="neg"></p>
+<div class="row"><button class="btn" data-a="save">Simpan</button>${x?'<button class="btn ghost" data-a="void">Batalkan transaksi</button>':''}<button class="btn ghost" data-a="close">Tutup</button></div>`);
+const fx=()=>{const t=T[$('#fty').value];document.querySelectorAll('#tq .chip').forEach(c=>c.classList.toggle('on',c.dataset.a==='fty:'+$('#fty').value));$('#th').textContent=(ADV?TH[$('#fty').value]:TH[$('#fty').value].replace(/\s*Jurnal:[^.]*\./,''))+($('#fty').value==='transfer'&&accs().length<2?' Anda butuh minimal dua rekening; tambah di tab Rekening.':'');applyFold();$('#lto').style.display=$('#fty').value==='transfer'?'block':'none';$('#lac').textContent=$('#fty').value==='transfer'?'Dari rekening':'Rekening';
+$('#lc').style.display=t.cat?'block':'none';$('#fc').innerHTML=t.cat?cats(t.cat).map(c=>opt(c.id,c.name,x?x.c:LAST.c)).join(''):''};
+const sy=()=>{const f=$('#fac').value,cur=$('#fto').value||(x&&x.to)||'',o=accs().filter(a=>a.id!==f);$('#fto').innerHTML=o.map(a=>opt(a.id,a.name,o.some(v=>v.id===cur)?cur:o[0].id)).join('')};
+$('#fty').onchange=()=>{fx();sy();imp()};$('#fac').onchange=()=>{sy();imp()};$('#fto').onchange=imp;$('#fd').onchange=imp;$('#fa').addEventListener('input',imp);fx();sy();imp();if(x&&x.pay)$('#fty').disabled=true;if(!x&&matchMedia('(hover:hover)').matches)setTimeout(()=>{const f=$('#fa');f&&f.focus({preventScroll:true})},60)}
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/08-data-lanjutan.js
+   DATA LANJUTAN: log, CSV, unduh/impor, transaksi berulang, utang-piutang, jurnal debit-kredit, impor CSV
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+const logA=(id,act,b)=>{S.log.push({t:Date.now(),id,act,b});if(S.log.length>500)S.log.shift()};
+const desc=x=>T[x.ty].l+' '+rp(x.amt)+' '+x.d;
+function csv(f,t){const q=s=>{s=String(s??'');if(/^[=+\-@\t\r]/.test(s))s="'"+s;return'"'+s.replace(/"/g,'""')+'"'};
+const rows=[['Tanggal','Jenis','Rekening','Rekening tujuan','Kategori','Nominal (Rp)','Catatan','Status']].concat(txs().filter(x=>x.d>=f&&x.d<=t).sort(cmp).map(x=>[x.d,T[x.ty].l,nm(S.acc,x.a),x.to?nm(S.acc,x.to):'',x.c?nm(S.cat,x.c):'',x.amt,x.n,x.st==='ok'?'Sah':'Batal']));
+return rows.map(r=>r.map(q).join(',')).join('\r\n')}
+function dl(name,txt,type){const f=new File([txt],name,{type}),mob=/iPhone|iPad|Android/i.test(navigator.userAgent);
+if(mob&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:name}).catch(()=>{});return}
+const u=URL.createObjectURL(f),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast('File diunduh: '+name)}
+document.addEventListener('change',e=>{if(e.target.id==='bkf'){const f=e.target.files[0];if(!f)return;f.text().then(t=>{if(t.replace(/^\uFEFF/,'').trim()[0]==='{'){$('#rs').value=t;act.rest()}else act.restcsv(t)},()=>toast('File tidak bisa dibaca'))}});
+function box(title,txt,extra){sheet(`<h2>${title}</h2><textarea id="bx" readonly>${esc(txt)}</textarea><div class="row"><button class="btn" data-a="copy">Salin</button><button class="btn ghost" data-a="close">Tutup</button></div>${extra||''}`)}
+function addP(d,f,dom){let[y,m]=d.split('-').map(Number);if(f==='week')return ymd(new Date(y,m-1,Number(d.slice(8))+7));if(f==='month'){m++;if(m>12){m=1;y++}}else y++;return y+'-'+pad(m)+'-'+pad(Math.min(dom,new Date(y,m,0).getDate()))}
+function runRec(){let n=0;for(const r of S.rec){if(!r.on)continue;let g=0;while(r.next<=today()&&g++<120){const t=r.tpl,x={id:uid(),w:r.w,st:'ok',at:Date.now(),d:r.next,ty:t.ty,a:t.a,to:t.to,c:t.c,amt:t.amt,n:t.n,rec:r.id};S.tx.push(x);logA(x.id,'berulang',desc(x));r.next=addP(r.next,r.freq,r.dom);n++}}if(n){save();toast(n+' transaksi berulang dicatat')}}
+const pa=(v,p)=>{if(!v.tx)return v.amt;const i=p&&Array.isArray(p.paid)?p.paid.indexOf(v):-1;if(i>=0&&p.paid.slice(0,i).some(z=>z.tx===v.tx))return 0n;const t=S.tx.find(t=>t.id===v.tx),ty=p&&p.dir==='recv'?'income':'expense';return t&&p&&t.st==='ok'&&t.w===p.w&&t.pay===p.id&&t.ty===ty?t.amt:0n};
+const sisa=p=>{const r=p.amt-p.paid.reduce((s,v)=>s+pa(v,p),0n);return r>0n?r:0n};
+function nudge(){let l=0;try{l=+localStorage.getItem('finara.lastbk')||0}catch(e){}if(!S.tx.length||Date.now()-l<14*864e5)return'';return`<button class="list-btn" data-a="bk"><small>${l?'Terakhir dicadangkan '+Math.floor((Date.now()-l)/864e5)+' hari lalu':'Data belum pernah dicadangkan'}</small><b>Unduh cadangan sekarang agar data aman</b></button>`}
+function due(){const lim=ymd(new Date(Date.now()+7*864e5)),a=S.pay.filter(p=>p.w===S.active&&p.st!=='void'&&sisa(p)>0n&&p.due<=lim);return a.length?`<button class="list-btn" data-a="plist"><small>Jatuh tempo dalam 7 hari atau terlambat</small><b>${a.length} catatan, sisa ${rp(a.reduce((s,p)=>s+sisa(p),0n))}</b></button>`:''}
+function jr(x){const A='A:'+x.a,Z=x.to?'A:'+x.to:'',C=x.c;return{income:[A,'R:'+C],expense:['B:'+C,A],loan_int:['B:'+C,A],refund:[A,'B:'+C],transfer:[Z,A],capital:[A,'E:modal'],draw:['E:prive',A],loan_in:[A,'L:pinjaman'],loan_prin:['L:pinjaman',A],adjp:[A,'E:koreksi'],adjm:['E:koreksi',A]}[x.ty]}
+function lname(k){const[t,id]=k.split(':');return t==='A'?nm(S.acc,id):t==='R'||t==='B'?nm(S.cat,id):{modal:'Modal pemilik',prive:'Penarikan pemilik',awal:'Saldo awal (ekuitas)',koreksi:'Selisih koreksi',pinjaman:'Utang pinjaman'}[id]}
+function ledger(){const L={},add=(k,d,c)=>{L[k]=L[k]||[0n,0n];L[k][0]+=BigInt(d);L[k][1]+=BigInt(c)};for(const a of accs())if(a.open){add('A:'+a.id,a.open,0);add('E:awal',0,a.open)}const td=today();for(const x of txs()){if(x.st!=='ok'||x.d>td)continue;const[d,c]=jr(x);add(d,x.amt,0);add(c,0,x.amt)}return L}
+let HINT=true;try{HINT=localStorage.getItem('bukukas.hint')!=='0'}catch(e){}
+let FOLD=[];try{FOLD=JSON.parse(localStorage.getItem('bukukas.fold'))||[]}catch(e){}
+function applyFold(){document.querySelectorAll('.hint').forEach(h=>{h.classList.toggle('fold',FOLD.includes(hash(h.textContent)));h.setAttribute('role','button');h.tabIndex=0})}
+function applyHint(){document.body.classList.toggle('nohint',!HINT);document.querySelectorAll('.hb').forEach(b=>b.classList.toggle('off',!HINT));applyFold()}
+const catUse=id=>S.tx.filter(x=>x.c===id).length;
+const LAST=(()=>{try{return JSON.parse(localStorage.getItem('finara.last'))||{}}catch(e){return{}}})();
+const NL=()=>[...new Set(txs().sort(cmp).map(x=>x.n).filter(Boolean))].slice(0,8).map(n=>'<option value="'+esc(n)+'">').join('');
+const WN={p:'Pribadi',u:'Usaha'},WK={Pribadi:'p',Usaha:'u'};
+function fullcsv(){const q=s=>{s=String(s??'');if(/^[=+\-@\t\r]/.test(s))s="'"+s;return'"'+s.replace(/"/g,'""')+'"'};
+const r=[['Bagian','Ruang','Kolom1','Kolom2','Kolom3','Kolom4','Kolom5','Kolom6','Kolom7','Kolom8']];
+S.acc.forEach(a=>r.push(['Rekening',WN[a.w],a.name,a.open]));S.cat.forEach(c=>r.push(['Kategori',WN[c.w],c.k,c.name]));
+S.bud.forEach(v=>r.push(['Anggaran',WN[v.w],nm(S.cat,v.c),v.lim]));
+S.tx.forEach(x=>r.push(['Transaksi',WN[x.w],x.d,x.ty,nm(S.acc,x.a),x.to?nm(S.acc,x.to):'',x.c?nm(S.cat,x.c):'',x.amt,x.n,x.st]));
+return r.map(a=>a.map(q).join(',')).join('\r\n')}
+function pcsv(t){t=t.replace(/^\uFEFF/,'');const l=t.split('\n')[0],d=l.includes(';')&&!l.includes(',')?';':',',o=[];let r=[],f='',qq=false;
+for(let i=0;i<t.length;i++){const c=t[i];if(qq){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else qq=false}else f+=c}else if(c==='"')qq=true;else if(c===d){r.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;r.push(f);o.push(r);r=[];f=''}else f+=c}
+if(f||r.length){r.push(f);o.push(r)}return o}
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/09-aksi.js
+   AKSI: objek act (semua tombol data-a="nama:param" menuju ke sini)
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+const act={
+wipews(){ask('Hapus semua catatan ruang '+(U()?'Usaha':'Pribadi')+' (transaksi, anggaran, utang-piutang, berulang, target)? Rekening dan kategori tetap. Ruang lainnya tidak terpengaruh.','wipews2','','Ya, hapus')},
+wipews2(){const w=S.active;for(const k of['tx','bud','pay','rec','goal'])S[k]=S[k].filter(v=>v.w!==w);save();close();render();toast('Data ruang dihapus')},
+pairsheet(){const x=S.tx.find(v=>v.id===FM.pair);if(!x)return;sheet('<h2>Catat juga di Pribadi?</h2><small class="hint">'+(x.ty==='draw'?'Penarikan pemilik ':'Modal pemilik ')+rp(x.amt)+' juga mengubah uang pribadi Anda. Pilih rekening Pribadi untuk mencatat pasangannya agar saldo kedua ruang tetap cocok.</small>'+S.acc.filter(a=>a.w==='p').map(a=>`<button class="list-btn" data-a="pairdo:${a.id}"><b>${esc(a.name)}</b></button>`).join('')+'<div class="row"><button class="btn ghost" data-a="close">Lewati</button></div>')},
+pairdo(id){const x=S.tx.find(v=>v.id===FM.pair);if(!x)return;const d=x.ty==='draw',cs=S.cat.filter(c=>c.w==='p'&&c.k===(d?'in':'out')),c=cs.find(c=>/lain/i.test(c.name))||cs[0];if(!c)return;S.tx.push({id:uid(),w:'p',st:'ok',at:Date.now(),d:x.d,ty:d?'income':'expense',a:id,to:'',c:c.id,amt:x.amt,n:d?'Penarikan dari usaha':'Modal ke usaha',pair:x.id});save();close();render();toast('Pasangan dicatat di Pribadi')},
+sim(){const a=S.goal.filter(g=>g.w===S.active);if(!a.length){toast('Buat target tabungan dulu di Lainnya');return}sheet('<h2>Simulasi tabungan</h2><small class="hint">Berapa lama target tercapai jika Anda menabung nominal tertentu tiap bulan.</small><label>Target<select id="sg">'+a.map(g=>`<option value="${g.id}">${esc(g.n)} (kurang ${rp(g.t>g.s?g.t-g.s:0n)})</option>`).join('')+'</select></label><label>Tabung per bulan (Rp)<input id="sa" inputmode="numeric"></label><p id="err" class="neg"></p><div id="so"></div><div class="row"><button class="btn" data-a="simgo">Hitung</button><button class="btn ghost" data-a="close">Tutup</button></div>')},
+simgo(){const g=S.goal.find(v=>v.id===$('#sg').value),m=NB($('#sa').value.replace(/\D/g,''));if(!g||m<=0n){$('#err').textContent='Isi nominal tabungan per bulan.';return}$('#err').textContent='';const k=g.t>g.s?g.t-g.s:0n,n=Number((k+m-1n)/m);let h,sm='';if(k===0n)h='Target sudah tercapai.';else if(n>1200){h='Lebih dari 100 tahun lagi';sm='Naikkan tabungan per bulan agar target terjangkau.'}else{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()+n);h=n+' bulan lagi';sm='Perkiraan tercapai '+MN[d.getMonth()]+' '+d.getFullYear()}$('#so').innerHTML='<div class="c"><b>'+h+'</b><small>'+sm+'</small></div>'},
+profpick(){sheet('<h2>Pilih profil Anda</h2><small class="hint">Menyesuaikan istilah dan fitur. Data tidak berubah, dan profil bisa diganti kapan saja di Lainnya.</small>'+[['person','Perorangan (disarankan)','Karyawan, pekerja lepas, atau siapa pun yang mencatat keuangan pribadi. Beranda menunjukkan jatah harian sampai gajian.'],['owner','Perorangan dengan usaha','Keuangan pribadi dan usaha dalam satu aplikasi, terpisah rapi.'],['biz','Bisnis','Hanya untuk usaha, dengan istilah dan fitur akuntansi.']].map(v=>`<button class="list-btn pf ${S.profile===v[0]?'on':''}" data-a="prof:${v[0]}"><b>${v[1]}</b><small>${v[2]}</small></button>`).join('')+'<div class="row"><button class="btn ghost" data-a="close">Tutup</button></div>')},
+prof(k){if(!k){act.profpick();return}S.profile=k;save();close();render();toast('Profil: '+PN[k])},
+payday(){const c=S.jatahCfg||{},period=range('month')[0],saved=c.periode===period?(c.disisihkan||0n):0n;sheet(`<h2>Atur jatah sampai gajian</h2><small class="hint">Finara mengurangi total saldo dengan tagihan, tabungan yang diamankan, dan satu jenis cadangan. Masukkan total saldo semua rekening, termasuk tabungan/cadangan. Jika tanggal gajian diubah, jumlah 'sudah disisihkan' dipertahankan; ubah jika jumlah itu tidak lagi diamankan pada siklus baru.</small><label>Tanggal gajian (1–28)<input id="pd" inputmode="numeric" data-plain maxlength="2" value="${S.payday}"></label><h3>Tabungan</h3><label>Target tabungan per periode gajian (Rp)<input id="jtab" inputmode="numeric" value="${c.tabungan||0n}" placeholder="0"></label><label>Sudah disisihkan pada periode ini (Rp)<input id="jsav" inputmode="numeric" value="${saved}" placeholder="0"></label><small class="hint">Finara melindungi target tabungan penuh, atau jumlah aktual yang sudah disisihkan bila lebih besar. Kolom sudah disisihkan hanya menjelaskan bagian yang sudah diamankan, bukan pengurang kedua. Periode mengikuti tanggal gajian.</small><h3>Cadangan tak terduga</h3><label>Metode cadangan<select id="jmode"><option value="persen" ${c.cadanganMode!=='nominal'?'selected':''}>Persentase dari sisa setelah tabungan</option><option value="nominal" ${c.cadanganMode==='nominal'?'selected':''}>Nominal tetap</option></select></label><label>Persentase cadangan (0–100%)<input id="jpct" inputmode="numeric" data-plain maxlength="3" value="${c.cadanganPersen??10}"></label><label>Cadangan nominal (Rp)<input id="jnom" inputmode="numeric" value="${c.cadanganNominal||0n}" placeholder="0"></label><small class="hint">Hanya metode yang dipilih yang digunakan. Persentase awal 10%. Metode nominal memberi keleluasaan menentukan jumlah sendiri.</small><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="paydaysave">Simpan pengaturan</button><button class="btn ghost" data-a="close">Batal</button></div>`)},
+paydaysave(){const v=parseInt($('#pd').value,10),tab=NB($('#jtab').value.replace(/\D/g,'')),saved=NB($('#jsav').value.replace(/\D/g,'')),pct=parseInt($('#jpct').value||'0',10),nom=NB($('#jnom').value.replace(/\D/g,'')),mode=$('#jmode').value,err=$('#err');const bad=tab<0n||saved<0n||nom<0n||tab.toString().length>MAXD||saved.toString().length>MAXD||nom.toString().length>MAXD;if(!(v>=1&&v<=28)){err.textContent='Tanggal gajian harus 1 sampai 28.';return}if(bad){err.textContent='Ada nominal terlalu besar atau tidak valid.';return}if(!(Number.isInteger(pct)&&pct>=0&&pct<=100)){err.textContent='Persentase cadangan harus 0 sampai 100.';return}const j0=U()?null:jatah().per,oldPayday=S.payday;S.payday=v;S.jatahCfg={tabungan:tab,disisihkan:saved,periode:range('month')[0],cadanganMode:mode==='nominal'?'nominal':'persen',cadanganPersen:pct,cadanganNominal:nom};save();close();R.o=0;render();toast(U()?'Pengaturan tersimpan':'Pengaturan tersimpan. Uang tersedia per hari: '+rp(jatah().per)+(j0!==null&&j0!==jatah().per?' (sebelumnya '+rp(j0)+')':''),4800)},
+pnav(p){R.o=Math.min(0,R.o+Number(p));render()},qclr(){Q={q:'',ty:''};render()},catgo(id){Q={q:'',ty:'',cg:id};act.tab('tx')},print(){print()},
+bkcsv(){dl('finara-cadangan-'+today()+'.csv','\uFEFF'+fullcsv(),'text/csv');try{localStorage.setItem('finara.lastbk',String(Date.now()))}catch(x){}},
+restcsv(t){try{const rows=pcsv(t),un=s=>/^'[=+\-@\t\r]/.test(s)?s.slice(1):s,n=fresh();if(!rows[0]||rows[0][0]!=='Bagian')throw 1;
+n.acc=[];n.cat=[];const R2=rows.slice(1).map(r=>r.map(un));
+for(const r of R2){const w=WK[r[1]];if(!w)continue;if(r[0]==='Rekening'&&r[2])n.acc.push({id:uid(),w,name:r[2],open:B(r[3])});else if(r[0]==='Kategori'&&r[3]&&(r[2]==='in'||r[2]==='out'))n.cat.push({id:uid(),w,k:r[2],name:r[3]})}
+const f0=fresh();for(const w of['p','u']){if(!n.acc.some(v=>v.w===w))n.acc.push(...f0.acc.filter(v=>v.w===w));for(const k of['in','out'])if(!n.cat.some(v=>v.w===w&&v.k===k))n.cat.push(...f0.cat.filter(v=>v.w===w&&v.k===k))}
+const A=(w,s)=>n.acc.find(v=>v.w===w&&v.name===s),C=(w,s,k)=>n.cat.find(v=>v.w===w&&v.name===s&&v.k===k);let bad=0,k=0;
+for(const r of R2){const w=WK[r[1]];if(!w)continue;
+if(r[0]==='Anggaran'){const c=C(w,r[2],'out'),l=B(r[3]);if(c&&l>0n)n.bud.push({w,c:c.id,lim:l})}
+else if(r[0]==='Transaksi'){const ty=r[3],t=T[ty],a=A(w,r[4]),amt=B(r[7]),to=ty==='transfer'?A(w,r[5]):null,c=t&&t.cat?C(w,r[6],t.cat):null;
+if(!t||!a||amt<=0n||!/^\d{4}-\d{2}-\d{2}$/.test(r[2])||(ty==='transfer'&&(!to||to===a))||(t.cat&&!c)){bad++;continue}
+n.tx.push({id:uid(),w,st:r[9]==='void'?'void':'ok',at:Date.now()+k++,d:r[2],ty,a:a.id,to:to?to.id:'',c:c?c.id:'',amt,n:r[8]||''})}}
+n.active=S.active;PEND=migrate(n);if(!PEND||PEND==='new')throw 2;
+ask('File CSV valid ('+n.tx.length+' transaksi'+(bad?', '+bad+' baris dilewati':'')+'). Pulihkan dan ganti semua data saat ini?','rest2','','Ya, pulihkan')}catch(e){toast('File CSV tidak valid. Pakai file dari Cadangan spreadsheet Finara.')}},
+goal(){const a=S.goal.filter(g=>g.w===S.active);sheet('<h2>Target tabungan</h2><small class="hint">Catatan untuk memantau progres target. Tidak mengubah saldo rekening.</small>'+(a.length?a.map(g=>{const p=g.t>0n?Math.min(100,Number(g.s*100n/g.t)):0;return`<div class="c"><b>${esc(g.n)}</b><small>${rp(g.s)} dari ${rp(g.t)} · ${p}%</small><div class="bar"><i style="width:${p}%"></i></div><div class="row"><button class="btn ghost" data-a="goaladd:${g.id}">Tambah setoran</button><button class="btn ghost" data-a="goaldel:${g.id}">Hapus</button></div></div>`}).join(''):'<div class="empty">Belum ada target.</div>')+`<h3>Target baru</h3><label>Nama<input id="gn" maxlength="40"></label><label>Target (Rp)<input id="gt" inputmode="numeric"></label><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="goalnew">Simpan target</button><button class="btn ghost" data-a="close">Tutup</button></div>`)},
+goalnew(){const n=$('#gn').value.trim(),t=NB($('#gt').value.replace(/\D/g,''));if(!n||t<=0n){$('#err').textContent=!n?'Isi nama target.':'Isi nominal target.';return}S.goal.push({id:uid(),w:S.active,n,t,s:0n});save();act.goal()},
+goaladd(id){FM.g=id;sheet(`<h2>Tambah setoran</h2><label>Nominal (Rp)<input id="gs" inputmode="numeric"></label><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="goalsave">Simpan</button><button class="btn ghost" data-a="goal">Kembali</button></div>`)},
+goalsave(){const g=S.goal.find(v=>v.id===FM.g),a=NB($('#gs').value.replace(/\D/g,''));if(!g||a<=0n){$('#err').textContent='Isi nominal setoran.';return}g.s+=a;save();act.goal()},
+goaldel(id){S.goal=S.goal.filter(v=>v.id!==id);save();act.goal()},
+
+qamt(p){const el=$('#fa');if(!el)return;if(p==='clr')el.value='';else{const c=BigInt(el.value.replace(/\D/g,'')||'0')+BigInt(p);if(c.toString().length>MAXD)return;el.value=String(c)}fmtNum(el);imp()},
+demo(){ask('Tambahkan data contoh ke ruang kerja '+(U()?'Usaha':'Pribadi')+'? Berguna untuk mencoba tampilan dan laporan. Data contoh bisa dihapus kapan saja lewat Lainnya.','demo2','','Ya, tambahkan')},
+demo2(){close();const ac=accs(),a0=ac[0].id,a1=(ac[1]||ac[0]).id,ci=cats('in'),co=cats('out'),n=new Date(),u=U(),td=today();let k=0;
+const add=(d,ty,a,c,amt,nt)=>{if(d>td)return;S.tx.push({id:uid(),w:S.active,st:'ok',at:Date.now()+(k++),d,ty,a,to:'',c,amt:B(amt),n:nt,demo:1})};
+const inc=u?[18500000,21000000,19800000]:[8500000,8500000,8700000],
+ex=u?[[2,2850000,'Stok barang'],[4,450000,'Listrik toko'],[6,1250000,'Gaji part-time'],[9,780000,'Kemasan'],[12,3200000,'Stok barang'],[15,350000,'Internet'],[18,920000,'Ongkir'],[21,2650000,'Stok barang'],[24,540000,'Promosi']]
+:[[2,45000,'Makan siang'],[3,25000,'Bensin'],[5,350000,'Listrik dan air'],[7,185000,'Belanja bulanan'],[9,60000,'Makan malam'],[12,150000,'Pulsa dan internet'],[14,95000,'Transportasi online'],[17,420000,'Belanja kebutuhan'],[20,55000,'Kopi dan makan'],[23,38000,'Parkir dan bensin'],[26,120000,'Nonton dan jajan']];
+for(let m=2;m>=0;m--){const b=new Date(n.getFullYear(),n.getMonth()-m,1);add(ymd(b),'income',a1,ci[0].id,inc[2-m],u?'Penjualan contoh':'Gaji contoh');
+ex.forEach((e,i)=>add(ymd(new Date(b.getFullYear(),b.getMonth(),e[0])),'expense',i%3===0?a1:a0,co[i%co.length].id,e[1],e[2]))}
+logA('','data contoh','ditambahkan');save();render();toast('Data contoh ditambahkan')},
+democlear(){ask('Hapus semua data contoh? Transaksi yang Anda catat sendiri tidak ikut terhapus.','democlear2','','Ya, hapus')},
+democlear2(){S.tx=S.tx.filter(x=>!x.demo);logA('','data contoh','dihapus');save();close();render();toast('Data contoh dihapus')},
+feedback(){open(FEEDBACK_URL,'_blank','noopener')},
+adv(){ADVP=!ADVP;try{localStorage.setItem('finara.adv',ADVP?'1':'0')}catch(e){}ADV=ADVP&&U();render();toast(ADV?'Fitur lanjutan ditampilkan':'Fitur lanjutan disembunyikan')},
+voidq(id){const x=S.tx.find(v=>v.id===id);if(!x||x.st!=='ok')return;x.st='void';logA(x.id,'batal',desc(x));const ps=S.tx.filter(v=>v.pair===x.id&&v.st==='ok');ps.forEach(v=>{v.st='void';logA(v.id,'batal',desc(v))});save();render();toastU(ps.length?'Transaksi dan pasangannya di Pribadi dibatalkan':'Transaksi dibatalkan',()=>{x.st='ok';logA(x.id,'pulihkan',desc(x));ps.forEach(v=>{v.st='ok';logA(v.id,'pulihkan',desc(v))});save();render()})},
+fty(p){const e=$('#fty');if(e&&!e.disabled){e.value=p;e.onchange()}},
+hint(){HINT=!HINT;try{localStorage.setItem('bukukas.hint',HINT?'1':'0')}catch(e){}applyHint();toast(HINT?'Bantuan ditampilkan':'Bantuan disembunyikan')},
+tab(p){tab=p;render();scrollTo(0,0);const mm=$('#m');mm.classList.remove('tin');void mm.offsetWidth;mm.classList.add('tin')},mode(p){S.active=p;Q.ac=Q.cg='';if(Q.ty&&T[Q.ty].only&&T[Q.ty].only!==p)Q.ty='';save();render()},close,
+add(p){txForm(null,p)},edit(p){txForm(p)},per(p){R.p=p;R.o=0;render()},
+// save = inti penyimpanan (saveInti) + tawaran mencatat pasangan modal/penarikan pemilik di Pribadi
+save(){const n=S.tx.length;act.saveInti();const x=S.tx[S.tx.length-1];if(S.tx.length>n&&PF()==='owner'&&U()&&x&&(x.ty==='capital'||x.ty==='draw')){FM.pair=x.id;setTimeout(()=>act.pairsheet(),120)}},
+saveInti(){const ty=$('#fty').value,t=T[ty],d=$('#fd').value,ds=$('#fa').value.replace(/\D/g,''),amt=NB(ds),a=$('#fac').value,to=$('#fto').value,c=t.cat?$('#fc').value:'',n=$('#fn').value.trim();
+const m=!/^\d{4}-\d{2}-\d{2}$/.test(d)||ymd(new Date(d+'T00:00:00'))!==d?'Tanggal tidak valid.':amt<0n?'Nominal terlalu besar.':!amt?'Nominal harus lebih dari 0.':!a?'Pilih rekening.':ty==='transfer'&&(!to||to===a)?'Rekening asal dan tujuan harus berbeda.':t.cat&&!c?'Pilih kategori.':'';
+if(m){$('#err').textContent=m;return}
+const o={d,ty,a,to:ty==='transfer'?to:'',c,amt,n};if(FM.id){const q=S.tx.find(v=>v.id===FM.id);if(q&&q.pay)o.ty=q.ty}
+if(FM.id){const x=S.tx.find(v=>v.id===FM.id);logA(x.id,'ubah',desc(x));Object.assign(x,o);if(x.ty==='capital'||x.ty==='draw')S.tx.forEach(v=>{if(v.pair===x.id&&v.st==='ok'){v.amt=x.amt;v.d=x.d}})}else{const x={id:uid(),w:S.active,st:'ok',at:Date.now(),...o};S.tx.push(x);logA(x.id,'buat',desc(x));const fq=$('#fr')&&$('#fr').value;if(fq){const dom=Number(d.slice(8));S.rec.push({id:uid(),w:S.active,tpl:{ty,a,to:o.to,c,amt,n},freq:fq,dom,next:addP(d,fq,dom),on:true})}}
+LAST.a=a;if(c)LAST.c=c;try{localStorage.setItem('finara.last',JSON.stringify(LAST))}catch(e){}save();close();render();const ng=accs().filter(a=>bal(a)<0n);let tm=U()?'Tersimpan':fbMsg(ty,d);if(ng.length&&(U()||!needSetup()))tm+=(U()?'. Perhatian: saldo ':' Perhatian: saldo ')+ng[0].name+' negatif.';toast(tm,U()?2600:5000)},
+void(){ask('Batalkan transaksi ini? Catatannya tetap tersimpan sebagai batal dan tidak dihitung di saldo maupun laporan.','void2','','Ya, batalkan')},
+void2(){act.voidq(FM.id);close()},
+// accdet = rincian rekening; daftar 10 transaksi terbaru sudah menjadi bagian dari sheet ini
+reconcile(id){const a=S.acc.find(v=>v.id===id);if(!a||a.w!==S.active)return;FM.reconcile=id;const current=bal(a);sheet(`<h2>Rekonsiliasi saldo</h2><small class="hint">Bandingkan saldo Finara dengan saldo nyata pada rekening ini. Finara akan membuat transaksi koreksi bertanggal hari ini. Koreksi tidak dihitung sebagai pendapatan atau pengeluaran, dan tidak mengubah saldo awal maupun laporan historis sebelumnya.</small><div class="c"><small>Saldo menurut Finara</small><b>${rp(current)}</b></div><label>Saldo nyata saat ini (Rp, boleh negatif)<input id="realsaldo" inputmode="text" placeholder="Contoh: 1.000.000" value="${current}"><small class="hint">Boleh memakai titik pemisah ribuan. Jangan masukkan angka desimal.</small></label><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="reconcilesave">Simpan koreksi</button><button class="btn ghost" data-a="accdet:${id}">Batal</button></div>`)},
+reconcilesave(){const id=FM.reconcile,a=S.acc.find(v=>v.id===id);if(!a||a.w!==S.active){toast('Rekening tidak ditemukan');return}const input=$('#realsaldo').value.trim().replace(/\s/g,''),valid=/^-?\d+$/.test(input)||/^-?\d{1,3}(\.\d{3})+$/.test(input);if(!valid){$('#err').textContent='Masukkan angka rupiah bulat; titik hanya boleh sebagai pemisah ribuan.';return}const raw=input.replace(/\./g,''),actual=BigInt(raw);if((actual<0n?-actual:actual).toString().length>MAXD){$('#err').textContent='Nominal terlalu besar.';return}const current=bal(a),diff=actual-current;if(diff===0n){close();act.accdet(id);toast('Saldo sudah cocok. Tidak perlu koreksi.');return}FM.reconcileData={id,actual:String(actual),current:String(current),diff:String(diff)};ask('Saldo Finara: '+rp(current)+'. Saldo nyata: '+rp(actual)+'. Selisih koreksi: '+rp(diff)+'. Finara akan mencatat koreksi bertanggal hari ini, bukan pendapatan atau pengeluaran. Lanjutkan?','reconcileapply','','Ya, catat koreksi')},
+reconcileapply(){const v=FM.reconcileData;if(!v)return;const a=S.acc.find(x=>x.id===v.id);if(!a||a.w!==S.active){FM.reconcileData=null;toast('Rekening tidak ditemukan');return}const current=bal(a),actual=BigInt(v.actual);if(current!==BigInt(v.current)){FM.reconcileData=null;toast('Saldo berubah sejak pratinjau. Buka rekonsiliasi lagi agar selisih dihitung ulang.');close();act.accdet(a.id);return}const diff=actual-current,ty=diff>0n?'adjp':'adjm',amt=diff>0n?diff:-diff,x={id:uid(),w:S.active,st:'ok',at:Date.now(),d:today(),ty,a:a.id,to:'',c:'',amt,n:'Rekonsiliasi saldo: '+rp(current)+' → '+rp(actual)};S.tx.push(x);logA(x.id,'rekonsiliasi',x.n);FM.reconcileData=null;save();close();act.accdet(a.id);render();toast('Koreksi saldo tersimpan: '+rp(diff))},
+accdet(id){const a=S.acc.find(v=>v.id===id);if(!a)return;const g={},all=txs().filter(x=>x.a===id||x.to===id);let vd=0;
+let fut=0;for(const x of all){if(x.st!=='ok'){vd++;continue}if(x.d>today()){fut++;continue}let k,d;if(x.ty==='transfer'){k=x.a===id?'tout':'tin';d=x.a===id?-x.amt:x.amt}else{k=x.ty;d=eff(x)}const r=g[k]=g[k]||{n:0,t:0n};r.n++;r.t+=d}
+const O=['income','tin','capital','loan_in','refund','adjp','expense','tout','draw','loan_prin','loan_int','adjm'],lb=k=>k==='tin'?'Transfer masuk':k==='tout'?'Transfer keluar':T[k].l;
+const rows=Object.keys(g).sort((x,y)=>O.indexOf(x)-O.indexOf(y)).map(k=>`<tr><td>${lb(k)}<small>${g[k].n} transaksi</small></td><td class="${g[k].t<0n?'neg':'pos'}">${g[k].t>0n?'+':''}${rp(g[k].t)}</td></tr>`).join('');
+sheet(`<h2>${esc(a.name)}</h2><small>Rincian saldo rekening</small><div class="c"><table><tr><td>Saldo awal<small>${a.src&&a.src.length?'Terdiri dari '+a.src.length+' sumber':a.note?esc(a.note):'Uang yang sudah ada sebelum mulai mencatat'}</small></td><td>${rp(a.open)}</td></tr>${(a.src||[]).map(v=>`<tr class="sub"><td>${esc(v.n)}</td><td>${rp(v.amt)}</td></tr>`).join('')}${rows}<tr><td><b>Saldo sekarang</b></td><td>${rp(bal(a))}</td></tr></table><small class="hint">Saldo sekarang = saldo awal ditambah semua transaksi sah di rekening ini.${vd?' '+vd+' transaksi dibatalkan tidak dihitung.':''}${fut?' '+fut+' transaksi bertanggal masa depan belum dihitung sampai tanggalnya tiba.':''} Saldo awal dicatat sebagai ekuitas awal, bukan pendapatan.</small></div><h3>Transaksi terbaru rekening ini</h3>${list(all.sort(cmp).slice(0,10))}<div class="row">${U()?'':`<button class="btn" data-a="reconcile:${a.id}">Rekonsiliasi saldo sekarang</button>`}<button class="btn ghost" data-a="accnew:${a.id}">${U()?'Ubah nama dan saldo awal':'Ubah nama / saldo awal'}</button><button class="btn ghost" data-a="close">Tutup</button></div>`)},
+srcadd(){const id=uid(),b=$('#srcs');b.insertAdjacentHTML('beforeend','<div class="srow" id="r'+id+'"><input class="sn" maxlength="40" placeholder="Nama sumber, mis. Tabungan" aria-label="Nama sumber"><div><input class="sa" inputmode="numeric" placeholder="0" aria-label="Jumlah sumber"></div><button class="sx" data-a="srcdel:'+id+'" aria-label="Hapus sumber">×</button></div>');fmtInit();srcsum();b.lastElementChild.querySelector('.sn').focus()},
+srcdel(id){const e=document.getElementById('r'+id);if(e)e.remove();srcsum()},
+accnew(p){const a=p?S.acc.find(v=>v.id===p):null;FM.acc=a?a.id:'';sheet(`<h2>${a?'Ubah':'Tambah'} rekening</h2><label>Nama<input id="an" maxlength="40" value="${esc(a?a.name:'')}"></label><label>Saldo awal (Rp)<input id="ao" inputmode="numeric" placeholder="0" value="${a&&a.open?a.open:''}"></label><h3>Rincian sumber saldo awal (opsional)</h3><small>Isi per sumber, misalnya tabungan atau deposito. Saldo awal di atas dihitung otomatis dari jumlahnya.</small><div id="srcs"></div><div class="row"><button class="btn ghost" data-a="srcadd">Tambah sumber</button></div><small class="hint">${U()?'Saldo awal adalah uang sebelum pencatatan dimulai. Mengubahnya akan mengubah saldo awal seluruh laporan historis. Untuk menyamakan saldo rekening saat ini dengan saldo nyata, gunakan Rekonsiliasi saldo di rincian rekening.':'Saldo awal adalah uang yang sudah ada sebelum mulai mencatat. Ini dicatat sebagai ekuitas awal, bukan pendapatan.'}</small><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="accsave">Simpan</button><button class="btn ghost" data-a="close">Tutup</button></div>`);if(a&&a.src&&a.src.length){for(const v of a.src){act.srcadd();const r=$('#srcs').lastElementChild;r.querySelector('.sn').value=v.n;r.querySelector('.sa').value=v.amt;fmtNum(r.querySelector('.sa'))}srcsum()}},
+accsave(){const n=$('#an').value.trim(),ds=$('#ao').value.replace(/\D/g,''),o=NB(ds);
+if(!n||o<0n){$('#err').textContent=!n?'Isi nama rekening.':'Saldo awal terlalu besar.';return}
+const sr=[...document.querySelectorAll('#shc .srow')].map(r=>({n:r.querySelector('.sn').value.trim(),amt:NB(r.querySelector('.sa').value.replace(/\D/g,''))})).filter(v=>v.amt!==0n);if(sr.some(v=>v.amt<0n)){$('#err').textContent='Jumlah sumber terlalu besar.';return}if(sr.some(v=>!v.n)){$('#err').textContent='Isi nama untuk setiap sumber.';return}const op=sr.length?sr.reduce((t,v)=>t+v.amt,0n):o;if(op.toString().length>MAXD){$('#err').textContent='Saldo awal terlalu besar.';return}const ex=FM.acc&&S.acc.find(v=>v.id===FM.acc);if(ex){logA(ex.id,'ubah rekening',ex.name+' saldo awal '+rp(ex.open)+' → '+rp(op));ex.name=n;ex.open=op;ex.src=sr;delete ex.note}else S.acc.push({id:uid(),w:S.active,name:n,open:op,src:sr});FM.acc='';save();close();render();toast('Rekening tersimpan')},
+catmgr(){const row=c=>`<button class="tx" data-a="catedit:${c.id}">${cic(c.id)}<span class="gr">${esc(c.name)}<small>${catUse(c.id)} transaksi</small></span><span>Ubah</span></button>`;
+sheet(`<h2>Kelola kategori</h2><small class="hint">Mengubah nama tidak mengubah angka di transaksi lama. Kategori yang sudah dipakai hanya bisa dihapus dengan memindahkan transaksinya ke kategori lain. Setiap jenis harus punya minimal satu kategori.</small><h3>Pengeluaran</h3><div class="lst">${cats('out').map(row).join('')}</div><h3>Pendapatan</h3><div class="lst">${cats('in').map(row).join('')}</div><div class="row"><button class="btn" data-a="catnew">Tambah kategori</button><button class="btn ghost" data-a="close">Tutup</button></div>`)},
+catnew(){sheet(`<h2>Tambah kategori</h2><label>Nama<input id="cn" maxlength="40"></label><label>Jenis<select id="ck"><option value="out">Pengeluaran</option><option value="in">Pendapatan</option></select></label><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="catsave">Simpan</button><button class="btn ghost" data-a="catmgr">Kembali</button></div>`)},
+catsave(){const n=$('#cn').value.trim(),k=$('#ck').value;if(!n){$('#err').textContent='Isi nama kategori.';return}if(cats(k).some(c=>c.name.toLowerCase()===n.toLowerCase())){$('#err').textContent='Nama kategori sudah ada.';return}S.cat.push({id:uid(),w:S.active,k,name:n});logA('','tambah kategori',n);save();act.catmgr();render();toast('Kategori ditambahkan')},
+catedit(id){const c=S.cat.find(v=>v.id===id);if(!c)return;FM.cat=id;sheet(`<h2>Ubah kategori</h2><small>${c.k==='in'?'Pendapatan':'Pengeluaran'} · ${catUse(id)} transaksi</small><label>Nama<input id="cn" maxlength="40" value="${esc(c.name)}"></label><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="catren">Simpan nama</button><button class="btn ghost" data-a="catdel:${id}">Hapus kategori</button><button class="btn ghost" data-a="catmgr">Kembali</button></div>`)},
+catren(){const c=S.cat.find(v=>v.id===FM.cat);if(!c)return;const n=$('#cn').value.trim();if(!n){$('#err').textContent='Isi nama kategori.';return}if(cats(c.k).some(v=>v.id!==c.id&&v.name.toLowerCase()===n.toLowerCase())){$('#err').textContent='Nama kategori sudah ada.';return}logA(c.id,'ubah kategori',c.name+' → '+n);c.name=n;save();act.catmgr();render();toast('Nama kategori diubah')},
+catdel(id){const c=S.cat.find(v=>v.id===id);if(!c)return;const o=cats(c.k).filter(v=>v.id!==id);if(!o.length){toast('Minimal harus ada satu kategori '+(c.k==='in'?'pendapatan':'pengeluaran'));return}
+const n=catUse(id),u=n||S.rec.some(r=>r.tpl.c===id)||S.bud.some(v=>v.c===id);
+if(!u){ask('Hapus kategori "'+esc(c.name)+'"?','catdel2',id,'Ya, hapus');return}
+sheet(`<h2>Hapus "${esc(c.name)}"</h2><p>${n} transaksi (termasuk yang dibatalkan), anggaran, atau aturan berulang memakai kategori ini. Pindahkan ke kategori:</p><label>Kategori tujuan<select id="ct">${o.map(v=>opt(v.id,v.name)).join('')}</select></label><small class="hint">Anggaran kategori ini digabung ke kategori tujuan. Laporan lama akan menampilkan transaksinya di kategori tujuan.</small><div class="row"><button class="btn" data-a="catdel2:${id}">Pindahkan lalu hapus</button><button class="btn ghost" data-a="catedit:${id}">Kembali</button></div>`)},
+catdel2(id){const c=S.cat.find(v=>v.id===id);if(!c)return;const o=cats(c.k).filter(v=>v.id!==id),sel=$('#ct'),t=sel?sel.value:'';
+const u=catUse(id)||S.rec.some(r=>r.tpl.c===id)||S.bud.some(v=>v.c===id);
+if(!o.length||(u&&!o.some(v=>v.id===t))){toast('Pilih kategori tujuan');return}
+if(u){S.tx.forEach(x=>{if(x.c===id)x.c=t});S.rec.forEach(r=>{if(r.tpl.c===id)r.tpl.c=t});for(const v of S.bud.filter(q=>q.c===id)){const bt=S.bud.find(q=>q.c===t&&q.w===v.w);if(bt)bt.lim+=v.lim;else v.c=t}S.bud=S.bud.filter(v=>v.c!==id)}
+logA(id,'hapus kategori',c.name+(u?' → '+nm(S.cat,t):''));S.cat=S.cat.filter(v=>v.id!==id);save();act.catmgr();render();toast('Kategori dihapus')},
+bud(){const b=id=>(S.bud.find(v=>v.w===S.active&&v.c===id)||{}).lim||'';
+sheet(`<h2>Anggaran bulanan</h2><small class="hint">Anggaran membandingkan batas Anda dengan pengeluaran bulan berjalan per kategori, dikurangi refund. Transfer, modal, dan pinjaman tidak ikut dihitung. Kosongkan untuk tanpa batas.</small>${cats('out').map(c=>`<label>${esc(c.name)}<input class="bi" data-c="${c.id}" inputmode="numeric" value="${b(c.id)}"></label>`).join('')}<div class="row"><button class="btn" data-a="budsave">Simpan</button><button class="btn ghost" data-a="close">Tutup</button></div>`)},
+budsave(){const n=[...document.querySelectorAll('.bi')].map(e=>({w:S.active,c:e.dataset.c,lim:NB(e.value.replace(/\D/g,''))})).filter(v=>v.lim!==0n);if(n.some(v=>v.lim<0n)){toast('Nominal anggaran terlalu besar');return}
+S.bud=S.bud.filter(v=>v.w!==S.active).concat(n);save();close();render()},
+csv(p){act.csvdl(p)},
+bk(){sheet(`<h2>Cadangan dan pemulihan</h2><small class="hint">Privasi penuh: data hanya ada di perangkat Anda. Finara tidak punya server dan tidak mengirim apa pun ke internet. Cadangan adalah file yang Anda simpan sendiri (File Manager Android, aplikasi Files di iPhone, atau penyimpanan pribadi Anda).</small><h3>Simpan cadangan</h3><div class="row"><button class="btn" data-a="bkdl">Unduh cadangan lengkap (.json)</button><button class="btn ghost" data-a="bkcsv">Unduh cadangan spreadsheet (.csv)</button></div><small>File .csv bisa dibuka di Excel atau Google Sheets dan dipulihkan lagi ke Finara. Isinya rekening, kategori, anggaran, dan transaksi. Utang-piutang, transaksi berulang, dan target tabungan hanya ada di file .json.</small><h3>Pulihkan dari file</h3><label>Pilih file cadangan (.json atau .csv)<input type="file" id="bkf" accept=".json,.csv,application/json,text/csv"></label><details><summary>Tempel teks cadangan (lanjutan)</summary><textarea id="rs" placeholder="Tempel teks cadangan JSON"></textarea><div class="row"><button class="btn ghost" data-a="rest">Pulihkan dari teks</button></div></details><div class="row"><button class="btn ghost" data-a="close">Tutup</button></div>`)},
+copy(){const e=$('#bx');e.select();if(e.value.startsWith('{"app":"bukukas"'))try{localStorage.setItem('finara.lastbk',String(Date.now()))}catch(x){}try{navigator.clipboard.writeText(e.value).then(()=>toast('Tersalin'),()=>toast('Teks dipilih, salin manual'))}catch(x){toast('Teks dipilih, salin manual')}},
+bkdl(){const d=J(S);dl('finara-cadangan-'+today()+'.json',J({app:'bukukas',v:1,created:new Date().toISOString(),sum:hash(d),data:S}),'application/json');try{localStorage.setItem('finara.lastbk',String(Date.now()))}catch(x){}},
+csvdl(p){const[f,t]=p==='p'?range(R.p,R.o):['0000-01-01','9999-12-31'];dl('finara-transaksi-'+today()+'.csv','\uFEFF'+csv(f,t),'text/csv')},
+theme(){const o=['auto','light','dark'];let t='auto';try{t=localStorage.getItem('finara.theme')||'auto'}catch(e){}t=o[(o.indexOf(t)+1)%3];try{localStorage.setItem('finara.theme',t)}catch(e){}applyTheme();render();toast('Tema: '+themeLabel())},
+install(){if(DEFERRED){const d=DEFERRED;DEFERRED=null;d.prompt();d.userChoice.then(c=>{if(c&&c.outcome==='accepted')toast('Finara dipasang')}).catch(()=>{}).finally(()=>render());return}
+const web=/^https?:$/.test(location.protocol);
+sheet('<h2>Pasang Finara di perangkat ini</h2>'+(STANDALONE()?'<p>Finara sudah terpasang dan sedang dibuka sebagai aplikasi.</p>':!web?'<p>Pemasangan hanya bisa dari tautan web (https), bukan dari file yang dibuka langsung. Buka Finara lewat alamat webnya di Chrome atau Safari, lalu ulangi.</p>':ISIOS?'<p>Di iPhone atau iPad, pasang lewat Safari:</p><ol class="qs"><li>Ketuk tombol <b>Bagikan</b> (kotak dengan panah ke atas).</li><li>Pilih <b>Tambah ke Layar Utama</b>.</li><li>Ketuk <b>Tambah</b>.</li></ol><small class="hint">Bila membuka dari Chrome atau aplikasi lain di iPhone, buka dulu tautannya di Safari.</small>':'<p>Pasang lewat menu peramban Anda:</p><ol class="qs"><li><b>Android (Chrome):</b> ketuk menu ⋮, lalu <b>Instal aplikasi</b> atau <b>Tambahkan ke layar utama</b>.</li><li><b>Komputer (Chrome atau Edge):</b> klik ikon pasang di ujung kolom alamat, atau menu ⋮ lalu <b>Instal Finara</b>.</li></ol><small class="hint">Tombol pasang otomatis hanya muncul bila peramban mengizinkan. Jika sudah pernah dipasang atau ditolak, pakai langkah di atas.</small>')+'<div class="row"><button class="btn ghost" data-a="close">Tutup</button></div>')},
+instno(){PBH=true;try{localStorage.setItem('finara.pasang','1')}catch(e){}render()},
+rest(){try{const j=JSON.parse($('#rs').value);if(j.app!=='bukukas'||j.v!==1||!j.data||!Array.isArray(j.data.tx))throw 1;if(hash(JSON.stringify(j.data))!==j.sum)throw 2;PEND=migrate(j.data);if(!PEND||PEND==='new')throw 3;ask('Cadangan valid ('+j.data.tx.length+' transaksi). Pulihkan dan ganti semua data saat ini?','rest2','','Ya, pulihkan')}catch(e){toast('Cadangan tidak valid atau rusak')}},
+rest2(){S=PEND;save();close();render();toast('Data dipulihkan')},
+wipe(){sheet('<h2>Hapus semua data?</h2><p>Semua rekening, transaksi, anggaran, utang-piutang, dan target di perangkat ini akan dihapus dan tidak bisa dikembalikan. Unduh cadangan lebih dulu agar data bisa dipulihkan.</p><div class="row"><button class="btn ghost" data-a="bkdl">Unduh cadangan dulu</button></div><div class="row"><button class="btn" data-a="wipe2">Ya, hapus semua</button><button class="btn ghost" data-a="close">Kembali</button></div>')},
+wipe2(){S=fresh();S.profile='person';save();close();tab='home';render()},
+help(){sheet(`<h2>Petunjuk penggunaan</h2><h3>Jatah harian</h3><p>Di Beranda, Finara memperkirakan alokasi rata-rata harian sampai gajian. Cara hitungnya: total saldo seluruh rekening dikurangi tagihan, target tabungan periode ini, dan cadangan tak terduga, lalu dibagi jumlah hari sampai gajian. Pengaturan tabungan dan cadangan ada di tombol Ubah tanggal gajian pada kartu jatah. Pastikan total saldo mencakup rekening tabungan/cadangan; target tabungan dikurangi satu kali dari total saldo. Nilai sudah disisihkan hanya memisahkan bagian target yang sudah diamankan dari yang masih perlu diamankan. Setiap kali Anda mencatat pengeluaran, sisa jatah hari ini langsung berkurang. Bila lewat dari jatah, jatah hari-hari berikutnya menyusut. Untuk menghitungnya Finara butuh tiga hal: uang Anda sekarang, tanggal gajian, dan tagihan tetap (Lainnya, Tagihan tetap dan transaksi berulang).</p><h3>Agar data selalu tersimpan</h3><p>Data disimpan di peramban perangkat ini, bukan di server. Buka selalu lewat tautan dan peramban yang sama, jangan pakai tab penyamaran (incognito/private), dan jangan hapus data situs atau riwayat peramban.</p><h3>Android (Chrome)</h3><p>Ketuk menu ⋮, pilih Tambahkan ke layar utama (atau Instal aplikasi), lalu buka Finara dari ikon tersebut.</p><h3>iPhone (Safari)</h3><p>Buka tautan di Safari, ketuk Bagikan, pilih Tambah ke Layar Utama, lalu pakai dari ikon itu sejak awal. Data di tab Safari tidak otomatis ada di ikon, dan data situs yang lama tidak dibuka bisa dihapus iOS.</p><h3>Cadangan rutin</h3><p>Buka Lainnya, Cadangan dan pulihkan, lalu ketuk Unduh cadangan lengkap (.json). Simpan file itu di tempat aman di luar aplikasi (penyimpanan HP, Google Drive, atau email ke diri sendiri). Lakukan seminggu sekali. Cadangan tidak dienkripsi, jadi simpan di tempat yang hanya Anda yang bisa buka.</p><h3>Memulihkan data</h3><p>Buka Cadangan dan pulihkan, ketuk Pilih file cadangan di bagian Pulihkan dari file (.json atau .csv), lalu ketuk Ya, pulihkan pada konfirmasi. Semua data saat ini akan diganti. File .csv hanya memuat rekening, kategori, anggaran, dan transaksi. Jika file tidak bisa dipilih, buka Tempel teks cadangan (lanjutan) dan tempel isi file .json di sana.</p><h3>Mengisi atau mengubah saldo awal</h3><p>Pertama kali, ketuk Hitung jatah harian saya di Beranda dan isi uang tunai serta saldo bank atau e-wallet. ${U()?'Untuk mengubah nama dan saldo awal, buka tab Rekening, ketuk rekening, lalu pilih Ubah nama dan saldo awal.':'Untuk mengubah saldo awal historis, buka tab Rekening, ketuk rekening, lalu pilih Ubah nama / saldo awal. Perubahan saldo awal memengaruhi laporan historis. Untuk mencocokkan saldo rekening saat ini, pilih Rekonsiliasi saldo sekarang agar selisih dicatat sebagai koreksi, bukan pendapatan atau pengeluaran.'} Untuk rekening baru, pakai Tambah rekening.</p><h3>Tips mencatat</h3><p>Ketuk Catat. Pilih Pengeluaran, Pemasukan, atau Transfer; di bawah nominal Anda melihat dampaknya ke saldo dan jatah sebelum menyimpan. Pindah dana antar rekening pakai Transfer, bukan pengeluaran. Jenis lain seperti pinjaman dan cicilan ada di fitur lanjutan (Lainnya). Transaksi yang salah bisa dibatalkan dan tetap tercatat sebagai batal.</p><h3>Tombol Bantuan</h3><p>Tombol ? (di kanan atas, dan di pojok kanan atas setiap jendela form) menampilkan atau menyembunyikan semua catatan penjelasan. Ketuk satu catatan untuk melipatnya jadi satu baris, ketuk lagi untuk membukanya. Pilihan tombol dan catatan yang dilipat diingat di perangkat Anda.</p><h3>Prinsip aplikasi</h3><p>Saldo tidak disimpan sebagai satu angka. Ia dihitung ulang dari saldo awal ditambah semua transaksi sah, jadi selalu bisa diperiksa. Pencatatan memakai basis kas: pendapatan dan beban dihitung saat uang bergerak. Transaksi batal tidak dihapus, hanya tidak dihitung. Ruang kerja Pribadi dan Usaha terpisah penuh. Laporan memakai tanggal transaksi. Bagi yang paham akuntansi, setiap transaksi dibentuk menjadi jurnal debit-kredit yang bisa dilihat di Lainnya, Debit-kredit dan neraca.</p><div class="row"><button class="btn" data-a="close">Tutup</button></div>`)},
+rec(){const a=S.rec.filter(r=>r.w===S.active),F={week:'mingguan',month:'bulanan',year:'tahunan'};sheet('<h2>'+(U()?'Transaksi berulang':'Tagihan tetap dan transaksi berulang')+'</h2>'+(U()?'':'<small class="hint">Tagihan tetap (kos, cicilan, listrik) disisihkan dulu dari uang Anda sebelum jatah harian dihitung. Finara mencatatnya otomatis pada tanggal jatuh tempo, jadi aturan ini mengasumsikan tagihan dibayar saat itu. Jika belum dibayar, jeda aturan dan catat kewajibannya agar saldo tidak dianggap sudah keluar.</small>')+(a.length?a.map(r=>`<div class="c"><b>${esc(T[r.tpl.ty].l)} ${rp(r.tpl.amt)}</b><small>${F[r.freq]} · berikutnya ${fd(r.next)} · ${esc(nm(S.acc,r.tpl.a))}${r.on?'':' · dijeda'}</small><div class="row"><button class="btn ghost" data-a="rtog:${r.id}">${r.on?'Jeda':'Aktifkan'}</button><button class="btn ghost" data-a="rdel:${r.id}">Hapus aturan</button></div></div>`).join(''):'<div class="empty">Belum ada. Saat mencatat transaksi baru, pilih Ulangi.</div>')+'<div class="row">'+(U()?'':'<button class="btn" data-a="billnew">Tambah tagihan tetap</button>')+'<button class="btn ghost" data-a="close">Tutup</button></div><small>Transaksi dicatat otomatis saat aplikasi dibuka, termasuk yang terlewat.</small>')},
+rtog(p){const r=S.rec.find(v=>v.id===p);r.on=!r.on;save();act.rec();render()},
+rdel(p){S.rec=S.rec.filter(v=>v.id!==p);save();act.rec();render()},
+plist(){const a=S.pay.filter(p=>p.w===S.active&&p.st!=='void').sort((x,y)=>x.due.localeCompare(y.due)),sm=d=>a.filter(p=>p.dir===d).reduce((s,p)=>s+sisa(p),0n);
+sheet(`<h2>Utang-piutang</h2><div class="c g2"><div><small>Piutang (hak tagih)</small><b class="pos">${rp(sm('recv'))}</b></div><div><small>Utang (kewajiban)</small><b class="neg">${rp(sm('pay'))}</b></div></div>`+(a.length?a.map(p=>{const r=sisa(p);return`<button class="tx" data-a="pdet:${p.id}"><i class="av ${p.dir==='recv'?'pos':'neg'}">${p.dir==='recv'?'↓':'↑'}</i><span class="gr">${esc(p.who)}<small>Jatuh tempo ${fd(p.due)}${r>0n&&p.due<today()?' · terlambat':''}${r===0n?' · lunas':''}</small></span><span>${rp(r)}</span></button>`}).join(''):'<div class="empty">Belum ada catatan.</div>')+'<div class="row"><button class="btn" data-a="pnew">Tambah</button><button class="btn ghost" data-a="close">Tutup</button></div><small>Pembayaran bisa langsung dicatat ke rekening: piutang menjadi pendapatan, utang menjadi pengeluaran. Untuk pinjaman uang, pilih Tanpa transaksi rekening lalu catat dengan jenis Pinjaman diterima atau Bayar pokok pinjaman.</small>')},
+pnew(){sheet(`<h2>Catatan baru</h2><label>Jenis<select id="pd"><option value="recv">Piutang (orang lain berutang ke saya)</option><option value="pay">Utang (saya berutang)</option></select></label><label>Nama pihak<input id="pw" maxlength="60"></label><label>Nominal (Rp)<input id="pa" inputmode="numeric"></label><label>Jatuh tempo<input type="date" id="pu" value="${today()}"></label><label>Catatan<input id="pn" maxlength="120"></label><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="psave">Simpan</button><button class="btn ghost" data-a="plist">Kembali</button></div>`)},
+psave(){const w=$('#pw').value.trim(),ds=$('#pa').value.replace(/\D/g,''),amt=NB(ds),u=$('#pu').value;const m=!w?'Isi nama pihak.':amt<0n?'Nominal terlalu besar.':!amt?'Nominal harus lebih dari 0.':!/^\d{4}-\d{2}-\d{2}$/.test(u)||ymd(new Date(u+'T00:00:00'))!==u?'Tanggal jatuh tempo tidak valid.':'';if(m){$('#err').textContent=m;return}
+const p={id:uid(),w:S.active,dir:$('#pd').value,who:w,amt,due:u,n:$('#pn').value.trim(),paid:[],st:'ok',at:Date.now()};S.pay.push(p);logA(p.id,'buat',(p.dir==='recv'?'Piutang ':'Utang ')+rp(amt)+' '+w);save();act.plist();render()},
+pdet(p){const x=S.pay.find(v=>v.id===p);FM.p=p;const r=sisa(x);sheet(`<h2>${esc(x.who)}</h2><small>${x.dir==='recv'?'Piutang':'Utang'} · jatuh tempo ${fd(x.due)}${x.n?' · '+esc(x.n):''}</small><div class="c"><table><tr><td>Total</td><td>${rp(x.amt)}</td></tr>${x.paid.map(v=>`<tr><td>Dibayar ${fd(v.d)}${v.tx?' · ke rekening':''}${v.tx&&!pa(v,x)?' · transaksi tidak dihitung':''}</td><td>${rp(pa(v,x))}</td></tr>`).join('')}<tr><td><b>Sisa</b></td><td>${rp(r)}</td></tr></table></div>${r>0n?`<label>Catat pembayaran (Rp)<input id="pp" inputmode="numeric" value="${r}"></label><label>Catat ke rekening<select id="pac"><option value="">Tanpa transaksi rekening</option>${accs().map(a=>opt(a.id,a.name,accs()[0].id)).join('')}</select></label><label>Kategori<select id="pcat">${cats(x.dir==='recv'?'in':'out').map(c=>opt(c.id,c.name)).join('')}</select></label><small class="hint">${x.dir==='recv'?'Uang masuk ke rekening dan dicatat sebagai pendapatan.':'Uang keluar dari rekening dan dicatat sebagai pengeluaran.'} Pilih Tanpa transaksi rekening jika uangnya sudah Anda catat sendiri atau berupa pinjaman uang.</small><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="ppay">Catat pembayaran</button>`:'<div class="row">'}<button class="btn ghost" data-a="pvoid">Batalkan catatan</button><button class="btn ghost" data-a="plist">Kembali</button></div>`)},
+ppay(){const x=S.pay.find(v=>v.id===FM.p),ds=$('#pp').value.replace(/\D/g,''),a=NB(ds);if(a<=0n||a>sisa(x)){$('#err').textContent='Nominal harus lebih dari 0 dan tidak melebihi sisa.';return}const ac=$('#pac').value,ct=$('#pcat').value;if(ac&&!ct){$('#err').textContent='Pilih kategori.';return}const pm={d:today(),amt:a};if(ac){const t={id:uid(),w:S.active,st:'ok',at:Date.now(),d:today(),ty:x.dir==='recv'?'income':'expense',a:ac,to:'',c:ct,amt:a,n:(x.dir==='recv'?'Terima piutang ':'Bayar utang ')+x.who,pay:x.id};S.tx.push(t);logA(t.id,'buat',desc(t));pm.tx=t.id}x.paid.push(pm);logA(x.id,'bayar',rp(a));save();act.pdet(x.id);render()},
+pvoid(){ask('Batalkan catatan ini? Transaksi rekening yang dibuat dari pembayarannya ikut dibatalkan.','pvoid2','','Ya, batalkan')},
+pvoid2(){const x=S.pay.find(v=>v.id===FM.p);x.st='void';for(const v of x.paid){const t=v.tx&&S.tx.find(q=>q.id===v.tx);if(t&&t.st==='ok'){t.st='void';logA(t.id,'batal',desc(t))}}logA(x.id,'batal',x.who);save();act.plist();render()},
+jurnal(){const L=ledger(),k=Object.keys(L).sort(),net=a=>L[a][0]-L[a][1],g=p=>k.filter(a=>a[0]===p).reduce((s,a)=>s+net(a),0n);let D=0n,C=0n;
+const rows=k.map(a=>{const n=net(a),d=n>0n?n:0n,c=n<0n?-n:0n;D+=d;C+=c;return`<tr><td>${esc(lname(a))}</td><td>${d?rp(d):''}</td><td>${c?rp(c):''}</td></tr>`}).join(''),as=g('A'),li=-g('L'),eq=-(g('E')+g('R')+g('B')),ok=D===C&&as===li+eq;
+sheet(`<h2>Debit-kredit dan neraca</h2><small class="hint">Setiap transaksi punya dua sisi, debit dan kredit, dengan nilai sama. Aset seperti rekening normalnya di debit, sedangkan pendapatan, modal, dan kewajiban normalnya di kredit. Jurnal dibentuk otomatis dari saldo awal dan setiap transaksi sah.</small><div class="c"><table><tr><td><b>Akun</b></td><td><b>Debit</b></td><td><b>Kredit</b></td></tr>${rows}<tr><td><b>Total</b></td><td>${rp(D)}</td><td>${rp(C)}</td></tr></table><p class="${ok?'pos':'neg'}">${ok?'Seimbang: total debit sama dengan total kredit.':'Tidak seimbang. Periksa data atau buat cadangan.'}</p></div><h3>Neraca ringkas</h3><div class="c"><table><tr><td>Aset (rekening)</td><td>${rp(as)}</td></tr><tr><td>Kewajiban (pinjaman)</td><td>${rp(li)}</td></tr><tr><td>Ekuitas</td><td>${rp(eq)}</td></tr></table></div><div class="row"><button class="btn ghost" data-a="close">Tutup</button></div>`)},
+log(){const a=S.log.slice(-60).reverse();sheet('<h2>Riwayat perubahan</h2>'+(a.length?'<div class="lst">'+a.map(v=>`<div class="tx"><span class="gr">${esc(v.act)}<small>${new Date(v.t).toLocaleString('id-ID')} · ${esc(v.b)}</small></span></div>`).join('')+'</div>':'<div class="empty">Belum ada riwayat.</div>')+'<div class="row"><button class="btn ghost" data-a="close">Tutup</button></div>')},
+ver(){sheet('<h2>Riwayat versi</h2>'+RIWAYAT.map(r=>'<div class="rv"><b>v'+esc(r.v)+'</b><small>'+esc(tglId(r.t))+'</small>'+r.u.map(x=>'<p>• '+esc(x)+'</p>').join('')+'</div>').join('')+'<div class="row"><button class="btn" data-a="close">Tutup</button></div>')},
+info(){sheet(`<h2>Tentang dan keterbatasan</h2><p><b>Finara</b> v${VER} · diperbarui ${tglId(TGL)} · Made by <b>Herysap61</b></p><p>Data tersimpan di peramban perangkat ini dan berjalan tanpa internet. Agar bisa dibuka saat offline, buka sekali lewat tautan web (https) bersama file sw.js; setelah itu salinan aplikasi tersimpan di perangkat. Jika file HTML dibuka langsung dari penyimpanan, fitur offline ini tidak aktif. Di iPhone, tambahkan ke Layar Utama agar penyimpanan lebih awet; buat cadangan rutin.</p><p>Belum tersedia: kunci PIN/biometrik, enkripsi cadangan, dan notifikasi pengingat. Transaksi berulang dicatat otomatis saat aplikasi dibuka, jurnal debit-kredit dibentuk otomatis dari transaksi, dan data lama dimigrasi otomatis ke skema terbaru. Saldo dihitung ulang dari saldo awal dan transaksi sah setiap kali ditampilkan. Nominal memakai bilangan bulat presisi penuh hingga 36 digit (sampai 999 desiliun), sehingga tidak ada pembulatan.</p><div class="row"><button class="btn ghost" data-a="ver">Riwayat versi</button><button class="btn" data-a="close">Tutup</button></div>`)}};
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/09b-aksi-jatah.js   (baru di 1.5.0)
+   AKSI JATAH HARIAN: alur tiga pertanyaan (onb*), tagihan tetap (bill*),
+   penanda fitur lanjutan (lanjut). Menambah aksi ke objek `act` dari
+   09-aksi.js lewat Object.assign; tidak menimpa aksi yang sudah ada.
+   Logika hitungan ada di 06b-jatah.js.
+   ============================================================ */
+// Jawaban sementara selama alur tiga pertanyaan (disimpan sebagai teks angka).
+let ONB={s:1,cash:'',bank:'',pd:'',bills:[]};
+const onbHead=n=>`<div class="stp" role="img" aria-label="Langkah ${n} dari 3">${[1,2,3].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}<small>Langkah ${n} dari 3</small></div>`;
+const brow=(n,a,d)=>{const id=uid();return`<div class="brow" id="b${id}"><input class="bnm" maxlength="40" placeholder="Nama tagihan, mis. Kos" aria-label="Nama tagihan" value="${esc(n)}"><div><input class="ba" inputmode="numeric" placeholder="0" aria-label="Nominal tagihan" value="${esc(a)}"></div><input class="bdy" inputmode="numeric" data-plain maxlength="2" placeholder="Tgl" aria-label="Tanggal jatuh tempo, 1 sampai 28" value="${esc(d)}"><button class="sx" data-a="onbrowdel:${id}" aria-label="Hapus tagihan">×</button></div>`};
+const readBills=()=>[...document.querySelectorAll('#bls .brow')].map(r=>({n:r.querySelector('.bnm').value.trim(),a:r.querySelector('.ba').value.replace(/\D/g,''),d:r.querySelector('.bdy').value.trim()}));
+Object.assign(act,{
+onb(){ONB={s:1,cash:'',bank:'',pd:'',bills:[]};act.onbs(1)},
+onbs(n){n=+n;ONB.s=n;
+if(n===1)sheet(onbHead(1)+`<h2>Uang Anda sekarang berapa?</h2><small class="hint">Jumlahkan uang yang bisa Anda pakai hari ini. Perkiraan juga boleh, nanti bisa diubah di tab Rekening.</small><label>Uang tunai (Rp)<input id="ob1" inputmode="numeric" placeholder="0" value="${ONB.cash}"></label><label>Saldo bank dan e-wallet (Rp)<input id="ob2" inputmode="numeric" placeholder="0" value="${ONB.bank}"></label><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="onbnext">Lanjut</button><button class="btn ghost" data-a="close">Nanti saja</button></div>`);
+else if(n===2)sheet(onbHead(2)+`<h2>Gajian tanggal berapa?</h2><small class="hint">Dipakai untuk menghitung berapa hari uang Anda harus cukup. Tidak punya gaji tetap? Pilih tanggal 1 (awal bulan). Gajian tanggal 29–31? Isi 28.</small><div class="row chips" role="group" aria-label="Pilihan cepat tanggal gajian">${[1,5,10,15,20,25,28].map(v=>`<button type="button" class="chip" data-a="onbpd:${v}">${v}</button>`).join('')}</div><label>Tanggal gajian (1–28)<input id="ob3" inputmode="numeric" data-plain maxlength="2" placeholder="25" value="${esc(ONB.pd)}"></label><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="onbnext">Lanjut</button><button class="btn ghost" data-a="onbback">Kembali</button></div>`);
+else sheet(onbHead(3)+`<h2>Tagihan tetap tiap bulan?</h2><small class="hint">Contoh: kos atau sewa, cicilan, listrik, internet. Finara menyisihkannya lebih dulu supaya tidak terpakai untuk jajan. Isi tanggal jatuh tempo bulanan. Bila tanggal bulan ini sudah lewat atau hari ini, Finara menganggap tagihan bulan ini sudah dibayar dan mulai menghitung bulan berikutnya. Tagihan yang belum dibayar perlu dicatat sebagai kewajiban terpisah. Boleh dikosongkan.</small><div class="row chips" role="group" aria-label="Contoh tagihan">${['Kos atau sewa','Cicilan','Listrik','Internet dan pulsa'].map(v=>`<button type="button" class="chip" data-a="onbbill:${v}">+ ${v}</button>`).join('')}</div><div id="bls">${(ONB.bills.length?ONB.bills:[{n:'',a:'',d:''}]).map(b=>brow(b.n,b.a,b.d)).join('')}</div><div class="row"><button class="btn ghost" data-a="onbrow">Tambah baris</button></div><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="onbnext">Hitung jatah</button><button class="btn ghost" data-a="onbback">Kembali</button></div>`)},
+onbpd(v){const e=$('#ob3');if(e)e.value=v},
+onbrow(){const b=$('#bls');if(!b||b.children.length>=8)return;b.insertAdjacentHTML('beforeend',brow('','',''));fmtInit();b.lastElementChild.querySelector('.bnm').focus()},
+onbrowdel(id){const e=document.getElementById('b'+id);if(e)e.remove()},
+onbbill(n){const b=$('#bls');if(!b)return;let r=[...b.children].find(r=>!r.querySelector('.bnm').value.trim());if(!r){if(b.children.length>=8)return;act.onbrow();r=b.lastElementChild}r.querySelector('.bnm').value=n;r.querySelector('.ba').focus()},
+onbback(){if(ONB.s===2)ONB.pd=($('#ob3').value||'').trim();if(ONB.s===3)ONB.bills=readBills();act.onbs(Math.max(1,ONB.s-1))},
+onbnext(){const err=t=>{$('#err').textContent=t};
+if(ONB.s===1){const c=NB($('#ob1').value.replace(/\D/g,'')),b=NB($('#ob2').value.replace(/\D/g,''));
+if(c<0n||b<0n){err('Nominal terlalu besar.');return}if(c+b<=0n){err('Isi uang Anda sekarang. Perkiraan juga boleh.');return}
+ONB.cash=c?String(c):'';ONB.bank=b?String(b):'';act.onbs(2)}
+else if(ONB.s===2){const v=parseInt($('#ob3').value,10);if(!(v>=1&&v<=28)){err('Isi angka 1 sampai 28.');return}ONB.pd=String(v);act.onbs(3)}
+else{const o=[];for(const r of readBills()){if(!r.n&&!r.a&&!r.d)continue;const a=NB(r.a),d=parseInt(r.d,10),n=r.n||'Tagihan';
+if(a<0n){err('Nominal terlalu besar untuk "'+n+'".');return}if(a===0n){err('Isi nominal untuk "'+n+'".');return}if(!(d>=1&&d<=28)){err('Isi tanggal jatuh tempo 1 sampai 28 untuk "'+n+'".');return}o.push({n,a:String(a),d:String(d)})}
+ONB.bills=o;act.onbdone()}},
+// Terapkan jawaban: saldo awal, tanggal gajian, tagihan tetap. Hanya dipanggil saat belum ada uang tercatat.
+onbdone(){S.active='p';const P=S.acc.filter(a=>a.w==='p');if(!P.length){const a={id:uid(),w:'p',name:'Tunai',open:0n};S.acc.push(a);P.push(a)}
+const c=BigInt(ONB.cash||'0'),b=BigInt(ONB.bank||'0');if(P[1]){P[0].open=c;P[1].open=b}else P[0].open=c+b;
+S.payday=+ONB.pd;const pa=P[1]&&b>c?P[1]:P[0];let n=0;for(const v of ONB.bills)if(addBill(v.n,BigInt(v.a),+v.d,pa.id))n++;
+if(!S.profile)S.profile='person';logA('','jatah harian','saldo '+rp(c+b)+', gajian tanggal '+S.payday+', '+n+' tagihan');save();render();act.onbres()},
+onbres(){const J=jatah(),ok=J.fr>0n;sheet(`<div class="stp"><i class="on"></i><i class="on"></i><i class="on"></i><small>Selesai</small></div><h2>${ok?'Jatah harian Anda':'Uang belum cukup sampai gajian'}</h2><div class="c res"><small>${ok?'Estimasi alokasi per hari':'Kekurangan'}</small><b class="big ${ok?'pos':'neg'}">${ok?rp(J.per):rp(-J.fr)}</b><small>${ok?'selama '+J.days+' hari, sampai gajian '+tglId(J.np):'setelah tagihan, tabungan, dan cadangan sampai '+tglId(J.np)}</small></div>
+<div class="c"><table><tr><td>Uang Anda sekarang</td><td>${rp(J.tot)}</td></tr><tr><td>Tagihan sebelum gajian<small>${J.B.length} tagihan</small></td><td>−${rp(J.bt)}</td></tr><tr><td>Tabungan yang diamankan</td><td>−${rp(J.savingsHold)}</td></tr><tr><td>Cadangan tak terduga</td><td>−${rp(J.reserve)}</td></tr><tr><td>Uang tersedia</td><td>${rp(J.fr)}</td></tr><tr><td>Dibagi jumlah hari</td><td>${J.days} hari</td></tr></table></div>${ok?'':'<small class="hint">Coba tunda pengeluaran yang tidak wajib, atau periksa saldo, tagihan, target tabungan, dan cadangan. Saldo ada di tab Rekening, tagihan di Lainnya › Tagihan tetap dan transaksi berulang.</small>'}<h3>Cara memakainya</h3><p>Ini estimasi setelah tagihan, tabungan, dan cadangan, bukan jaminan uang aman dibelanjakan. Pastikan total saldo mencakup seluruh rekening termasuk tabungan dan cadangan. Atur target tabungan serta cadangan melalui Ubah tanggal gajian di Beranda. Setiap kali Anda belanja, ketuk Catat. Beranda langsung menunjukkan sisa jatah hari ini, dan sebelum menyimpan Anda sudah melihat dampaknya.</p><div class="row"><button class="btn" data-a="onbgo">Catat pengeluaran</button><button class="btn ghost" data-a="close">Lihat Beranda</button></div>`)},
+onbgo(){act.add('expense')},
+billnew(){sheet(`<h2>Tambah tagihan tetap</h2><small class="hint">Tagihan yang muncul tiap bulan, misalnya kos, cicilan, listrik, atau internet. Finara menyisihkannya dari total saldo sebelum menghitung jatah harian, dan mencatatnya otomatis pada tanggalnya.</small><label>Nama tagihan<input id="bln" maxlength="40" placeholder="Contoh: Kos"></label><label>Nominal (Rp)<input id="bla" inputmode="numeric" placeholder="0"></label><label>Tanggal jatuh tempo tiap bulan (1–28)<input id="bld" inputmode="numeric" data-plain maxlength="2" placeholder="5"></label><label>Dibayar dari rekening<select id="blk">${accs().map(a=>opt(a.id,a.name,LAST.a)).join('')}</select></label><p id="err" class="neg"></p><div class="row"><button class="btn" data-a="billsave">Simpan tagihan</button><button class="btn ghost" data-a="close">Batal</button></div>`)},
+billsave(){const n=$('#bln').value.trim(),a=NB($('#bla').value.replace(/\D/g,'')),d=parseInt($('#bld').value,10),k=$('#blk').value;
+const m=!n?'Isi nama tagihan.':a<0n?'Nominal terlalu besar.':!a?'Isi nominal tagihan.':!(d>=1&&d<=28)?'Isi tanggal 1 sampai 28.':!k?'Pilih rekening.':'';if(m){$('#err').textContent=m;return}
+const f0=jatah().fr;addBill(n,a,d,k);save();render();const f1=jatah().fr;act.rec();
+toast(f1!==f0?'Tagihan disimpan. Sisa setelah tagihan sampai gajian: '+rp(f0)+' → '+rp(f1):'Tagihan disimpan. Dihitung ke jatah saat jatuh temponya masuk periode gajian ini.',4800)},
+lanjut(){LANJUT=!LANJUT;try{localStorage.setItem('finara.lanjut',LANJUT?'1':'0')}catch(e){}render();toast(LANJUT?'Fitur lanjutan ditampilkan':'Fitur lanjutan disembunyikan')}
+});
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/10-peristiwa.js
+   PERISTIWA & FORMAT: pendengar klik/geser, terbilang, format nominal, penyesuaian ukuran huruf
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const i=b.dataset.a.indexOf(':'),a=i<0?b.dataset.a:b.dataset.a.slice(0,i);act[a]&&act[a](i<0?'':b.dataset.a.slice(i+1))});
+document.addEventListener('click',e=>{const h=e.target.closest('.hint');if(!h)return;h.classList.toggle('fold');const k=hash(h.textContent),i=FOLD.indexOf(k);if(h.classList.contains('fold')){if(i<0)FOLD.push(k)}else if(i>=0)FOLD.splice(i,1);try{localStorage.setItem('bukukas.fold',JSON.stringify(FOLD))}catch(x){}});
+let SWX=0,SWE=null,SWD=0,SWQ=0;
+document.addEventListener('pointerdown',e=>{const t=e.target.closest&&e.target.closest('.tx[data-sw]');if(t){SWE=t;SWX=e.clientX;SWD=0}});
+document.addEventListener('pointermove',e=>{if(!SWE)return;const d=e.clientX-SWX;if(d<-10||SWD){SWD=Math.max(-160,Math.min(0,d));SWE.classList.add('sw');SWE.style.transform='translateX('+SWD+'px)'}});
+const swEnd=e=>{if(!SWE)return;const t=SWE,d=SWD;SWE=null;SWD=0;if(!d)return;SWQ=Date.now();if(d<-90&&e.type==='pointerup'){act.voidq(t.dataset.sw);return}t.style.transform='';t.classList.remove('sw')};
+document.addEventListener('pointerup',swEnd);document.addEventListener('pointercancel',swEnd);
+document.addEventListener('click',e=>{if(Date.now()-SWQ<400){e.stopImmediatePropagation();e.preventDefault()}},true);
+$('#sh').addEventListener('click',e=>{if(e.target.id==='sh')close()});
+function tb(n){n=BigInt(n);if(n===0n)return'Nol rupiah';
+const w=['','satu','dua','tiga','empat','lima','enam','tujuh','delapan','sembilan','sepuluh','sebelas'],
+sc=['','ribu','juta','miliar','triliun','kuadriliun','kuintiliun','sekstiliun','septiliun','oktiliun','noniliun','desiliun'];
+const f=g=>g<12?w[g]:g<20?w[g-10]+' belas':g<100?w[Math.floor(g/10)]+' puluh'+(g%10?' '+w[g%10]:''):g<200?'seratus'+(g>100?' '+f(g-100):''):w[Math.floor(g/100)]+' ratus'+(g%100?' '+f(g%100):'');
+const d=n.toString(),gs=[];for(let e=d.length;e>0;e-=3)gs.unshift(d.slice(Math.max(0,e-3),e));
+const out=[];gs.forEach((x,k)=>{const g=Number(x),i=gs.length-1-k;if(!g)return;out.push(i===1&&g===1?'seribu':f(g)+(sc[i]?' '+sc[i]:''))});
+const t=out.join(' ');return t[0].toUpperCase()+t.slice(1)+' rupiah'}
+function fmtNum(el){const pos=el.selectionStart,d=(el.value.slice(0,pos).match(/\d/g)||[]).length,g=el.value.replace(/\D/g,'').replace(/^0+(?=\d)/,'').slice(0,MAXD+1),v=g.replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+el.value=v;if(document.activeElement===el){let i=0,c=0;while(i<v.length&&c<d){if(/\d/.test(v[i]))c++;i++}try{el.setSelectionRange(i,i)}catch(e){}}
+const o=el.nextElementSibling;if(o&&o.classList.contains('say'))o.textContent=!g?'':g.length>MAXD?'Nominal terlalu besar':tb(BigInt(g))}
+function fmtInit(){document.querySelectorAll('#shc input[inputmode="numeric"]:not([data-plain])').forEach(el=>{if(!el.nextElementSibling||!el.nextElementSibling.classList.contains('say'))el.insertAdjacentHTML('afterend','<small class="say" aria-live="polite"></small>');fmtNum(el)})}
+function srcsum(){const r=[...document.querySelectorAll('#shc .sa')],o=$('#ao');if(!o)return;o.readOnly=r.length>0;if(!r.length)return;const t=r.reduce((t,e)=>t+BigInt(e.value.replace(/\D/g,'').slice(0,MAXD+1)||'0'),0n);o.value=t?String(t):'';fmtNum(o)}
+document.addEventListener('input',e=>{const el=e.target;if(el.matches&&el.matches('#shc input[inputmode="numeric"]:not([data-plain])'))fmtNum(el);if(el.classList&&el.classList.contains('sa'))srcsum()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#sh').classList.contains('on'))close()});
+function fit(el,max){el.style.fontSize='';el.style.whiteSpace='';el.style.wordBreak='';if(!(max>0)||!el.getClientRects().length)return;let fs=parseFloat(getComputedStyle(el).fontSize);while(fs>9&&el.scrollWidth>max+.5){fs-=Math.max(.5,fs*.04);el.style.fontSize=fs+'px'}if(el.scrollWidth>max+.5){el.style.whiteSpace='normal';el.style.wordBreak='break-all'}}
+function fitAll(){document.querySelectorAll('.hero b,.hmini strong,.g2 b,.cards b,.big').forEach(e=>fit(e,e.clientWidth));
+document.querySelectorAll('.tx>span:last-child').forEach(e=>fit(e,e.parentElement.clientWidth*.8));
+document.querySelectorAll('td+td').forEach(e=>{const t=e.closest('table'),pe=t.parentElement,ps=getComputedStyle(pe),iw=pe.clientWidth-parseFloat(ps.paddingLeft)-parseFloat(ps.paddingRight);fit(e,Math.min(t.clientWidth,iw)*(t.rows[0].cells.length>2?.34:.55))});
+document.querySelectorAll('.rep-b b').forEach(e=>fit(e,e.parentElement.clientWidth*.6))}
+let fq;const sched=()=>{cancelAnimationFrame(fq);fq=requestAnimationFrame(fitAll)};
+new MutationObserver(sched).observe(document.body,{childList:true,subtree:true});
+addEventListener('resize',sched);addEventListener('orientationchange',sched);if(document.fonts)document.fonts.ready.then(sched);
+
+</script>
+<script>
+/* ============================================================
+   FINARA · js/11-mulai.js
+   MULAI: splash, penyempurnaan akhir, render pertama, service worker
+   Dimuat berurutan (angka di nama berkas = urutan). Semua berkas
+   berbagi satu lingkup global; lihat docs/PETA-KODE.md.
+   ============================================================ */
+(()=>{const e=$('#spl');if(!e)return;let k=0;try{k=sessionStorage.getItem('fsp');sessionStorage.setItem('fsp','1')}catch(x){}if(k){e.remove();return}setTimeout(()=>{e.classList.add('x');setTimeout(()=>e.remove(),450)},900)})();
+document.addEventListener('keydown',e=>{if(e.key!=='Enter'||e.isComposing)return;const t=e.target;if(!t.matches||!t.matches('#shc input:not([type=file]):not([type=search])'))return;const b=document.querySelector('#shc .row .btn:not(.ghost)');if(b){e.preventDefault();b.click()}});
+new MutationObserver(()=>{const e=$('#shc #err');if(e&&e.textContent)e.scrollIntoView({block:'center',behavior:'smooth'})}).observe($('#shc'),{childList:true,subtree:true,characterData:true});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[role=button]:not(button)')){e.preventDefault();e.target.click()}});
+// 1.5.0: pengguna baru langsung memakai profil Perorangan (tanpa pemilih profil); profil bisa diganti di Lainnya.
+if(!S.profile){if(S.tx.length||S.acc.some(a=>a.open>0n))S.profile='owner';else{S.profile='person';save()}}
+render();
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))addEventListener('load',()=>{const had=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js').catch(()=>{});navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!had)return;const e=$('#toast');e.textContent='Versi baru Finara siap. ';const b=document.createElement('button');b.textContent='Muat ulang';b.style.cssText='margin-left:8px;border:0;background:none;color:#a6ee6b;font:inherit;font-weight:800;text-decoration:underline;cursor:pointer';b.onclick=()=>location.reload();e.append(b);e.style.display='block';e.style.pointerEvents='auto';clearTimeout(TT)})});
+
+</script>
+</body></html>
