@@ -8,8 +8,8 @@ const VERSI = 'finara-v' + VER;
 const INTI = [
   './', './index.html', './styles.css', './config.js', './versi.js',
   './js/01-dasar.js', './js/02-data.js', './js/03-hitung.js', './js/04-komponen.js',
-  './js/05-grafik.js', './js/06-layar.js', './js/07-render-formulir.js', './js/08-data-lanjutan.js',
-  './js/09-aksi.js', './js/10-peristiwa.js', './js/11-mulai.js',
+  './js/05-grafik.js', './js/06-layar.js', './js/06b-jatah.js', './js/07-render-formulir.js', './js/08-data-lanjutan.js',
+  './js/09-aksi.js', './js/09b-aksi-jatah.js', './js/10-peristiwa.js', './js/11-mulai.js',
   './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png'
 ];
 

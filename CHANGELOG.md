@@ -4,6 +4,93 @@ Catatan untuk **pengembang** (apa yang berubah di kode dan kenapa). Catatan untu
 ada di `versi.js` (tampil di aplikasi: Lainnya > Tentang > Riwayat versi).
 Format: bagian terbaru di atas. Penomoran: lihat `docs/PANDUAN-PEMBARUAN.md`.
 
+## [1.5.0] - 2026-10-30
+
+Rilis fokus **mode Pribadi**: satu janji utama (jatah harian sampai gajian), alur pertama yang pendek, dan umpan balik
+setelah mencatat. **Tidak ada perubahan skema atau format data** (`SCHEMA` tetap 2). Mode Usaha tidak diubah.
+
+### Ditambah
+- `js/06b-jatah.js` (berkas baru): `jatah()` (uang bebas, jatah hari ini, sisa jatah, jatah besok), `heroJ()`/`vHomeP()`
+  (Beranda Pribadi), `vWelcome()` (layar pertama berisi janji, contoh hitungan, tiga pertanyaan), `fbMsg()` (teks umpan balik
+  setelah mencatat), `imp()` + `simTx()` (pratinjau dampak di formulir: transaksi rekaan ditambahkan sementara ke `S.tx`, dihitung, lalu dibuang),
+  `addBill()` (tagihan tetap = aturan berulang bulanan), `LJ()`/`tyOK()`/`hasAdv()` (mode sederhana vs fitur lanjutan).
+- `js/09b-aksi-jatah.js` (berkas baru): aksi `onb*` (alur tiga pertanyaan: uang sekarang, tanggal gajian, tagihan tetap, lalu hasil),
+  `billnew`/`billsave`, `lanjut`. Ditambahkan ke `act` lewat `Object.assign`, tidak menimpa aksi lama.
+- Kunci penyimpanan baru `finara.lanjut` (1 = fitur lanjutan Pribadi tampil).
+
+### Diubah
+- Beranda Pribadi: kartu utama kini jatah harian (bukan total saldo). Urutan: jatah, pemasukan/pengeluaran, transaksi terbaru,
+  kartu cara hitung, kesehatan keuangan, tren, anggaran, rekening. Pengguna tanpa uang tercatat melihat layar sambutan.
+  Beranda Usaha dipindah ke `vHomeU()` tanpa perubahan isi; `vHome()` hanya memilih.
+- `plancard()` dan `health()` dipindah ke `06b-jatah.js`. `plancard` kini "Cara menghitung jatah Anda" (rincian, tombol tambah tagihan).
+  `health` menambah baris "Langkah:" per indikator (dana darurat, tingkat tabungan, beban cicilan, kekayaan bersih).
+- Formulir transaksi (Pribadi, mode sederhana): kolom Jenis disembunyikan untuk transaksi baru (cukup tiga tombol cepat); daftar jenis
+  dibatasi ke Pemasukan/Pengeluaran/Transfer (jenis lain muncul bila fitur lanjutan aktif atau transaksi itu sudah memakainya).
+  Filter jenis di tab Transaksi ikut dibatasi.
+- `saveInti`: toast setelah simpan memakai `fbMsg()` (Pribadi) dan tampil lebih lama (5 dtk). `toast(t, ms)` menerima durasi.
+- Menu Lainnya (Pribadi): grup baru "Jatah harian" (tanggal gajian, tagihan tetap); Utang-piutang dan Simulasi tabungan masuk fitur lanjutan.
+- `act.payday`, `act.rec`, `act.help`, teks `TH` Pribadi (pemasukan, pengeluaran, transfer) menjelaskan dampak ke jatah harian.
+- Pengguna baru otomatis berprofil `person` (`11-mulai.js`) dan pemilih profil tidak lagi muncul sendiri. `wipe2` juga mengatur profil `person`.
+
+### Diperbaiki
+- `act.rtog` dan `act.rdel`: Beranda di belakang jendela tidak ikut diperbarui; kini `render()` dipanggil.
+
+### Catatan
+- Definisi jatah: uang bebas = total saldo − tagihan berulang − utang jatuh tempo sebelum gajian berikutnya. Jatah hari ini =
+  (uang bebas + pengeluaran harian hari ini) ÷ jumlah hari sampai gajian (hari ini ikut). Pengeluaran harian tidak memuat transaksi
+  hasil aturan berulang (`rec`) dan pembayaran utang (`pay`) karena keduanya sudah dihitung lewat tagihan.
+- Tagihan yang tanggalnya sudah lewat atau hari ini saat dibuat dianggap sudah dibayar bulan itu (jatuh tempo berikutnya bulan depan).
+- Gajian tanggal 1 berarti bulan kalender (perilaku lama); pendapatan tidak tetap disarankan memakai tanggal 1.
+- Belum diuji dengan pengguna nyata. Lihat `docs/RENCANA.md` untuk pengujian 3–5 orang.
+
+## [1.4.6] - 2026-10-30
+
+Rilis perapian tampilan dan bantuan. **Tidak ada perubahan skema atau format data.**
+
+### Diubah
+- `vMore()` (`js/06-layar.js`): daftar datar ±17 tombol diganti daftar `G` berisi grup (Catatan keuangan, Akuntansi [Usaha],
+  Data dan cadangan, Tampilan dan profil, Bantuan, Hapus data). Isi dan urutan tombol dalam tiap grup mengikuti kondisi lama
+  (Pribadi/Usaha, `ADV`, `DEFERRED`, `FEEDBACK_URL`). Gaya baru di akhir `styles.css` (`h3.mh`, `.list-btn.danger`).
+- `ask(pesan, aksi, param, label)` (`js/07-render-formulir.js`): parameter keempat opsional mengganti label tombol
+  "Ya, lanjutkan". Aksi yang menghapus atau membatalkan kini memakai "Ya, hapus", "Ya, batalkan", "Ya, pulihkan", "Ya, tambahkan".
+- `act.wipe` (`js/09-aksi.js`): tidak lagi lewat `ask()`; sheet sendiri dengan tombol **Unduh cadangan dulu** (`bkdl`) di atas
+  "Ya, hapus semua".
+
+### Diperbaiki
+- `act.help`: bagian "Cadangan rutin" dan "Memulihkan data" menyebut tombol Salin dan Periksa dan pulihkan yang sudah tidak
+  ada. Teks kini sesuai layar Cadangan (Unduh cadangan lengkap, Pilih file cadangan, konfirmasi Ya, pulihkan).
+
+### Catatan
+- `act.copy` dan `box()` (`js/08-data-lanjutan.js`) tidak lagi dipakai dari layar mana pun; dibiarkan untuk saat ini.
+
+## [1.4.5] - 2026-10-30
+
+Rilis perbaikan. **Tidak ada perubahan skema atau format data** (`SCHEMA` tetap 2).
+
+### Diperbaiki
+- `act.accdet` (`js/09-aksi.js`): daftar transaksi tampil dua kali di rincian rekening. Sejak 1.4.4 pembungkus `accdet`
+  menambahkan "10 transaksi terakhir" padahal `accdetInti` sudah memuat daftar yang sama. Pembungkus dihapus dan
+  `accdetInti` dikembalikan menjadi `accdet`. Pola pembungkus kini hanya tersisa di `save` (lihat `docs/PETA-KODE.md` bagian 6).
+- Siklus gajian: input `#pd` memakai `inputmode="numeric"` sehingga ikut diformat sebagai rupiah dan menampilkan terbilang
+  ("Satu rupiah"). Input itu kini bertanda `data-plain`, dan `fmtInit()` serta pendengar `input` (`js/10-peristiwa.js`)
+  melewati input bertanda itu. **Aturan:** input angka yang bukan nominal uang wajib diberi `data-plain`.
+- `act.simgo`: target dengan tabungan per bulan sangat kecil menghasilkan tanggal tidak valid ("undefined NaN").
+  Kini di atas 1200 bulan tampil "Lebih dari 100 tahun lagi"; tanggal dihitung dari tanggal 1 agar tidak melompat bulan.
+- `act.voidq`: membatalkan modal/penarikan pemilik di Usaha tidak membatalkan pasangannya di Pribadi (`pair`), sehingga
+  saldo dua ruang tidak cocok. Pasangan berstatus `ok` kini ikut dibatalkan, dan ikut dipulihkan saat diurungkan.
+  Mengubah modal/penarikan (`saveInti`) juga menyamakan nominal dan tanggal pasangannya.
+
+### Keamanan
+- `index.html`: ditambah Content-Security-Policy (`connect-src 'none'`, `script-src 'self'`, tanpa skrip inline).
+  Janji "tidak ada permintaan ke internet" kini ditegakkan oleh peramban, bukan hanya oleh `tools/cek.mjs`.
+- `migrate()` (`js/02-data.js`): file cadangan bisa dimodifikasi dan checksum `hash()` bukan tanda tangan, sehingga
+  `id` atau tanggal berisi HTML lolos dan masuk ke templat. Sekarang `id` yang tidak berbentuk `[A-Za-z0-9_-]{1,40}`
+  diganti `uid()` baru (rujukan ikut dipetakan), tanggal transaksi/berulang harus `TTTT-BB-HH`, dan `opt()` memakai `esc()`.
+
+### Catatan
+- Belum diperbaiki (lihat `docs/RENCANA.md`): teks Petunjuk penggunaan masih menyebut tombol Salin / Periksa dan pulihkan,
+  menu Lainnya belum dikelompokkan, dan label konfirmasi masih seragam "Ya, lanjutkan".
+
 ## [1.4.4] - 2026-10-29
 
 Rilis perapian. **Tidak ada perubahan fitur, tampilan, maupun format data.**

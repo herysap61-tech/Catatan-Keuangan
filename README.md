@@ -12,7 +12,7 @@ Made by **Herysap61**. Lisensi MIT.
 - Pemasukan, pengeluaran, transfer antar rekening, modal dan penarikan pemilik, pinjaman, refund, koreksi saldo
 - Laporan periode, grafik tren, anggaran bulanan beserta laju pemakaiannya
 - Transaksi berulang, utang-piutang, target tabungan, simulasi tabungan
-- Pribadi: kartu Kesehatan keuangan, **Rencana sampai gajian**, siklus gajian
+- Pribadi: **jatah harian sampai gajian** (angka utama di Beranda), tiga pertanyaan awal, pratinjau dampak saat mencatat, kartu Kesehatan keuangan bersaran, tagihan tetap
 - Usaha: arus kas 30 hari, umur piutang dan utang, jurnal debit-kredit (fitur lanjutan)
 - Kekayaan gabungan Pribadi + Usaha
 - Cadangan dan pemulihan (JSON dan CSV), ekspor CSV
@@ -33,7 +33,7 @@ index.html            Kerangka halaman; urutan <script> = urutan pemuatan
 styles.css            Seluruh tampilan
 config.js             Pengaturan jarang berubah (mis. FEEDBACK_URL)
 versi.js              SATU-SATUNYA tempat nomor versi dan catatan pembaruan
-js/                   Logika aplikasi, 11 berkas berurutan (01-dasar … 11-mulai)
+js/                   Logika aplikasi, berkas berurutan (01-dasar … 11-mulai, termasuk 06b dan 09b untuk jatah harian)
 sw.js                 Service worker: cache offline & pemasangan versi baru
 manifest.webmanifest  Agar bisa dipasang seperti aplikasi
 icon*.png, icon.svg   Ikon

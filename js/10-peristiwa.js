@@ -23,12 +23,12 @@ const t=out.join(' ');return t[0].toUpperCase()+t.slice(1)+' rupiah'}
 function fmtNum(el){const pos=el.selectionStart,d=(el.value.slice(0,pos).match(/\d/g)||[]).length,g=el.value.replace(/\D/g,'').replace(/^0+(?=\d)/,'').slice(0,MAXD+1),v=g.replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 el.value=v;if(document.activeElement===el){let i=0,c=0;while(i<v.length&&c<d){if(/\d/.test(v[i]))c++;i++}try{el.setSelectionRange(i,i)}catch(e){}}
 const o=el.nextElementSibling;if(o&&o.classList.contains('say'))o.textContent=!g?'':g.length>MAXD?'Nominal terlalu besar':tb(BigInt(g))}
-function fmtInit(){document.querySelectorAll('#shc input[inputmode="numeric"]').forEach(el=>{if(!el.nextElementSibling||!el.nextElementSibling.classList.contains('say'))el.insertAdjacentHTML('afterend','<small class="say" aria-live="polite"></small>');fmtNum(el)})}
+function fmtInit(){document.querySelectorAll('#shc input[inputmode="numeric"]:not([data-plain])').forEach(el=>{if(!el.nextElementSibling||!el.nextElementSibling.classList.contains('say'))el.insertAdjacentHTML('afterend','<small class="say" aria-live="polite"></small>');fmtNum(el)})}
 function srcsum(){const r=[...document.querySelectorAll('#shc .sa')],o=$('#ao');if(!o)return;o.readOnly=r.length>0;if(!r.length)return;const t=r.reduce((t,e)=>t+BigInt(e.value.replace(/\D/g,'').slice(0,MAXD+1)||'0'),0n);o.value=t?String(t):'';fmtNum(o)}
-document.addEventListener('input',e=>{const el=e.target;if(el.matches&&el.matches('#shc input[inputmode="numeric"]'))fmtNum(el);if(el.classList&&el.classList.contains('sa'))srcsum()});
+document.addEventListener('input',e=>{const el=e.target;if(el.matches&&el.matches('#shc input[inputmode="numeric"]:not([data-plain])'))fmtNum(el);if(el.classList&&el.classList.contains('sa'))srcsum()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#sh').classList.contains('on'))close()});
 function fit(el,max){el.style.fontSize='';el.style.whiteSpace='';el.style.wordBreak='';if(!(max>0)||!el.getClientRects().length)return;let fs=parseFloat(getComputedStyle(el).fontSize);while(fs>9&&el.scrollWidth>max+.5){fs-=Math.max(.5,fs*.04);el.style.fontSize=fs+'px'}if(el.scrollWidth>max+.5){el.style.whiteSpace='normal';el.style.wordBreak='break-all'}}
-function fitAll(){document.querySelectorAll('.hero b,.g2 b,.cards b,.big').forEach(e=>fit(e,e.clientWidth));
+function fitAll(){document.querySelectorAll('.hero b,.hmini strong,.g2 b,.cards b,.big').forEach(e=>fit(e,e.clientWidth));
 document.querySelectorAll('.tx>span:last-child').forEach(e=>fit(e,e.parentElement.clientWidth*.8));
 document.querySelectorAll('td+td').forEach(e=>{const t=e.closest('table'),pe=t.parentElement,ps=getComputedStyle(pe),iw=pe.clientWidth-parseFloat(ps.paddingLeft)-parseFloat(ps.paddingRight);fit(e,Math.min(t.clientWidth,iw)*(t.rows[0].cells.length>2?.34:.55))});
 document.querySelectorAll('.rep-b b').forEach(e=>fit(e,e.parentElement.clientWidth*.6))}

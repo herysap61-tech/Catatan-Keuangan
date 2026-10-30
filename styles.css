@@ -267,3 +267,37 @@ details{margin:14px 0}summary{cursor:pointer;font-weight:700;color:var(--at);min
 /* ===== v1.4 ===== */
 .mb{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:12px;z-index:5;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:#2f8f46;color:#fff}.mb.u{background:#2f7fd1}body[data-mode="u"]{--at:#2f7fd1}
 .rv{margin:0 0 14px}.rv b{display:block}.rv small{margin-bottom:4px}.rv p{margin:2px 0}
+
+/* ===== v1.4.6 ===== */
+h3.mh{margin:22px 4px 2px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mu)}
+.list-btn.danger{color:var(--neg)}
+
+/* ===== v1.5.0: jatah harian, tiga pertanyaan, dampak, saran ===== */
+#toast{border-radius:20px;line-height:1.4;padding:11px 20px}
+.hj>small{display:block}
+.hj .hsub{margin-top:10px;font-size:14px;font-weight:600;opacity:.9}
+.hj .hbar{height:10px;background:rgba(255,255,255,.5);border-radius:5px;overflow:hidden;margin:16px 0 4px}
+.hj .hbar i{display:block;height:100%;background:#12381a;border-radius:5px;min-width:0}
+.hj.bad>b{color:#8f1d12}.hj.bad .hbar i{background:#9b1c10}
+.hmini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 10px;padding:12px 0 2px;border-top:1px solid rgba(16,48,15,.22)}
+.hmini span{display:block;min-width:0}
+.hmini em{display:block;font-style:normal;font-size:12px;font-weight:600;color:var(--on2);opacity:.75}
+.hmini strong{display:block;font-size:15px;font-weight:800;white-space:nowrap}
+.hj .lk{color:var(--on2);text-decoration:underline;padding:2px 0;margin:0;font-size:13px}
+.hj.prom>b{white-space:normal;font-size:clamp(1.55rem,6.8vw,2.1rem);line-height:1.2;letter-spacing:-.02em}
+.hj.prom .qa{margin-top:20px}
+ol.qs{margin:8px 0 10px;padding-left:22px;line-height:1.7}
+.stp{display:flex;align-items:center;gap:6px;margin:6px 0 0}.stp i{width:28px;height:6px;border-radius:3px;background:var(--ln)}.stp i.on{background:var(--ac)}.stp small{margin-left:6px;font-weight:700}
+.brow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px 40px;gap:8px;align-items:start;margin-top:8px}.brow input{margin:0}
+@media(max-width:480px){.brow{grid-template-columns:minmax(0,1fr) 64px 40px}.brow .bnm{grid-column:1/-1}}
+.imp{margin:12px 0 0;padding:0;border-radius:16px;background:var(--tint);font-size:13px;line-height:1.5}
+.imp:not(:empty){padding:12px 14px}
+.imp>b{display:block;margin-bottom:4px;font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:var(--mu)}
+.imp>div{display:flex;justify-content:space-between;gap:12px}.imp>div>span:last-child{text-align:right;font-weight:700}
+.imp>p{margin:6px 0 0}
+.sg{margin-top:6px;padding:7px 10px;border-radius:12px;background:var(--tint);color:var(--ink);white-space:normal}
+.health .hr>div:first-child{min-width:0;white-space:normal}
+.demo-b{border:2px dashed var(--ln)}
+.c.res{text-align:center}
+.hj.prom>b+small{margin-top:12px}
+.imp>div>span:first-child{flex:none}

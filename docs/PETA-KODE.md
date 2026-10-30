@@ -31,9 +31,11 @@ tidak boleh dilanggar?"**. Baca bagian 1 dan 5 dulu; sisanya untuk dicari saat d
 | `js/04-komponen.js` | Komponen tampilan kecil | `IC` (ikon), `cic()`, `list()`/`listRows()` (daftar transaksi), `bud()` | mengubah baris transaksi/ikon |
 | `js/05-grafik.js` | Grafik SVG & tren | `area()`, `lineChart()`, `expTrend()`, `weekCard()`, `flowCard()`, `budPace()`, `trendBal()` | mengubah/menambah grafik |
 | `js/06-layar.js` | Layar & kartu | `vHome`, `vTx`, `vRep`, `vAcc`, `vMore` (menu Lainnya), `applyProfile()`, `applyTheme()`, `health()`, `plancard()`, `bizcard()`, `strip()` | mengubah isi layar, menambah kartu/menu |
+| `js/06b-jatah.js` | **Jatah harian (Pribadi)**, baru di 1.5.0 | `jatah()`, `vHomeP`, `vWelcome`, `heroJ`, `plancard`, `health`, `fbMsg()` (umpan balik setelah catat), `imp()` + `simTx()` (pratinjau dampak), `addBill()`, `LJ()`/`tyOK()` (mode sederhana vs lanjutan) | mengubah Beranda Pribadi, rumus jatah, saran kesehatan |
 | `js/07-render-formulir.js` | Kerangka render & formulir | `render()`, `sheet()` (jendela bawah), `ask()` (konfirmasi), `txForm()` | mengubah navigasi, formulir transaksi |
 | `js/08-data-lanjutan.js` | Data pendukung | `csv()`, `fullcsv()`, `pcsv()`, `dl()`, `runRec()` (berulang), `due()`, `nudge()`, `jr()`/`ledger()` (jurnal), `addP()` | mengubah ekspor/impor, berulang, jurnal |
-| `js/09-aksi.js` | Semua perilaku tombol | objek `act` (`save`→`saveInti`, `accdet`→`accdetInti`, lihat bagian 6) | menambah/mengubah aksi tombol, formulir |
+| `js/09-aksi.js` | Semua perilaku tombol | objek `act` (`save`→`saveInti`, lihat bagian 6) | menambah/mengubah aksi tombol, formulir |
+| `js/09b-aksi-jatah.js` | Aksi jatah harian | `onb*` (alur 3 pertanyaan), `billnew`/`billsave`, `lanjut` (ditambah ke `act` lewat `Object.assign`) | mengubah alur pertama atau tagihan tetap |
 | `js/10-peristiwa.js` | Pendengar global & format | pendengar klik `data-a`, geser-untuk-batal, `tb()` (terbilang), `fmtNum()`, `fit()` | mengubah gestur, format ketikan nominal |
 | `js/11-mulai.js` | Proses start | splash, pendengar tombol Enter/Spasi, `render()` pertama, pendaftaran service worker | mengubah urutan start (hati-hati) |
 | `sw.js` | Cache offline | `INTI`, `VERSI` | menambah/menghapus berkas aplikasi |
@@ -54,7 +56,8 @@ act.aksi(param)      ── mengubah S ──►  save()  ──► localStorage
 ```
 
 Jendela di bawah layar (`sheet(html)`) dipakai untuk formulir dan dialog; `close()` menutupnya;
-`ask(pesan, aksi, param)` membuat dialog konfirmasi yang memanggil `act.aksi(param)` bila disetujui.
+`ask(pesan, aksi, param, label)` membuat dialog konfirmasi yang memanggil `act.aksi(param)` bila disetujui. Beri `label`
+yang sesuai untuk aksi yang menghapus/membatalkan ("Ya, hapus", "Ya, batalkan"); bila kosong tombolnya "Ya, lanjutkan".
 
 ## 4. Model data (`S`)
 
@@ -92,9 +95,15 @@ Arti singkat: `w` = ruang kerja pemilik data, `d` = tanggal `TTTT-BB-HH`, `ty` =
    hanya menghitung `st:'ok'`. Saldo selalu dihitung ulang (`bal()`), tidak pernah disimpan.
 5. **Teks dari pengguna harus lewat `esc()`** sebelum masuk ke template HTML (pencegahan XSS).
 6. **Tidak boleh ada permintaan ke internet.** Tanpa font/skrip/gambar eksternal, tanpa `fetch` ke luar.
-   Itu janji privasi aplikasi; `tools/cek.mjs` memeriksanya.
+   Itu janji privasi aplikasi; `tools/cek.mjs` memeriksanya dan Content-Security-Policy di `index.html`
+   (`connect-src 'none'`, `script-src 'self'`) menegakkannya di peramban. Jangan menambah skrip inline atau atribut
+   `onclick=` di HTML; pakai `data-a` dan `act`.
 7. **Jangan mengganti nama kunci penyimpanan** (tabel di bawah). Itu yang membuat data pengguna lama tetap terbaca.
-8. **Urutan berkas `js/` itu penting** (kode di level atas dijalankan saat dimuat). Berkas baru diberi nomor
+8. **Input angka yang bukan nominal uang** (tanggal gajian, dsb.) harus diberi atribut `data-plain`; tanpa itu
+   `fmtInit()`/`fmtNum()` memformatnya sebagai rupiah dan menampilkan terbilang.
+9. **Data impor tidak tepercaya.** File cadangan bisa dimodifikasi (checksum `hash()` bukan tanda tangan). `migrate()`
+   membersihkan `id` dan tanggal; bila menambah bidang baru yang masuk ke templat HTML, lewatkan `esc()` atau validasi di `migrate()`.
+10. **Urutan berkas `js/` itu penting** (kode di level atas dijalankan saat dimuat). Berkas baru diberi nomor
    yang tepat dan didaftarkan (lihat resep 7.5).
 
 ### Kunci penyimpanan peramban
@@ -105,6 +114,7 @@ Arti singkat: `w` = ruang kerja pemilik data, `d` = tanggal `TTTT-BB-HH`, `ty` =
 | `bukukas.v1.rusak`, `bukukas.v1.v<n>` | salinan pengaman saat data rusak / sebelum migrasi skema |
 | `finara.theme` | tema: `auto` / `light` / `dark` |
 | `finara.adv` | fitur lanjutan (akuntansi) tampil atau tidak |
+| `finara.lanjut` | fitur lanjutan Pribadi (pinjaman, utang-piutang) tampil atau tidak |
 | `finara.lastbk` | waktu cadangan terakhir (untuk pengingat) |
 | `finara.last` | pilihan terakhir formulir (rekening/kategori) |
 | `bukukas.hint`, `bukukas.fold` | status bantuan (tampil/lipat) |
@@ -112,22 +122,25 @@ Arti singkat: `w` = ruang kerja pemilik data, `d` = tanggal `TTTT-BB-HH`, `ty` =
 
 ## 6. Pola "pembungkus + inti" di `act`
 
-Dua aksi punya perilaku tambahan di sekitar logika aslinya, dan keduanya tinggal bersebelahan di `09-aksi.js`:
+Hanya satu aksi yang punya perilaku tambahan di sekitar logika aslinya, dan keduanya tinggal bersebelahan di `09-aksi.js`:
 
 | Aksi | Pembungkus (yang dipanggil tombol) | Inti (logika lama) |
 |---|---|---|
 | `save` | memanggil `saveInti()`, lalu bila yang tersimpan modal/penarikan pemilik di Usaha, menawarkan mencatat pasangannya di Pribadi | `saveInti` = validasi dan penyimpanan transaksi |
-| `accdet` | memanggil `accdetInti()`, lalu menambahkan "10 transaksi terakhir" | `accdetInti` = rincian rekening |
 
 Aturan praktis: **ubah logika yang sudah ada di `…Inti`; tambahkan perilaku sesudahnya di pembungkus.**
-Tombol dan pendengar tetap memanggil nama pembungkus (`act.save`, `act.accdet`), jangan memanggil `…Inti` dari luar.
-Tidak ada lagi kode yang menimpa fungsi `act` dari berkas lain.
+Tombol dan pendengar tetap memanggil nama pembungkus (`act.save`), jangan memanggil `saveInti` dari luar.
+Tidak ada lagi kode yang menimpa fungsi `act` dari berkas lain. (`accdet` dulu dibungkus; pembungkusnya dihapus di 1.4.5
+karena menggandakan daftar transaksi.)
+
+Transaksi pasangan modal/penarikan (`pair:<id transaksi Usaha>`) mengikuti induknya: `voidq` membatalkan/memulihkannya
+bersama induk, dan `saveInti` menyamakan nominal serta tanggalnya saat induk diubah.
 
 ## 7. Resep perubahan umum
 
 ### 7.1 Menambah item di menu "Lainnya"
-1. `06-layar.js` → fungsi `vMore()`: tambahkan pasangan `['kunciBaru','Label tombol']` di daftar menu
-   (gunakan `...(U()?[]:[…])` bila khusus Pribadi, `...(U()?[…]:[])` bila khusus Usaha).
+1. `06-layar.js` → fungsi `vMore()`: tambahkan pasangan `['kunciBaru','Label tombol']` di grup yang sesuai pada daftar `G`
+   (Catatan keuangan, Akuntansi, Data dan cadangan, Tampilan dan profil, Bantuan, Hapus data; gunakan `...(U()?[]:[…])` bila khusus Pribadi, `...(U()?[…]:[])` bila khusus Usaha).
 2. `09-aksi.js` → di objek `act`, tambahkan `kunciBaru(){ sheet('<h2>…</h2>…') }`.
 3. Rilis (bagian 9 panduan): `versi.js`, `CHANGELOG.md`.
 
@@ -142,7 +155,7 @@ Sentuh semua titik ini (cari kata `capital` sebagai contoh jenis yang sudah leng
 2. `02-data.js` → `TH`: teks bantuan jenis itu.
 3. `03-hitung.js` → `sum()`: tambahkan `case` agar masuk ke laporan.
 4. `08-data-lanjutan.js` → `jr()`: pasangan debit-kredit untuk jurnal.
-5. `09-aksi.js` → `accdetInti`: daftar urutan `O` dan label di rincian rekening.
+5. `09-aksi.js` → `accdet`: daftar urutan `O` dan label di rincian rekening.
 6. Periksa `txForm()` (`07-render-formulir.js`) bila ada isian khusus, dan `fullcsv()`/`restcsv()` bila ikut dicadangkan.
 7. Uji: catat, batalkan, laporan, rincian rekening, cadangan JSON dan CSV lalu pulihkan.
 
@@ -193,3 +206,12 @@ Buka aplikasi lewat `http://localhost` (lihat README), lalu:
 - Kode padat dan berbagi lingkup global; nama pendek (`S`, `T`, `R`, `Q`, `FM`) dipakai lintas berkas.
 - `styles.css` berlapis per rilis (v1.1–v1.4); ada kemungkinan aturan yang saling menimpa.
 - Catatan rilis 1.0–1.4.0 tidak memiliki tanggal.
+
+## 10. Rumus jatah harian (1.5.0)
+
+`jatah()` di `06b-jatah.js`: uang bebas = total saldo − tagihan berulang (`S.rec` jenis expense/loan) dan utang yang jatuh tempo
+sebelum gajian berikutnya. Jatah hari ini = (uang bebas + pengeluaran harian hari ini) ÷ jumlah hari sampai gajian (hari ini ikut).
+Sisa jatah = jatah − pengeluaran harian hari ini. Pengeluaran harian tidak memuat transaksi hasil aturan berulang (`rec`) dan
+pembayaran utang (`pay`). Pratinjau dampak di formulir memakai `simTx()`: menambah satu transaksi rekaan ke `S.tx`, menghitung, lalu membuangnya.
+
+Versi satu berkas: `node tools/bundel.mjs` (menggabungkan CSS dan JS, membuat CSP berbasis hash).
