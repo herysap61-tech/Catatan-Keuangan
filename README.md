@@ -17,6 +17,7 @@ Made by **Herysap61**. Lisensi MIT.
 - Kekayaan gabungan Pribadi + Usaha
 - Cadangan dan pemulihan (JSON dan CSV), ekspor CSV
 - Mode terang, gelap, atau otomatis
+- Tombol **Pasang Finara di perangkat ini** (kartu di Beranda dan menu Lainnya), dengan petunjuk untuk iPhone
 - Data contoh sekali ketuk untuk mencoba
 
 ## Privasi

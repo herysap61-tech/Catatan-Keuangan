@@ -4,6 +4,32 @@ Catatan untuk **pengembang** (apa yang berubah di kode dan kenapa). Catatan untu
 ada di `versi.js` (tampil di aplikasi: Lainnya > Tentang > Riwayat versi).
 Format: bagian terbaru di atas. Penomoran: lihat `docs/PANDUAN-PEMBARUAN.md`.
 
+## [1.6.0] - 2026-10-30
+
+Rilis tampilan Beranda dan tombol pasang aplikasi. **Tidak ada perubahan perhitungan, skema, atau format data** (`SCHEMA` tetap 2).
+
+### Diubah
+- Urutan Beranda Pribadi (`vHomeP`, `js/06b-jatah.js`), atas ke bawah: jatah hari ini, pemasukan/pengeluaran, **Rekening saya** (`strip()`),
+  kelompok perhatian (data contoh, utang jatuh tempo, pengingat cadangan, kartu pasang), cara menghitung jatah, anggaran + laju,
+  tren saldo, kesehatan keuangan, lalu **Transaksi terbaru di paling bawah** (kini dengan tautan "Lihat semua" ke tab Transaksi).
+  Sebelumnya: transaksi terbaru berada tepat di bawah pemasukan/pengeluaran dan rekening di paling bawah.
+- Beranda Usaha (`vHomeU`, `js/06-layar.js`): isi dan urutan tidak berubah; hanya ditambah tautan "Lihat semua" dan kelas tata letak baru.
+- Tata letak layar lebar (>= 1024 px): Rekening dan Transaksi terbaru selebar penuh, kelompok kartu tengah dibagi dua kolom (`div.dcol`: kiri perhatian + cara hitung, kanan anggaran + tren + kesehatan; Usaha: kiri kartu bisnis, kanan tren + anggaran). Di HP tetap satu kolom dengan urutan yang sama.
+  Kelas baru `d-w` (`styles.css`, bagian akhir). `strip()` ikut memakai `d-w`.
+
+### Ditambah
+- Tombol **Pasang Finara di perangkat ini** dikembalikan. Sebelumnya hanya muncul di Lainnya dan hanya bila peramban mengirim
+  `beforeinstallprompt`, sehingga di iPhone, di Chrome yang sudah menolak pernah, atau bila peristiwa itu terlambat, tombol "hilang".
+  Sekarang: kartu `installCard()` di Beranda (`06b-jatah.js`) dan tombol selalu ada di Lainnya selama aplikasi belum dibuka sebagai
+  aplikasi (`STANDALONE()`). `act.install` (`09-aksi.js`) memakai prompt bawaan bila ada; bila tidak, menampilkan petunjuk
+  iPhone/Android/komputer, atau penjelasan bila dibuka lewat `file://`.
+- `act.instno` ("Nanti saja") menyimpan kunci `finara.pasang` = 1 agar kartu tidak muncul lagi. Kunci yang sama dipasang saat
+  peristiwa `appinstalled`.
+
+### Catatan
+- `beforeinstallprompt` kini juga memicu `render()` bila sedang di Beranda, supaya tombol langsung memakai prompt bawaan.
+- Tidak ada berkas baru, jadi `index.html` dan `sw.js` tidak perlu diubah.
+
 ## [1.5.1] - 2026-10-30
 
 Perbaikan istilah dan penjelasan; **tidak ada perubahan perhitungan, skema, atau format data**.

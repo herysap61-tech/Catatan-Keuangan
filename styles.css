@@ -301,3 +301,13 @@ ol.qs{margin:8px 0 10px;padding-left:22px;line-height:1.7}
 .c.res{text-align:center}
 .hj.prom>b+small{margin-top:12px}
 .imp>div>span:first-child{flex:none}
+
+/* ===== 1.6.0: susunan Beranda dan kartu pasang aplikasi ===== */
+.d-w,.dcol{min-width:0}
+.inst{border:2px dashed var(--ln)}
+.d-b .shd h3{margin:12px 0 4px}.d-b .shd .lk{margin-top:0}
+@media(min-width:1024px){
+.dash>.d-w{grid-column:1/-1}
+.dash>.d-a.d-w{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;align-items:start}
+.dash>.d-a.d-w>h3:first-child{margin-top:16px}
+}

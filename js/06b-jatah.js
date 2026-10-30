@@ -82,11 +82,25 @@ return`<div class="hero hj${ng||ov?' bad':''}"><small>${lab}</small><b>${big}</b
 function vWelcome(){return`<div class="dash"><div class="hero hj prom"><small>Selamat datang di Finara</small><b>Tahu berapa uang yang aman dipakai per hari sampai gajian.</b><small>Jawab 3 pertanyaan singkat. Hasilnya langsung tampil, sebelum Anda mencatat apa pun.</small><div class="qa"><button class="btn" data-a="onb">Hitung jatah harian saya</button></div></div>
 <div class="d-a"><div class="c"><b>Begini cara menghitungnya</b><table><tr><td>Uang Anda sekarang</td><td>Rp2.000.000</td></tr><tr><td>Tagihan tetap sebelum gajian</td><td>−Rp600.000</td></tr><tr><td>Sisa setelah tagihan</td><td>Rp1.400.000</td></tr><tr><td>Gajian 10 hari lagi</td><td class="pos">Rp140.000 per hari</td></tr></table><small>Hanya contoh. Angka Anda dihitung dari jawaban Anda sendiri.</small></div>
 <div class="c"><b>Tiga pertanyaan yang akan diajukan</b><ol class="qs"><li>Uang Anda sekarang berapa?</li><li>Gajian tanggal berapa?</li><li>Tagihan tetap tiap bulan apa saja? (boleh dilewati)</li></ol><small>Setelah itu, setiap Anda mencatat pengeluaran, Beranda langsung menunjukkan sisa jatah hari ini. Data hanya tersimpan di perangkat Anda.</small><div class="row"><button class="btn ghost" data-a="demo">Coba dulu dengan data contoh</button></div></div></div></div>`}
+// 1.6.0: urutan Beranda Pribadi (atas ke bawah):
+//  1 jatah hari ini · 2 pemasukan/pengeluaran · 3 rekening · 4 perhatian (utang jatuh tempo, cadangan, pasang aplikasi)
+//  5 cara hitung · 6 anggaran · 7 tren · 8 kesehatan keuangan · 9 transaksi terbaru (paling bawah)
+//  Layar lebar: kelompok 4-8 jadi dua kolom (kiri: 4-5, kanan: 6-8) lewat dua <div class="dcol">; di HP tetap satu kolom berurutan.
 function vHomeP(){if(needSetup())return vWelcome();
 const[f,t]=range('month'),r=sum(f,t),J=jatah(),cy=CYC()?'periode':'bulan',demo=S.tx.some(x=>x.demo);
 return`<div class="dash">${heroJ(J)}<div class="c g2 stats"><div><small>Pemasukan ${cy} ini</small><b class="pos">${rp(r.inc)}</b></div><div><small>Pengeluaran ${cy} ini</small><b class="neg">${rp(r.exp)}</b></div></div>
-<section class="d-b"><h3>Transaksi terbaru</h3>${list(txs().sort(cmp).slice(0,5))}</section>
-<div class="d-a">${demo?'<div class="c demo-b"><b>Ini data contoh</b><small>Angka di atas berasal dari data contoh, bukan uang Anda.</small><div class="row"><button class="btn ghost" data-a="democlear">Hapus data contoh dan mulai dari nol</button></div></div>':''}${plancard(J,r)}${nudge()}${due()}${health(f,t,r)}${S.tx.length?trendBal():''}${S.bud.some(v=>v.w===S.active)?bud()+budPace():''}</div>${strip()}</div>`}
+${strip()}<div class="d-a d-w"><div class="dcol">${demo?'<div class="c demo-b"><b>Ini data contoh</b><small>Angka di atas berasal dari data contoh, bukan uang Anda.</small><div class="row"><button class="btn ghost" data-a="democlear">Hapus data contoh dan mulai dari nol</button></div></div>':''}${due()}${nudge()}${installCard()}${plancard(J,r)}</div><div class="dcol">${S.bud.some(v=>v.w===S.active)?bud()+budPace():''}${S.tx.length?trendBal():''}${health(f,t,r)}</div></div>
+<section class="d-b d-w"><div class="shd"><h3>Transaksi terbaru</h3><button class="lk" data-a="tab:tx">Lihat semua</button></div>${list(txs().sort(cmp).slice(0,5))}</section></div>`}
+
+/* ---------- Pasang Finara di perangkat (dikembalikan di 1.6.0) ----------
+   Kartu di Beranda + tombol di Lainnya. Chrome/Edge/Android memakai prompt bawaan (DEFERRED dari 06-layar.js);
+   iPhone dan peramban lain mendapat petunjuk manual. Disembunyikan bila sudah dibuka sebagai aplikasi. */
+const STANDALONE=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}};
+const ISIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+let PBH=false;try{PBH=localStorage.getItem('finara.pasang')==='1'}catch(e){}
+function installCard(){if(STANDALONE()||PBH||!/^https?:$/.test(location.protocol))return'';
+return`<div class="c inst"><b>Pasang Finara di perangkat ini</b><small>Buka dari layar utama seperti aplikasi biasa, tampil layar penuh, dan tetap jalan tanpa internet.</small><div class="row"><button class="btn" data-a="install">Pasang sekarang</button><button class="btn ghost" data-a="instno">Nanti saja</button></div></div>`}
+addEventListener('appinstalled',()=>{DEFERRED=null;PBH=true;try{localStorage.setItem('finara.pasang','1')}catch(e){}if(tab==='home'||tab==='more')render();toast('Finara terpasang')});
 
 /* ---------- Kartu cara hitung ---------- */
 function plancard(J,r){const ms=mon(6).slice(2,5),
